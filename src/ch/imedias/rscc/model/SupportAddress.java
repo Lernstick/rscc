@@ -4,8 +4,10 @@ import ch.imedias.rscc.RemoteSupportFrame;
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -27,29 +29,43 @@ public class SupportAddress implements Serializable {
     private String description;
     private String address;
     private boolean encrypted;
-    
     private static List<SupportAddress> supportAddresses;
-    private static boolean supportChecked = false;
     
-    public static void makeSupportAddresses(){
-        
-        if(!supportChecked){
-            Preferences preferences = Preferences.userNodeForPackage(RemoteSupportFrame.class);
-            
-            String supportAddressesXML = preferences.get(RemoteSupportFrame.SUPPORT_ADDRESSES, null);
+    private final static Preferences preferences = Preferences.userNodeForPackage(SupportAddress.class);;
+    
 
-            if (supportAddressesXML == null) {
-                supportAddresses = getDefaultList();
-                
-
-            } else {
-                byte[] array = supportAddressesXML.getBytes();
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(array);
-                XMLDecoder decoder = new XMLDecoder(inputStream);
-                supportAddresses = (List<SupportAddress>) decoder.readObject();
-            }
-            supportChecked = true;
+    private static final Logger LOGGER = Logger.getLogger(SupportAddress.class.getName());
+    
+    
+    public static List<SupportAddress> getAll() {
+        if (supportAddresses != null) return supportAddresses; // if it has already been set: just return it
+        // else read from storage
+        String supportAddressesXML = preferences.get("supportAddresses", null);
+        if (supportAddressesXML == null) {
+            // use some hardcoded defaults
+            supportAddresses = getDefaultList();
+        } else {
+            byte[] array = supportAddressesXML.getBytes();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(array);
+            XMLDecoder decoder = new XMLDecoder(inputStream);
+            supportAddresses = (List<SupportAddress>) decoder.readObject();
         }
+        return supportAddresses;
+    }
+    
+    public static void saveAll() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        XMLEncoder encoder = new XMLEncoder(byteArrayOutputStream);
+        encoder.setPersistenceDelegate(SupportAddress.class,
+                SupportAddress.getPersistenceDelegate());
+        encoder.writeObject(supportAddresses);
+        encoder.close();
+        String supportAddressesXML = byteArrayOutputStream.toString();
+        preferences.put("supportAddresses", supportAddressesXML);
+    }
+    
+    public static void resetAllToDefault() {
+        supportAddresses = getDefaultList();
     }
     
     public static List<SupportAddress> getSupportAddresses(){
@@ -61,10 +77,9 @@ public class SupportAddress implements Serializable {
      *
      * @return the default support address list
      */
-    public static List<SupportAddress> getDefaultList() {
+    private static List<SupportAddress> getDefaultList() {
         List<SupportAddress> defaultList = new ArrayList<SupportAddress>();
         FilenameFilter rsccDefaultsFilter = new FilenameFilter() {
-
             @Override
             public boolean accept(File dir, String name) {
                 return name.startsWith("rscc-defaults");
@@ -73,7 +88,7 @@ public class SupportAddress implements Serializable {
         File usrShareDir = new File("/usr/share/");
         File[] defaultFiles = usrShareDir.listFiles(rsccDefaultsFilter);
         for (File defaultFile : defaultFiles) {
-            RemoteSupportFrame.LOGGER.log(Level.INFO, "parsing {0}", defaultFile);
+            LOGGER.log(Level.INFO, "parsing {0}", defaultFile);
             FileReader fileReader = null;
             BufferedReader bufferedReader = null;
             try {
@@ -99,19 +114,18 @@ public class SupportAddress implements Serializable {
                     }
                     lineCounter++;
                 }
-
             } catch (IOException ex) {
-                RemoteSupportFrame.LOGGER.log(Level.SEVERE, "", ex);
+                LOGGER.log(Level.SEVERE, "", ex);
             } finally {
                 try {
                     bufferedReader.close();
                 } catch (IOException ex) {
-                    RemoteSupportFrame.LOGGER.log(Level.SEVERE, "", ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                 }
                 try {
                     fileReader.close();
                 } catch (IOException ex) {
-                    RemoteSupportFrame.LOGGER.log(Level.SEVERE, "", ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                 }
             }
         }
@@ -130,7 +144,6 @@ public class SupportAddress implements Serializable {
         this.description = description;
         this.address = address;
         this.encrypted = encrypted;
-        makeSupportAddresses();
     }
 
     /**
