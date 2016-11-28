@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import static java.util.Collections.swap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -21,13 +20,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -63,12 +62,12 @@ public class EditDialogController extends Application implements Initializable {
     private SelectionModel<SupportAddress> selectionModel;
     @FXML
     private TableView<SupportAddress> table;
-  //  @FXML
-  //  private TableColumn<Map, String> name;
-  //  @FXML
-  //  private TableColumn<Map, String> address;
-   // @FXML
-   // private TableColumn<Map, Boolean> encrypted;
+    @FXML
+    private TableColumn name;
+    @FXML
+    private TableColumn address;
+    @FXML
+    private TableColumn encrypted;
     
     
     private List<SupportAddress> staticDefaultAddressList;
@@ -93,17 +92,24 @@ public class EditDialogController extends Application implements Initializable {
         staticDefaultAddressList.add(new SupportAddress("zwei", "zwei.hallo", true));
         staticDefaultAddressList.add(new SupportAddress("drei", "drei.hallo", false));
         
+        name = new TableColumn("Name");
+        name.setCellValueFactory(new PropertyValueFactory("name"));
+
+        address = new TableColumn("Address");
+        address.setCellValueFactory(new PropertyValueFactory("address"));
         
+        encrypted = new TableColumn("Encrypted");
+        encrypted.setCellValueFactory(new PropertyValueFactory("encrypted"));
+
+        table.getColumns().setAll(name, address, encrypted);
+
         // make a deep copy of the list
-        this.supportAddresses = FXCollections.observableArrayList();
-        for (SupportAddress supportAddress : staticAddressList) {
-            if (supportAddress != null) {
-            SupportAddress addressCopy = new SupportAddress(
-                    supportAddress.getDescription(),
-                    supportAddress.getAddress(),
-                    supportAddress.isEncrypted());
-            this.supportAddresses.add(addressCopy);
-            }
+       
+        if(staticAddressList != null)
+        {
+             this.supportAddresses = FXCollections.observableArrayList(staticAddressList);
+        }else{
+            this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
         }
         //this.selectionModel = table.getSelectionModel();
         //table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -160,7 +166,7 @@ public class EditDialogController extends Application implements Initializable {
         selectionModel = table.getSelectionModel();
         SupportAddress temp = selectionModel.selectedItemProperty().getValue();
         int index = supportAddresses.indexOf(temp);
-        swap(supportAddresses, index, index + 1);
+        swap(supportAddresses, index, index - 1);
     }
 
     @FXML
@@ -168,21 +174,14 @@ public class EditDialogController extends Application implements Initializable {
         selectionModel = table.getSelectionModel();
         SupportAddress temp = selectionModel.selectedItemProperty().getValue();
         int index = supportAddresses.indexOf(temp);
-        swap(supportAddresses, index, index - 1);
+        swap(supportAddresses, index, index + 1);
     }
 
     @FXML
     private void reset(MouseEvent event) {
-        this.supportAddresses = FXCollections.observableArrayList();
-        for (SupportAddress supportAddress : staticDefaultAddressList) {
-            if (supportAddress != null) {
-            SupportAddress addressCopy = new SupportAddress(
-                    supportAddress.getDescription(),
-                    supportAddress.getAddress(),
-                    supportAddress.isEncrypted());
-            this.supportAddresses.add(addressCopy);
-            }
-        }
+            this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
+
+        staticAddressList = null;
     }
 
     @FXML
