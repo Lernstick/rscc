@@ -5,11 +5,10 @@
  */
 package ch.imedias.rscc;
 
+import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /**
@@ -20,9 +19,7 @@ public class RemoteSupportApplication extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("ch/imedias/rscc/Bundle"); // NOI18N
-        Parent parent = FXMLLoader.load(getClass().getResource("view/RemoteSupportStart.fxml")/*, bundle*/);
-        Scene scene = new Scene(parent);
+        Scene scene = FXMLGuiLoader.getInstance().getRemoteSupportStart();
         primaryStage.setScene(scene);
         primaryStage.show();
     }

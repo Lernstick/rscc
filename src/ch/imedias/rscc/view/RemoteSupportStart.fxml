@@ -24,8 +24,8 @@
             </TextFlow>
             <HBox alignment="CENTER" spacing="30.0">
                 <children>
-                    <Button mnemonicParsing="false" onAction="#openRemoteObtain" prefHeight="70.0" prefWidth="150.0" text="Support beziehen" />
-                    <Button mnemonicParsing="false" onAction="#openRemoteOffer" prefHeight="70.0" prefWidth="150.0" text="Support anbieten" />
+                    <Button mnemonicParsing="false" onAction="#onRequstSupportAction" prefHeight="70.0" prefWidth="150.0" text="Support beziehen" />
+                    <Button mnemonicParsing="false" onAction="#OnProvideSupportAction" prefHeight="70.0" prefWidth="150.0" text="Support anbieten" />
                 </children>
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

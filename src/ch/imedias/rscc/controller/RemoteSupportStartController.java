@@ -5,16 +5,15 @@
  */
 package ch.imedias.rscc.controller;
 
-import java.io.IOException;
+import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -22,34 +21,36 @@ import javafx.scene.Scene;
  * @author user
  */
 public class RemoteSupportStartController implements Initializable {
-    private Parent remoteObtain;
-    private Parent remoteOffer;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            m_remoteObtain = FXMLLoader.load(getClass().getResource("RemoteObtain.fxml"), rb);
-//            m_remoteOffer = FXMLLoader.load(getClass().getResource("RemoteOffer.fxml"), rb);
-//        } catch(IOException ex) {
-//            ex.printStackTrace();
-//        }
     }    
 
+    /**
+     * Open other view by clicking on request support button
+     * @param event 
+     */
     @FXML
-    private void openRemoteObtain(ActionEvent event) {
+    private void onRequstSupportAction(ActionEvent event) {
         Scene scene = ((Node)(event.getSource())).getScene();
+        Stage stage = (Stage)scene.getWindow();
         
-        scene.setRoot(remoteObtain);
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupport());
     }
 
+    /**
+     * Open other view by clicking on provide support button
+     * @param event 
+     */
     @FXML
-    private void openRemoteOffer(ActionEvent event) {
+    private void OnProvideSupportAction(ActionEvent event) {
         Scene scene = ((Node)(event.getSource())).getScene();
+        Stage stage = (Stage)scene.getWindow();
         
-        scene.setRoot(remoteOffer);
+        stage.setScene(FXMLGuiLoader.getInstance().getProvideSupport());
     }
-    
+
 }
