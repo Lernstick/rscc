@@ -56,11 +56,11 @@
                <right>
                   <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="AddButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="^" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="v" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="←" />
+                        <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#add" prefHeight="30.0" prefWidth="30.0" text="+" />
+                        <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="30.0" prefWidth="30.0" text="-" />
+                        <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#up" prefHeight="30.0" prefWidth="30.0" text="^" />
+                        <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#down" prefHeight="30.0" prefWidth="30.0" text="v" />
+                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="30.0" text="←" />
                      </children>
                      <BorderPane.margin>
                         <Insets left="15.0" />
