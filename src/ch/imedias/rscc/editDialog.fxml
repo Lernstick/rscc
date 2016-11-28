@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.EditDialogController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
@@ -46,7 +46,7 @@
                         <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#cancel" text="Abbrechen" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <Button mnemonicParsing="false" text="Speichern" BorderPane.alignment="CENTER" />
+                        <Button fx:id="SaveButton" mnemonicParsing="false" onMouseClicked="#save" text="Speichern" BorderPane.alignment="CENTER" />
                      </right>
                      <BorderPane.margin>
                         <Insets top="15.0" />
@@ -56,7 +56,7 @@
                <right>
                   <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" />
+                        <Button fx:id="AddButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" />
                         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" />
                         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="^" />
                         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="v" />
