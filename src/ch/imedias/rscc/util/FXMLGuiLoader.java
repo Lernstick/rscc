@@ -22,57 +22,36 @@ public final class FXMLGuiLoader {
     private Scene requestSupport;
     private Scene editDialog;
     
-    private FXMLGuiLoader() {}
+    private FXMLGuiLoader() {
+        // Create all instances
+        try {
+            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml")));
+            provideSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/ProvideSupport.fxml")));
+            requestSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RequestSupport.fxml")));
+            // TODO
+            //editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml")));  
+        } catch(IOException ex) {
+               ex.printStackTrace();
+        }
+    }
     
     public static FXMLGuiLoader getInstance() {
         return instance;
     }
     
     public Scene getRemoteSupportStart() {
-        if (remoteSupportStart == null) {
-            // Create new Instance
-            try {
-            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml")));
-            } catch(IOException ex) {
-               ex.printStackTrace();
-            }
-        }
         return remoteSupportStart;
     }
     
     public Scene getProvideSupport() {
-        if (provideSupport == null) {
-            // Create new Instance
-            try {
-            provideSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/ProvideSupport.fxml")));
-            } catch(IOException ex) {
-               ex.printStackTrace();
-            }
-        }
         return provideSupport;
     }
     
     public Scene getRequestSupport() {
-        if (requestSupport == null) {
-            // Create new Instance
-            try {
-            requestSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RequestSupport.fxml")));
-            } catch(IOException ex) {
-               ex.printStackTrace();
-            }
-        }
         return requestSupport;
     }
     
     public Scene getEditDialog() {
-        if (editDialog == null) {
-            // Create new Instance
-            try {
-            editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml")));
-            } catch(IOException ex) {
-               ex.printStackTrace();
-            }
-        }
         return editDialog;
     }
 }
