@@ -201,7 +201,7 @@
 		
 		        <!-- lernstickTools -->
 		<dependency>
-			<groupId>com.github.valendinosaurus</groupId>
+			<groupId>https://github.com/valendinosaurus/lernstickTools.git</groupId>
 			<artifactId>lernstickTools</artifactId>
 			<version>2</version>
 		</dependency>
