@@ -22,11 +22,11 @@
         </Label>
             <BorderPane prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <center>
-                  <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="table" onMouseClicked="#selectAddress" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn prefWidth="142.0" text="Beschreibung" />
-                      <TableColumn minWidth="0.0" prefWidth="164.0" text="Adresse" />
-                        <TableColumn prefWidth="164.0" text="Verschlüsselt" />
+                      <TableColumn fx:id="name" prefWidth="142.0" text="Beschreibung" />
+                      <TableColumn fx:id="address" minWidth="0.0" prefWidth="164.0" text="Adresse" />
+                        <TableColumn fx:id="encrypted" prefWidth="164.0" text="Verschlüsselt" />
                     </columns>
                   </TableView>
                </center>
