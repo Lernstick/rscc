@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,11 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -68,11 +63,11 @@ public class EditDialogController extends Application implements Initializable {
     @FXML
     private TableView<SupportAddress> table;
     @FXML
-    private TableColumn<SupportAddress, String> name;
+    private TableColumn name;
     @FXML
-    private TableColumn<SupportAddress, String> address;
+    private TableColumn address;
     @FXML
-    private TableColumn<SupportAddress, Boolean> encrypted;
+    private TableColumn encrypted;
     
     
     private List<SupportAddress> staticDefaultAddressList;
@@ -97,58 +92,14 @@ public class EditDialogController extends Application implements Initializable {
         staticDefaultAddressList.add(new SupportAddress("zwei", "zwei.hallo", true));
         staticDefaultAddressList.add(new SupportAddress("drei", "drei.hallo", false));
         
-        table.setEditable(true);
+        name = new TableColumn("Name");
+        name.setCellValueFactory(new PropertyValueFactory("name"));
+
+        address = new TableColumn("Address");
+        address.setCellValueFactory(new PropertyValueFactory("address"));
         
-        name.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("description"));
-        name.setCellFactory(TextFieldTableCell.<SupportAddress, String>forTableColumn(new StringConverter<String>() {
-            @Override
-            public String toString(String t) {
-                return t;
-            }
-
-            @Override
-            public String fromString(String string) {
-               return string; 
-            }
-        }));
-        name.setOnEditCommit(
-            new EventHandler<CellEditEvent<SupportAddress, String>>() {
-                @Override
-                public void handle(CellEditEvent<SupportAddress, String> t) {
-                    ((SupportAddress) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                            ).setDescription(t.getNewValue());
-                }
-            }
-        );
-
-        address.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("address"));
-        address.setCellFactory(TextFieldTableCell.<SupportAddress, String>forTableColumn(new StringConverter<String>() {
-            @Override
-            public String toString(String t) {
-                return t;
-            }
-
-            @Override
-            public String fromString(String string) {
-               return string; 
-            }
-        }));
-        address.setOnEditCommit(
-            new EventHandler<CellEditEvent<SupportAddress, String>>() {
-                @Override
-                public void handle(CellEditEvent<SupportAddress, String> t) {
-                    ((SupportAddress) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                            ).setAddress(t.getNewValue());
-                }
-            }
-        );
-        
-//        encrypted.setCellValueFactory(new PropertyValueFactory<SupportAddress, Boolean>("encrypted"));
-        encrypted.setCellValueFactory(new PropertyValueFactory<SupportAddress, Boolean>("encrypted"));
-        encrypted.setCellFactory(CheckBoxTableCell.forTableColumn(encrypted));
-        encrypted.setEditable(true);
+        encrypted = new TableColumn("Encrypted");
+        encrypted.setCellValueFactory(new PropertyValueFactory("encrypted"));
 
         table.getColumns().setAll(name, address, encrypted);
 
