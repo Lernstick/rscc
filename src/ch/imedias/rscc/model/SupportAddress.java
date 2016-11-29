@@ -53,6 +53,10 @@ public class SupportAddress implements Serializable {
         return supportAddresses;
     }
     
+    public static void setAll(List<SupportAddress> supportAddresses) {
+        SupportAddress.supportAddresses = supportAddresses;
+    }
+    
     public static void saveAll() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         XMLEncoder encoder = new XMLEncoder(byteArrayOutputStream);
@@ -66,10 +70,6 @@ public class SupportAddress implements Serializable {
     
     public static void resetAllToDefault() {
         supportAddresses = getDefaultList();
-    }
-    
-    public static List<SupportAddress> getSupportAddresses(){
-        return supportAddresses;
     }
     
     /**
