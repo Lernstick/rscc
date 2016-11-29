@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.imedias.rscc;
+package ch.imedias.rscc.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+import ch.imedias.rscc.model.SupportAddress;
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -68,7 +70,7 @@ public class EditDialogController extends Application implements Initializable {
      private final static ResourceBundle BUNDLE = ResourceBundle.getBundle(
             "ch/imedias/rscc/Bundle");
     private final static Logger LOGGER
-            = Logger.getLogger(EditDialog.class.getName());
+            = Logger.getLogger(EditDialogController.class.getName());
     
     //private final SupportAddressesTableModel tableModel;
     
@@ -95,17 +97,15 @@ public class EditDialogController extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("ch.imedias.rscc.EditDialogController.initialize()");
-        staticAddressList = new ArrayList<SupportAddress>();
-        staticDefaultAddressList = new ArrayList<SupportAddress>();
-
-        
+        staticAddressList = SupportAddress.getAll();//new ArrayList<SupportAddress>();
+        staticDefaultAddressList = SupportAddress.getAll();/*new ArrayList<SupportAddress>();
         staticAddressList.add(new SupportAddress("Hallo", "hallo.hallo", false));
         staticAddressList.add(new SupportAddress("Fritz", "fritz.hallo", true));
         staticAddressList.add(new SupportAddress("Meier", "Meier.hallo", false));
 
         staticDefaultAddressList.add(new SupportAddress("eins", "eins.hallo", false));
         staticDefaultAddressList.add(new SupportAddress("zwei", "zwei.hallo", true));
-        staticDefaultAddressList.add(new SupportAddress("drei", "drei.hallo", false));
+        staticDefaultAddressList.add(new SupportAddress("drei", "drei.hallo", false));*/
         
         table.setEditable(true);
         
@@ -249,6 +249,8 @@ public class EditDialogController extends Application implements Initializable {
             }
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
+        SupportAddress.setAll(staticAddressList);
+        SupportAddress.saveAll();
     }
 
     @FXML

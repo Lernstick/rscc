@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.EditDialogController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.EditDialogController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library hereâ€¦" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
           <font>
             <Font size="18.0" />
           </font>
@@ -26,7 +26,7 @@
                     <columns>
                       <TableColumn fx:id="name" prefWidth="142.0" text="Beschreibung" />
                       <TableColumn fx:id="address" minWidth="0.0" prefWidth="164.0" text="Adresse" />
-                        <TableColumn fx:id="encrypted" prefWidth="164.0" text="Verschlüsselt" />
+                        <TableColumn fx:id="encrypted" prefWidth="164.0" text="VerschlÃ¼sselt" />
                     </columns>
                   </TableView>
                </center>
@@ -60,7 +60,7 @@
                         <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="30.0" prefWidth="30.0" text="-" />
                         <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#up" prefHeight="30.0" prefWidth="30.0" text="^" />
                         <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#down" prefHeight="30.0" prefWidth="30.0" text="v" />
-                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="30.0" text="←" />
+                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="30.0" text="â†�" />
                      </children>
                      <BorderPane.margin>
                         <Insets left="15.0" />
