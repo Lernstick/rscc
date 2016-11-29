@@ -167,7 +167,7 @@ public class EditDialogController extends Application implements Initializable {
         encrypted.setCellValueFactory(new Callback<CellDataFeatures<SupportAddress, Boolean>, ObservableValue<Boolean>>() {
             @Override
             public ObservableValue<Boolean> call(CellDataFeatures<SupportAddress, Boolean> param) {
-                SupportAddress sa = param.getValue();
+                final SupportAddress sa = param.getValue();
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(sa.isEncrypted());
                 booleanProp.addListener(new ChangeListener<Boolean>() {
                     @Override
