@@ -1,3 +1,4 @@
+package ch.imedias.rscc.model;
 import java.util.prefs.Preferences;
 
 /*
