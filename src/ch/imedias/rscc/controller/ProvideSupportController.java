@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -35,6 +36,11 @@ public class ProvideSupportController implements Initializable {
     private TextField txtSafePorts;
     @FXML
     private CheckBox chkHttpsPort;
+    @FXML
+    private Button cmdStartService;
+    
+    // Describes if the service is started
+    private boolean serviceStarted = false;
 
     /**
      * Initializes the controller class.
@@ -45,6 +51,7 @@ public class ProvideSupportController implements Initializable {
         // TODO: set value from model
         cboQuality.getItems().addAll(1,2,3,4,5,6,7,8,9);
         // TODO: set value from model
+
     }    
 
     @FXML
@@ -56,7 +63,30 @@ public class ProvideSupportController implements Initializable {
 
     @FXML
     private void onStartServiceAction(ActionEvent event) {
-        
+        if (serviceStarted){
+            // Stop service
+            cmdStartService.setText("Dienst starten");
+            serviceStarted = false;
+            
+            // Enable components
+            cboCompression.setDisable(false);
+            cboQuality.setDisable(false);
+            chk8BitColor.setDisable(false);
+            chkHttpsPort.setDisable(false);
+            txtSafePorts.setDisable(false);
+        } else {
+            // Start service
+            
+            // Disable controls
+            cboCompression.setDisable(true);
+            cboQuality.setDisable(true);
+            chk8BitColor.setDisable(true);
+            chkHttpsPort.setDisable(true);
+            txtSafePorts.setDisable(true);
+            
+            cmdStartService.setText("Dienst stoppen");
+            serviceStarted = true;
+        }
     }
     
 }

@@ -30,5 +30,12 @@ public class RemoteSupportApplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    @Override
+    public void stop() throws Exception {
+        // Save data from model        
+    }
+    
+    
     
 }

@@ -23,7 +23,7 @@
                <children>
                   <BorderPane>
                      <right>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" prefHeight="26.0" prefWidth="114.0" text="Dienst starten" BorderPane.alignment="CENTER" />
+                        <Button fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" prefHeight="26.0" prefWidth="132.0" text="Dienst starten" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
                         <Button mnemonicParsing="false" onAction="#onBackAction" text="Zurück" BorderPane.alignment="CENTER" />
