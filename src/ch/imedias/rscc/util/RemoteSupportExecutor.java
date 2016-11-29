@@ -7,8 +7,6 @@ package ch.imedias.rscc.util;
 
 import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.model.SupportAddress;
-import ch.imedias.rscc.util.ProcessExecutor;
-import java.awt.Frame;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,7 +22,6 @@ import java.util.regex.Pattern;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
 
@@ -69,7 +66,6 @@ public class RemoteSupportExecutor {
     public static void startOffer(String securePortsText, final Number compression, 
                                   final Number quality, final boolean isBGR233selected){
         
-        /**/
         String[] securePortsStrings = securePortsText.split(",");
         List<Integer> securePorts = new ArrayList<Integer>();
         for (String securePortsString : securePortsStrings) {
@@ -91,8 +87,7 @@ public class RemoteSupportExecutor {
             }
         }
 
-
-        /* GUI stuff begin */
+        // TODO SwingWorker will not be used with JavaFX
         SwingWorker viewerSwingWorker = new SwingWorker() {
 
             @Override
@@ -106,7 +101,8 @@ public class RemoteSupportExecutor {
             }
         };
         viewerSwingWorker.execute();
-        /* GUI stuff end */
+        
+        
 
         // check that the pem file for stunnel is there
         final String pemFilePath = System.getProperty("user.home")
@@ -165,7 +161,7 @@ public class RemoteSupportExecutor {
         return null;
     }
     
-    private static void stopOffer() {
+    public static void stopOffer() {
         OFFER_PROCESS_EXECUTOR.destroy();
         for (ProcessExecutor tunnelExecutor : TUNNEL_EXECUTORS) {
             tunnelExecutor.destroy();
@@ -179,8 +175,7 @@ public class RemoteSupportExecutor {
     private static Pattern failedPattern;
     
     public static void connect(final SupportAddress supportAddress,
-                               final SpinnerNumberModel scaleSpinnerModel,
-                               Label connectingLabel){
+                               final Double scale){
 
         final String address = supportAddress.getAddress();
 
@@ -190,6 +185,8 @@ public class RemoteSupportExecutor {
         failedPattern = Pattern.compile(
                 ".*reverse_connect: " + address + " failed");
 
+        
+        // TODO SwingWorker will not be used in JavaFX
         SwingWorker swingWorker = new SwingWorker() {
 
             @Override
@@ -202,19 +199,19 @@ public class RemoteSupportExecutor {
                     commandList.add("-ssl");
                     commandList.add("TMP");
                 }
-                String scaleString = scaleSpinnerModel.getNumber().toString();
+                String scaleString = scale.toString();
                 if (!scaleString.equals("1.0")) {
                     commandList.add("-scale");
                     commandList.add(scaleString);
                 }
-                scaleSpinnerModel.getNumber();
                 String[] commandArray =
                         commandList.toArray(new String[commandList.size()]);
                 SEEK_PROCESS_EXECUTOR.executeProcess(true, true, commandArray);
                 return null;
             }
 
-           /* @Override
+           /* TODO see RequestSupportController.onConnectAction()
+              @Override
               protected void done() {
                 rsFrame.setTitle(BUNDLE.getString("RemoteSupportFrame.title"));
                 showPanel(rsFrame.getSeekSuportPanel(), "mainPanel");
@@ -225,7 +222,7 @@ public class RemoteSupportExecutor {
         String connectMessage = BUNDLE.getString("Connecting_To");
         connectMessage = MessageFormat.format(
                 connectMessage, supportAddress.getDescription());
-        connectingLabel.setText(connectMessage);
+        // TODO GUI connectingLabel.setText(connectMessage);
         // TODO GUI showPanel(seekSupportPanel, "connectingPanel");
         
     }
@@ -239,9 +236,8 @@ public class RemoteSupportExecutor {
                 SupportAddress.getPersistenceDelegate());
         encoder.writeObject(supportAddresses);
         encoder.close();
-        String supportAddressesXML = byteArrayOutputStream.toString();
-        Settings settings = new Settings();
-        settings.save();
+        String supportAddressesXML = byteArrayOutputStream.toString(); // TODO not used?
+        Settings.save();
 
         // stop all external processes
         disconnect();
@@ -254,17 +250,18 @@ public class RemoteSupportExecutor {
         SEEK_PROCESS_EXECUTOR.destroy();
     }
     
+    // TODO only GUI related stuff
     private static void changeProperty(String newValue,
                                         SupportAddress supportAddress,
                                         Label connectingLabel){
         
         if (failedPattern.matcher(newValue).matches()) {
-            //showPanel(seekSupportPanel, "mainPanel");
+            // TODO showPanel(seekSupportPanel, "mainPanel");
            
-         /*  JOptionPane.showMessageDialog(rsFrame,
+            /* TODO JOptionPane.showMessageDialog(rsFrame,
                     BUNDLE.getString("Connection_Failed"),
                     BUNDLE.getString("Error"),
-                    JOptionPane.ERROR_MESSAGE);*/
+                    JOptionPane.ERROR_MESSAGE); */
             
         } else if (okPlainPattern.matcher(newValue).matches()
                 || okSSLPattern.matcher(newValue).matches()) {
@@ -272,8 +269,9 @@ public class RemoteSupportExecutor {
             connectedMessage = MessageFormat.format(
                     connectedMessage, supportAddress.getDescription());
             connectingLabel.setText(connectedMessage);
-           /* rsFrame.setTitle(connectedMessage);*/
-           // showPanel(seekSupportPanel, "connectedPanel");
+           /* TODO 
+                rsFrame.setTitle(connectedMessage);
+                showPanel(seekSupportPanel, "connectedPanel"); */
             new SwingWorker(){
 
                 @Override
@@ -284,7 +282,7 @@ public class RemoteSupportExecutor {
 
                 @Override
                 protected void done() {
-                   // rsFrame.setExtendedState(Frame.ICONIFIED);
+                   // TODO rsFrame.setExtendedState(Frame.ICONIFIED);
                 }
             }.execute();
         }
@@ -293,6 +291,6 @@ public class RemoteSupportExecutor {
     private static void showPortError(String portString){
         String errorMessage = BUNDLE.getString("Error_No_Port");
         errorMessage = MessageFormat.format(errorMessage, portString);
-        //showErrorMessage(errorMessage);
+        // TODO showErrorMessage(errorMessage);
     }
 }

@@ -5,7 +5,9 @@
  */
 package ch.imedias.rscc.controller;
 
+import ch.imedias.rscc.model.SupportAddress;
 import ch.imedias.rscc.util.FXMLGuiLoader;
+import ch.imedias.rscc.util.RemoteSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,7 +29,7 @@ public class RequestSupportController implements Initializable {
     @FXML
     private ComboBox<Double> cbx_imagescale;
     @FXML
-    private ComboBox<?> cbx_supporter;
+    private ComboBox<SupportAddress> cbx_supporter;
     
     private final static double[] IMAGESCALES = { 0.5, 1, 2};
 
@@ -53,7 +55,14 @@ public class RequestSupportController implements Initializable {
 
     @FXML
     private void onConnectAction(ActionEvent event) {
+        SupportAddress supportAddress = cbx_supporter.getValue();
+        Double scale = cbx_imagescale.getValue();
         
+        RemoteSupportExecutor.connect(supportAddress, scale);
+        
+        // TODO onDone frame.setTitle((BUNDLE.getString("RemoteSupportFrame.title"));
+        // TODO showPanel(getSeekSupportPanel(), "mainPanel");
+        // TODO frame.setExtendedState(Frame.NORMAL);
     }
 
     @FXML

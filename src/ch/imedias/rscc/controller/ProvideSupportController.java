@@ -6,6 +6,7 @@
 package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.util.FXMLGuiLoader;
+import ch.imedias.rscc.util.RemoteSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -63,8 +64,11 @@ public class ProvideSupportController implements Initializable {
 
     @FXML
     private void onStartServiceAction(ActionEvent event) {
+        
         if (serviceStarted){
             // Stop service
+            RemoteSupportExecutor.stopOffer();
+            
             cmdStartService.setText("Dienst starten");
             serviceStarted = false;
             
@@ -76,6 +80,10 @@ public class ProvideSupportController implements Initializable {
             txtSafePorts.setDisable(false);
         } else {
             // Start service
+            RemoteSupportExecutor.startOffer(txtSafePorts.getText(), 
+                        cboCompression.getValue(), 
+                        cboQuality.getValue(), 
+                        serviceStarted);
             
             // Disable controls
             cboCompression.setDisable(true);
