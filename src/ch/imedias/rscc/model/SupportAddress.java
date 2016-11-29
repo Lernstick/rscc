@@ -1,6 +1,5 @@
 package ch.imedias.rscc.model;
 
-import ch.imedias.rscc.RemoteSupportFrame;
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLDecoder;
