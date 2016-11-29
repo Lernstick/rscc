@@ -8,45 +8,45 @@ import java.util.prefs.Preferences;
  */
 
 /**
- * rscc settings
+ * Static class for rscc settings.
  * @author patric steiner
  */
 public class Settings {
     // private fields
-    private String securePorts;
-    private int quality;
-    private int compressionLevel;
-    private boolean bgr233;
+    private static String securePorts;
+    private static int quality;
+    private static int compressionLevel;
+    private static boolean bgr233;
     
-    private final Preferences preferences;
+    private final static Preferences preferences;
     
     // getters & setters
-    public String getSecurePorts() {
+    public static String getSecurePorts() {
         return securePorts;
     }
-    public void setSecurePorts(String securePorts) {
-        this.securePorts = securePorts;
+    public static void setSecurePorts(String securePorts) {
+        Settings.securePorts = securePorts;
     }
-    public int getQuality() {
+    public static int getQuality() {
         return quality;
     }
-    public void setQuality(int quality) {
-        this.quality = quality;
+    public static void setQuality(int quality) {
+        Settings.quality = quality;
     }
-    public int getCompressionLevel() {
+    public static int getCompressionLevel() {
         return compressionLevel;
     }
-    public void setCompressionLevel(int compressionLevel) {
-        this.compressionLevel = compressionLevel;
+    public static void setCompressionLevel(int compressionLevel) {
+        Settings.compressionLevel = compressionLevel;
     }
-    public boolean getBgr233() {
+    public static boolean getBgr233() {
         return bgr233;
     }
-    public void setBgr233(boolean bgr233) {
-        this.bgr233 = bgr233;
+    public static void setBgr233(boolean bgr233) {
+        Settings.bgr233 = bgr233;
     }
     
-    public Settings() {
+    static {
         preferences = Preferences.userNodeForPackage(Settings.class);
         securePorts = preferences.get("securePorts", null);
         quality = preferences.getInt("quality", 6);
@@ -54,7 +54,7 @@ public class Settings {
         bgr233 = preferences.getBoolean("bgr233", false);
     }
     
-    public void save() {
+    public static void save() {
         preferences.put("securePorts", securePorts);
         preferences.putInt("quality", quality);
         preferences.putInt("compressionLevel", compressionLevel);
