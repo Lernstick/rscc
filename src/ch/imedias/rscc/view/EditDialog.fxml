@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.EditDialogController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library hereâ€¦" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+            <BorderPane prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <TableView fx:id="table" onMouseClicked="#selectAddress" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="name" prefWidth="142.0" text="Beschreibung" />
+                      <TableColumn fx:id="address" minWidth="0.0" prefWidth="164.0" text="Adresse" />
+                        <TableColumn fx:id="encrypted" prefWidth="164.0" text="VerschlÃ¼sselt" />
+                    </columns>
+                  </TableView>
+               </center>
+               <top>
+                  <Label text="Supportliste bearbeiten" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets bottom="15.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </top>
+               <bottom>
+                  <BorderPane prefHeight="26.0" prefWidth="527.0" BorderPane.alignment="CENTER">
+                     <left>
+                        <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#cancel" text="Abbrechen" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Button fx:id="SaveButton" mnemonicParsing="false" onMouseClicked="#save" text="Speichern" BorderPane.alignment="CENTER" />
+                     </right>
+                     <BorderPane.margin>
+                        <Insets top="15.0" />
+                     </BorderPane.margin>
+                  </BorderPane>
+               </bottom>
+               <right>
+                  <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#add" prefHeight="30.0" prefWidth="30.0" text="+" />
+                        <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="30.0" prefWidth="30.0" text="-" />
+                        <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#up" prefHeight="30.0" prefWidth="30.0" text="^" />
+                        <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#down" prefHeight="30.0" prefWidth="30.0" text="v" />
+                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="30.0" text="â†�" />
+                     </children>
+                     <BorderPane.margin>
+                        <Insets left="15.0" />
+                     </BorderPane.margin>
+                  </TilePane>
+               </right>
+            </BorderPane>
+      </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+    </AnchorPane>
+  </children>
+</VBox>
