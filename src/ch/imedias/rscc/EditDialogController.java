@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -27,10 +30,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 /**
@@ -145,9 +152,29 @@ public class EditDialogController extends Application implements Initializable {
             }
         );
         
-//        encrypted.setCellValueFactory(new PropertyValueFactory<SupportAddress, Boolean>("encrypted"));
-        encrypted.setCellValueFactory(new PropertyValueFactory<SupportAddress, Boolean>("encrypted"));
-        encrypted.setCellFactory(CheckBoxTableCell.forTableColumn(encrypted));
+        encrypted.setCellValueFactory(new Callback<CellDataFeatures<SupportAddress, Boolean>, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(CellDataFeatures<SupportAddress, Boolean> param) {
+                SupportAddress sa = param.getValue();
+                SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(sa.isEncrypted());
+                booleanProp.addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                        sa.setEncrypted(newValue);
+                    }
+                });
+                return booleanProp;
+            }
+        });
+        encrypted.setCellFactory(new Callback<TableColumn<SupportAddress, Boolean>,
+        TableCell<SupportAddress, Boolean>>() {
+            @Override
+            public TableCell<SupportAddress, Boolean> call(TableColumn<SupportAddress, Boolean> p) {
+                CheckBoxTableCell<SupportAddress, Boolean> cell = new CheckBoxTableCell<SupportAddress, Boolean>();
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        });
         encrypted.setEditable(true);
 
         table.getColumns().setAll(name, address, encrypted);
@@ -228,9 +255,7 @@ public class EditDialogController extends Application implements Initializable {
 
     @FXML
     private void reset(MouseEvent event) {
-            this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
-
-        staticAddressList = null;
+        this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
     }
 
     @FXML
