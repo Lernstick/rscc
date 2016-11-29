@@ -8,6 +8,7 @@ package ch.imedias.rscc;
 import java.net.URL;
 import java.util.ArrayList;
 import static java.util.Collections.swap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,6 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -92,8 +95,8 @@ public class EditDialogController extends Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("ch.imedias.rscc.EditDialogController.initialize()");
-        staticAddressList = new ArrayList();
-        staticDefaultAddressList = new ArrayList();
+        staticAddressList = new ArrayList<SupportAddress>();
+        staticDefaultAddressList = new ArrayList<SupportAddress>();
 
         
         staticAddressList.add(new SupportAddress("Hallo", "hallo.hallo", false));
@@ -128,6 +131,15 @@ public class EditDialogController extends Application implements Initializable {
                 }
             }
         );
+//        name.setOnEditCancel(new EventHandler<CellEditEvent<SupportAddress, String>>() {                
+//            @Override
+//                public void handle(CellEditEvent<SupportAddress, String> t) {
+//                    ((SupportAddress) t.getTableView().getItems().get(
+//                            t.getTablePosition().getRow())
+//                            ).setDescription(t.getNewValue());
+//                }
+//            }
+//        );
 
         address.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("address"));
         address.setCellFactory(TextFieldTableCell.<SupportAddress, String>forTableColumn(new StringConverter<String>() {
@@ -183,27 +195,41 @@ public class EditDialogController extends Application implements Initializable {
        
         if(staticAddressList != null)
         {
-             this.supportAddresses = FXCollections.observableArrayList(staticAddressList);
-        }else{
+            this.supportAddresses = FXCollections.observableArrayList(staticAddressList);
+        } else {
             this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
         }
-        //this.selectionModel = table.getSelectionModel();
-        //table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
-        //tableModel = new SupportAddressesTableModel();
-        //initComponents();
-        //table.setModel(tableModel);
-        
+       
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         table.itemsProperty().setValue(supportAddresses);
         
-       // table.setEditable(true);
-        //table.
-        // determine size and location
-        //adjustColumnPreferredWidths(table);
-        //pack();
-        //setLocationRelativeTo(parent);
-    }    
+        ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
+        selectedItems.addListener(new ListChangeListener<SupportAddress>() {
+            public void onChanged(Change c) {
+                manageUpDownButtons();
+            }
+        });
+    }
+    
+    private void manageUpDownButtons() {
+        ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
+        UpButton.setDisable(false);
+        DownButton.setDisable(false);
+        if (supportAddresses.size() >= 2) {
+            for (SupportAddress s : selectedItems) {
+                int index = supportAddresses.indexOf(s);
+                if (index <= 0) {
+                    UpButton.setDisable(true);
+                } else if (index >= (supportAddresses.size()-1)) {
+                    DownButton.setDisable(true);
+                }
+            }
+        } else {
+            UpButton.setDisable(true);
+            DownButton.setDisable(true);
+        }
+    }
 
     @FXML
     private void cancel(MouseEvent event) {
@@ -229,33 +255,56 @@ public class EditDialogController extends Application implements Initializable {
     private void add(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
         supportAddresses.add(addressNew);
+        manageUpDownButtons();
     }
 
     @FXML
     private void delete(MouseEvent event) {
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
         supportAddresses.removeAll(temp);
+        manageUpDownButtons();
     }
 
     @FXML
     private void up(MouseEvent event) {
-        selectionModel = table.getSelectionModel();
-        SupportAddress temp = selectionModel.selectedItemProperty().getValue();
-        int index = supportAddresses.indexOf(temp);
-        swap(supportAddresses, index, index - 1);
+        List<Integer> changedIndexes = new LinkedList<Integer>();
+        ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
+        int index = supportAddresses.indexOf(temp.get(0));
+        int size = temp.size() + index;
+        for (int i = index; i < size; i++) {
+            if (i > 0 && i < supportAddresses.size()) {
+                swap(supportAddresses, i - 1, i);
+                changedIndexes.add(i-1);
+            }
+        }
+        for (Integer i: changedIndexes) {
+            table.getSelectionModel().select(i);
+        }
     }
 
     @FXML
     private void down(MouseEvent event) {
-        selectionModel = table.getSelectionModel();
-        SupportAddress temp = selectionModel.selectedItemProperty().getValue();
-        int index = supportAddresses.indexOf(temp);
-        swap(supportAddresses, index, index + 1);
+        List<Integer> changedIndexes = new LinkedList<Integer>();
+        ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
+        int index = supportAddresses.indexOf(temp.get(0));
+        int size = temp.size() + index;
+        for (int i = size-1; i >= index; i--) {
+            if (i >= 0 && (i + 1) < supportAddresses.size()) {
+                swap(supportAddresses, i, i + 1);
+                changedIndexes.add(i+1);
+            }
+        }
+        for (Integer i: changedIndexes) {
+            table.getSelectionModel().select(i);
+        }
     }
 
     @FXML
     private void reset(MouseEvent event) {
-        this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
+        this.supportAddresses.clear();
+        for (SupportAddress sa : staticDefaultAddressList) {
+            this.supportAddresses.add(sa);
+        }
     }
 
     @FXML
