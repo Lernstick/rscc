@@ -1,5 +1,6 @@
 package ch.imedias.rscc;
 
+import ch.imedias.rscc.model.SupportAddress;
 import java.awt.Component;
 import java.awt.Window;
 import java.util.ArrayList;
