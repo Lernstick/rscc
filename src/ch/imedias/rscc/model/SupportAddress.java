@@ -212,4 +212,15 @@ public class SupportAddress implements Serializable {
         return new DefaultPersistenceDelegate(
                 new String[]{"description", "address", "encrypted"});
     }
+
+    /**
+     * Override to String cause main info is supporter name.
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return getDescription(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

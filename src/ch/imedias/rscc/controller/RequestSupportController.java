@@ -47,7 +47,10 @@ public class RequestSupportController implements Initializable {
         for(double val : IMAGESCALES) {
             cboImagescale.getItems().add(val);
         }
-        cboImagescale.setValue(1.0);
+        cboImagescale.getSelectionModel().select(1.0);
+        
+        cboSupporter.getItems().addAll(SupportAddress.getAll());
+        cboSupporter.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -60,15 +63,16 @@ public class RequestSupportController implements Initializable {
 
     @FXML
     private void onConnectAction(ActionEvent event) {
+        Scene scene = ((Node)(event.getSource())).getScene();
+        Stage stage = (Stage)scene.getWindow();
+        
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting());
+        
         SupportAddress supportAddress = cboSupporter.getValue();
         Double scale = cboImagescale.getValue();
         
         RemoteSupportExecutor.connect(supportAddress, scale);
         
-        Scene scene = ((Node)(event.getSource())).getScene();
-        Stage stage = (Stage)scene.getWindow();
-        
-        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting());
         
         // TODO: Run connecting and if fail jump back to this gui
     }
