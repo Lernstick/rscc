@@ -13,7 +13,7 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.EditDialogController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane id="Background" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@edit.css" VBox.vgrow="ALWAYS">
       <children>
         <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
           <font>
@@ -22,18 +22,18 @@
         </Label>
             <BorderPane prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <center>
-                  <TableView fx:id="table" onMouseClicked="#selectAddress" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <TableView id="Table" fx:id="table" prefHeight="283.0" prefWidth="475.0" stylesheets="@edit.css" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn fx:id="name" prefWidth="142.0" text="Beschreibung" />
-                      <TableColumn fx:id="address" minWidth="0.0" prefWidth="164.0" text="Adresse" />
-                        <TableColumn fx:id="encrypted" prefWidth="164.0" text="Verschlüsselt" />
+                      <TableColumn fx:id="name" minWidth="20.0" prefWidth="184.0" text="Beschreibung" />
+                      <TableColumn fx:id="address" minWidth="0.0" prefWidth="190.0" text="Adresse" />
+                        <TableColumn fx:id="encrypted" prefWidth="180.0" text="Verschlüsselt" />
                     </columns>
                   </TableView>
                </center>
                <top>
-                  <Label text="Supportliste bearbeiten" BorderPane.alignment="CENTER">
+                  <Label id="Titel" alignment="BASELINE_CENTER" stylesheets="@edit.css" text="Supportliste bearbeiten" textFill="#feffff" BorderPane.alignment="CENTER">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                      <BorderPane.margin>
                         <Insets bottom="15.0" />
@@ -41,26 +41,32 @@
                   </Label>
                </top>
                <bottom>
-                  <BorderPane prefHeight="26.0" prefWidth="527.0" BorderPane.alignment="CENTER">
+                  <BorderPane id="BorderPain" prefHeight="26.0" prefWidth="527.0" stylesheets="@edit.css" BorderPane.alignment="CENTER">
                      <left>
-                        <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#cancel" text="Abbrechen" BorderPane.alignment="CENTER" />
+                        <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#onCancelClickedAction" stylesheets="@edit.css" text="     Abbrechen" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <Button fx:id="SaveButton" mnemonicParsing="false" onMouseClicked="#save" text="Speichern" BorderPane.alignment="CENTER" />
+                        <Button fx:id="SaveButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onSaveClickedAction" stylesheets="@edit.css" text="     Speichern" />
                      </right>
                      <BorderPane.margin>
                         <Insets top="15.0" />
                      </BorderPane.margin>
+                     <padding>
+                        <Insets right="45.0" />
+                     </padding>
                   </BorderPane>
                </bottom>
                <right>
                   <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#add" prefHeight="30.0" prefWidth="30.0" text="+" />
-                        <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#delete" prefHeight="30.0" prefWidth="30.0" text="-" />
-                        <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#up" prefHeight="30.0" prefWidth="30.0" text="^" />
-                        <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#down" prefHeight="30.0" prefWidth="30.0" text="v" />
-                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="30.0" text="←" />
+                        <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#onAddClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css" />
+                        <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#onDeleteClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css" />
+                        <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#onUpClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css" />
+                        <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#onDownClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <TilePane.margin>
+                              <Insets />
+                           </TilePane.margin></Button>
+                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#onResetClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css" />
                      </children>
                      <BorderPane.margin>
                         <Insets left="15.0" />

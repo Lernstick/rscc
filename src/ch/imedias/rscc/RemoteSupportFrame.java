@@ -106,20 +106,20 @@ public class RemoteSupportFrame
         setLocationRelativeTo(null);
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                RemoteSupportFrame frame = new RemoteSupportFrame();
-                SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(frame);
-                frame.setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        EventQueue.invokeLater(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                RemoteSupportFrame frame = new RemoteSupportFrame();
+//                SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(frame);
+//                frame.setVisible(true);
+//            }
+//        });
+//    }
 
     /**
      * handles property change events

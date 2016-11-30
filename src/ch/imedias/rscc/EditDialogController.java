@@ -167,7 +167,7 @@ public class EditDialogController extends Application implements Initializable {
         encrypted.setCellValueFactory(new Callback<CellDataFeatures<SupportAddress, Boolean>, ObservableValue<Boolean>>() {
             @Override
             public ObservableValue<Boolean> call(CellDataFeatures<SupportAddress, Boolean> param) {
-                SupportAddress sa = param.getValue();
+                final SupportAddress sa = param.getValue();
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(sa.isEncrypted());
                 booleanProp.addListener(new ChangeListener<Boolean>() {
                     @Override
@@ -231,13 +231,33 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
 
+
+    @Override
+    public void start(Stage mainStage) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("editDialog.fxml"));
+        Scene myScene = new Scene(root); 
+        mainStage.setScene(myScene);
+        mainStage.setMinWidth(300);
+        mainStage.setMinHeight(300); 
+        mainStage.show();
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+
+      launch(args);
+    }
+
     @FXML
-    private void cancel(MouseEvent event) {
+    private void onCancelClickedAction(MouseEvent event) {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
-    private void save(MouseEvent event) {
+    private void onSaveClickedAction(MouseEvent event) {
         staticAddressList = new ArrayList<SupportAddress>();
         for (SupportAddress supportAddress : supportAddresses) {
             if (supportAddress != null) {
@@ -252,21 +272,21 @@ public class EditDialogController extends Application implements Initializable {
     }
 
     @FXML
-    private void add(MouseEvent event) {
+    private void onAddClickedAction(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
         supportAddresses.add(addressNew);
         manageUpDownButtons();
     }
 
     @FXML
-    private void delete(MouseEvent event) {
+    private void onDeleteClickedAction(MouseEvent event) {
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
         supportAddresses.removeAll(temp);
         manageUpDownButtons();
     }
 
     @FXML
-    private void up(MouseEvent event) {
+    private void onUpClickedAction(MouseEvent event) {
         List<Integer> changedIndexes = new LinkedList<Integer>();
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
         int index = supportAddresses.indexOf(temp.get(0));
@@ -283,7 +303,7 @@ public class EditDialogController extends Application implements Initializable {
     }
 
     @FXML
-    private void down(MouseEvent event) {
+    private void onDownClickedAction(MouseEvent event) {
         List<Integer> changedIndexes = new LinkedList<Integer>();
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
         int index = supportAddresses.indexOf(temp.get(0));
@@ -300,45 +320,11 @@ public class EditDialogController extends Application implements Initializable {
     }
 
     @FXML
-    private void reset(MouseEvent event) {
-        this.supportAddresses.clear();
+    private void onResetClickedAction(MouseEvent event) {
+    this.supportAddresses.clear();
         for (SupportAddress sa : staticDefaultAddressList) {
             this.supportAddresses.add(sa);
         }
-    }
-
-    @FXML
-    private void selectAddress(MouseEvent event) {
-
-    }
-
-    @Override
-    public void start(Stage mainStage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("editDialog.fxml"));
-        Scene myScene = new Scene(root); 
-        mainStage.setScene(myScene);
-        mainStage.setMinWidth(300);
-        mainStage.setMinHeight(300); 
-        mainStage.show();
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-        /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-      /*  EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                RemoteSupportFrame frame = new RemoteSupportFrame();
-                SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(frame);
-                frame.setVisible(true);
-            }
-        
-        });*/
-      launch(args);
     }
     
 }
