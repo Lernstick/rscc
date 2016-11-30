@@ -10,6 +10,7 @@ import ch.imedias.rscc.util.FXMLGuiLoader;
 import ch.imedias.rscc.util.RemoteSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,15 +62,14 @@ public class ProvideSupportController implements Initializable {
         chkHttpsPort.setSelected(Settings.getUseHttpsPort());
         txtSafePorts.setText(Settings.getSecurePorts());
         
-        // Disable SafePorts if https is selected
-        txtSafePorts.disableProperty().bind(chkHttpsPort.selectedProperty());
-        
         // Disable controls after starting remote
         cboCompression.disableProperty().bind(serviceStarted);
-            cboQuality.disableProperty().bind(serviceStarted);
-            chk8BitColor.disableProperty().bind(serviceStarted);
-            chkHttpsPort.disableProperty().bind(serviceStarted);
-            txtSafePorts.disableProperty().bind(serviceStarted);
+        cboQuality.disableProperty().bind(serviceStarted);
+        chk8BitColor.disableProperty().bind(serviceStarted);
+        chkHttpsPort.disableProperty().bind(serviceStarted);
+        
+        // Also disable SafePorts if https is selected
+        txtSafePorts.disableProperty().bind(Bindings.or(serviceStarted, chkHttpsPort.selectedProperty()));
     }    
 
     @FXML
