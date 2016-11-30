@@ -5,6 +5,7 @@
  */
 package ch.imedias.rscc;
 
+import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.io.IOException;
 import javafx.application.Application;
@@ -33,7 +34,8 @@ public class RemoteSupportApplication extends Application {
 
     @Override
     public void stop() throws Exception {
-        // Save data from model        
+        // Save settings on application close
+        Settings.save();      
     }
     
     
