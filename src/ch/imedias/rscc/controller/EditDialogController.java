@@ -7,7 +7,8 @@ package ch.imedias.rscc.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
-import static java.util.Collections.swap;
+import java.util.Collections;
+import static java.util.Collections.list;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,11 +40,10 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -109,60 +109,19 @@ public class EditDialogController extends Application implements Initializable {
         
         table.setEditable(true);
         
+        Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> cellFactory = (TableColumn<SupportAddress, String> p) -> new EditingCell();
+        
         name.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("description"));
-        name.setCellFactory(TextFieldTableCell.<SupportAddress, String>forTableColumn(new StringConverter<String>() {
-            @Override
-            public String toString(String t) {
-                return t;
-            }
-
-            @Override
-            public String fromString(String string) {
-               return string; 
-            }
-        }));
-        name.setOnEditCommit(
-            new EventHandler<CellEditEvent<SupportAddress, String>>() {
-                @Override
-                public void handle(CellEditEvent<SupportAddress, String> t) {
-                    ((SupportAddress) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                            ).setDescription(t.getNewValue());
-                }
-            }
-        );
-//        name.setOnEditCancel(new EventHandler<CellEditEvent<SupportAddress, String>>() {                
-//            @Override
-//                public void handle(CellEditEvent<SupportAddress, String> t) {
-//                    ((SupportAddress) t.getTableView().getItems().get(
-//                            t.getTablePosition().getRow())
-//                            ).setDescription(t.getNewValue());
-//                }
-//            }
-//        );
+        name.setCellFactory(cellFactory);
+        name.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
+            ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setDescription(t.getNewValue());
+        });
 
         address.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("address"));
-        address.setCellFactory(TextFieldTableCell.<SupportAddress, String>forTableColumn(new StringConverter<String>() {
-            @Override
-            public String toString(String t) {
-                return t;
-            }
-
-            @Override
-            public String fromString(String string) {
-               return string; 
-            }
-        }));
-        address.setOnEditCommit(
-            new EventHandler<CellEditEvent<SupportAddress, String>>() {
-                @Override
-                public void handle(CellEditEvent<SupportAddress, String> t) {
-                    ((SupportAddress) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                            ).setAddress(t.getNewValue());
-                }
-            }
-        );
+        address.setCellFactory(cellFactory);
+        address.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
+            ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAddress(t.getNewValue());
+        });
         
         encrypted.setCellValueFactory(new Callback<CellDataFeatures<SupportAddress, Boolean>, ObservableValue<Boolean>>() {
             @Override
@@ -231,13 +190,33 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
 
+
+    @Override
+    public void start(Stage mainStage) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("editDialog.fxml"));
+        Scene myScene = new Scene(root); 
+        mainStage.setScene(myScene);
+        mainStage.setMinWidth(300);
+        mainStage.setMinHeight(300); 
+        mainStage.show();
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+
+      launch(args);
+    }
+
     @FXML
-    private void cancel(MouseEvent event) {
+    private void onCancelClickedAction(MouseEvent event) {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
-    private void save(MouseEvent event) {
+    private void onSaveClickedAction(MouseEvent event) {
         staticAddressList = new ArrayList<SupportAddress>();
         for (SupportAddress supportAddress : supportAddresses) {
             if (supportAddress != null) {
@@ -254,93 +233,133 @@ public class EditDialogController extends Application implements Initializable {
     }
 
     @FXML
-    private void add(MouseEvent event) {
+    private void onAddClickedAction(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
         supportAddresses.add(addressNew);
+        table.getSelectionModel().select(addressNew);
         manageUpDownButtons();
     }
 
     @FXML
-    private void delete(MouseEvent event) {
+    private void onDeleteClickedAction(MouseEvent event) {
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
         supportAddresses.removeAll(temp);
         manageUpDownButtons();
     }
 
     @FXML
-    private void up(MouseEvent event) {
+    private void onUpClickedAction(MouseEvent event) {
         List<Integer> changedIndexes = new LinkedList<Integer>();
-        ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
-        int index = supportAddresses.indexOf(temp.get(0));
-        int size = temp.size() + index;
-        for (int i = index; i < size; i++) {
-            if (i > 0 && i < supportAddresses.size()) {
-                swap(supportAddresses, i - 1, i);
-                changedIndexes.add(i-1);
-            }
+        ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
+        List<SupportAddress> objects = new LinkedList<SupportAddress>();        
+        for (SupportAddress sa : selectedItems) {
+            objects.add(supportAddresses.get(supportAddresses.indexOf(sa)));
         }
+        for (SupportAddress sa : objects) {
+            int indexPrevious = supportAddresses.indexOf(sa)-1;
+            SupportAddress previous = supportAddresses.get(indexPrevious);
+            int indexSelected = indexPrevious+1;
+            SupportAddress selected = supportAddresses.get(supportAddresses.indexOf(sa));
+            supportAddresses.remove(selected);
+            supportAddresses.add(indexPrevious, selected);
+            changedIndexes.add(indexPrevious);
+        }
+        table.getSelectionModel().clearSelection();
+        for (Integer i: changedIndexes) {
+            table.getSelectionModel().select(i);
+        }
+    }
+    
+    @FXML
+    private void onDownClickedAction(MouseEvent event) {
+        List<Integer> changedIndexes = new LinkedList<Integer>();
+        ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
+        List<SupportAddress> objects = new LinkedList<SupportAddress>();
+        for (int i = selectedItems.size()-1; i >= 0; i--) {
+            objects.add(supportAddresses.get(supportAddresses.indexOf(selectedItems.get(i))));
+        }
+        for (SupportAddress sa : objects) {
+            int indexNext = supportAddresses.indexOf(sa)+1;
+            SupportAddress next = supportAddresses.get(indexNext);
+            int indexSelected = indexNext-1;
+            SupportAddress selected = supportAddresses.get(supportAddresses.indexOf(sa));
+            supportAddresses.remove(selected);
+            supportAddresses.add(indexNext, selected);
+            changedIndexes.add(indexNext);
+        }
+        table.getSelectionModel().clearSelection();
         for (Integer i: changedIndexes) {
             table.getSelectionModel().select(i);
         }
     }
 
     @FXML
-    private void down(MouseEvent event) {
-        List<Integer> changedIndexes = new LinkedList<Integer>();
-        ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
-        int index = supportAddresses.indexOf(temp.get(0));
-        int size = temp.size() + index;
-        for (int i = size-1; i >= index; i--) {
-            if (i >= 0 && (i + 1) < supportAddresses.size()) {
-                swap(supportAddresses, i, i + 1);
-                changedIndexes.add(i+1);
-            }
-        }
-        for (Integer i: changedIndexes) {
-            table.getSelectionModel().select(i);
-        }
-    }
-
-    @FXML
-    private void reset(MouseEvent event) {
-        this.supportAddresses.clear();
+    private void onResetClickedAction(MouseEvent event) {
+    this.supportAddresses.clear();
         for (SupportAddress sa : staticDefaultAddressList) {
             this.supportAddresses.add(sa);
         }
     }
-
-    @FXML
-    private void selectAddress(MouseEvent event) {
-
-    }
-
-    @Override
-    public void start(Stage mainStage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("editDialog.fxml"));
-        Scene myScene = new Scene(root); 
-        mainStage.setScene(myScene);
-        mainStage.setMinWidth(300);
-        mainStage.setMinHeight(300); 
-        mainStage.show();
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
-        /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-      /*  EventQueue.invokeLater(new Runnable() {
+    class EditingCell extends TableCell<SupportAddress, String> {
+        private TextField textField;
 
-            @Override
-            public void run() {
-                RemoteSupportFrame frame = new RemoteSupportFrame();
-                SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(frame);
-                frame.setVisible(true);
+        public EditingCell() {
+        }
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createTextField();
+                setText(null);
+                setGraphic(textField);
+                textField.selectAll();
             }
-        
-        });*/
-      launch(args);
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+
+            setText((String) getItem());
+            setGraphic(null);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+                    }
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        private void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.focusedProperty().addListener(
+                    (ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) -> {
+                        if (!arg2) {
+                            commitEdit(textField.getText());
+                        }
+                    });
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem().toString();
+        }
     }
-    
 }

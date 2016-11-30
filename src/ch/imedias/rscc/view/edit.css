@@ -1,0 +1,97 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits</a>
+*/
+/* 
+    Created on : 29.11.2016, 16:36:49
+    Author     : user
+*/
+
+#AddButton {          
+    -fx-background-image: url("icons/newIcons50x50/Plus-52(1).png");
+    -fx-background-image-size: 10;
+    -fx-background-size: 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;   
+}
+
+#DeleteButton {          
+    -fx-background-image: url("icons/newIcons50x50/Cancel_2-48.png");
+    -fx-background-image-size: 10;
+    -fx-background-position: center;
+    -fx-padding: 5;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+#UpButton {          
+    -fx-background-image: url("icons/newIcons50x50/Sort_Up_Filled-50(1).png");
+    -fx-background-position: center;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+#DownButton {          
+    -fx-background-image: url("icons/newIcons50x50/Sort_Down_Filled-50(1).png");
+    -fx-padding: 5;
+    -fx-background-position: center;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+#ResetButton {          
+    -fx-background-image: url("icons/newIcons50x50/Return-48.png");
+    -fx-padding: 5;
+    -fx-background-position: center;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+#SaveButton {          
+    -fx-background-image: url("icons/newIcons50x50/Checkmark-64.png");
+    -fx-background-position: 3 3;
+    -fx-padding: 5;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+#CancelButton {          
+    -fx-background-image: url("icons/newIcons50x50/Delete-52.png");
+    -fx-background-position: 3 3;
+    -fx-padding: 5;
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+}
+
+.table-view .column-header{
+    -fx-background-color: rgb(79, 181, 170);
+}
+
+#Background {
+    -fx-background-color: rgb(210,210,210);
+    -fx-font-style: bold;
+}
+
+.button {
+    -fx-background-color: whitesmoke;
+     /*rgb(79, 181, 170);*/
+    -fx-border-color: rgb(79, 181, 170);;
+    -fx-border-insets: -1;
+    -fx-border-style: solid;
+    -fx-border-radius: 3;
+    -fx-border-width: 1.5;
+}
+
+#Titel {
+   /* -fx-background-color: black;
+     -fx-border-color: rgb(79, 181, 170);;
+    -fx-border-insets: -1;
+    -fx-border-style: solid;
+    -fx-border-radius: 3;
+    -fx-border-width: 1.5;
+    -fx-padding: 0 160 0 160;*/
+    
+}
+
