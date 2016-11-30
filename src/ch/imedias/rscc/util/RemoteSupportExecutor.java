@@ -19,11 +19,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.regex.Pattern;
+
+import javafx.beans.property.Property;
+import javafx.concurrent.Task;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingWorker;
+
 
 /**
  *
@@ -86,20 +90,13 @@ public class RemoteSupportExecutor {
             }
         }
 
-        // TODO SwingWorker will not be used with JavaFX
-        SwingWorker viewerSwingWorker = new SwingWorker() {
-
+        // XXX ok?
+        Task viewerTask = new Task() {
             @Override
-            protected Object doInBackground() throws Exception {
+            protected Object call() throws Exception {
                 return onOfferActionDoInBackground(compression, quality, isBGR233selected);
             }
-
-            @Override
-            protected void done() {
-               // TODO GUI onOfferActionDone();
-            }
         };
-        viewerSwingWorker.execute();
         
         
 
@@ -119,10 +116,10 @@ public class RemoteSupportExecutor {
         }
 
         for (final Integer securePort : securePorts) {
-            SwingWorker tunnelSwingWorker = new SwingWorker() {
-
+            // XXX ok?
+            Task tunnelTask = new Task() {
                 @Override
-                protected Object doInBackground() throws Exception {
+                protected Object call() throws Exception {
                     ProcessExecutor tunnelExecutor = new ProcessExecutor();
                     tunnelExecutor.executeProcess(
                             "stunnel", "-f", "-P", "", "-p", pemFilePath,
@@ -131,7 +128,6 @@ public class RemoteSupportExecutor {
                     return null;
                 }
             };
-            tunnelSwingWorker.execute();
         }
         
     }
@@ -173,8 +169,14 @@ public class RemoteSupportExecutor {
     private static Pattern okSSLPattern;
     private static Pattern failedPattern;
     
+    /**
+     * 
+     * @param supportAddress
+     * @param scale
+     * @param statusProperty will be set to true as soon as the connection task has succeeded
+     */
     public static void connect(final SupportAddress supportAddress,
-                               final Double scale){
+                               final Double scale, Property<Boolean> statusProperty){
 
         final String address = supportAddress.getAddress();
 
@@ -185,11 +187,11 @@ public class RemoteSupportExecutor {
                 ".*reverse_connect: " + address + " failed");
 
         
-        // TODO SwingWorker will not be used in JavaFX
-        SwingWorker swingWorker = new SwingWorker() {
+        // XXX ok?
+        Task task = new Task() {
 
             @Override
-            protected Object doInBackground() throws Exception {
+            protected Object call() throws Exception {
                 List<String> commandList = new ArrayList<String>();
                 commandList.add("x11vnc");
                 commandList.add("-connect_or_exit");
@@ -217,7 +219,9 @@ public class RemoteSupportExecutor {
                 rsFrame.setExtendedState(Frame.NORMAL);
             }*/
         };
-        swingWorker.execute();
+        task.setOnSucceeded(e -> statusProperty.setValue(true));
+        //XXX the stuff below can prolly be deleted if our property stuff works
+        //swingWorker.execute();
         String connectMessage = BUNDLE.getString("Connecting_To");
         connectMessage = MessageFormat.format(
                 connectMessage, supportAddress.getDescription());
