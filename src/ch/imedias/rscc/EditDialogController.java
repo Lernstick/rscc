@@ -234,6 +234,7 @@ public class EditDialogController extends Application implements Initializable {
     private void onAddClickedAction(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
         supportAddresses.add(addressNew);
+        table.getSelectionModel().select(addressNew);
         manageUpDownButtons();
     }
 

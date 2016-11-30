@@ -33,7 +33,7 @@
                <top>
                   <Label id="Titel" alignment="BASELINE_CENTER" stylesheets="@edit.css" text="Supportliste bearbeiten" textFill="#feffff" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font size="24.0" />
                      </font>
                      <BorderPane.margin>
                         <Insets bottom="15.0" />
