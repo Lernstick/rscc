@@ -38,10 +38,10 @@
                     <tooltip>
                        <Tooltip text="Definiert in welcher Grösse das Bild übertragt wird." />
                     </tooltip></Label>
-                 <ComboBox fx:id="cbx_imagescale" prefHeight="25.0" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                 <ComboBox fx:id="cboImagescale" prefHeight="25.0" prefWidth="72.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                  <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="166.0" GridPane.columnIndex="1">
                     <children>
-                       <ComboBox fx:id="cbx_supporter" prefHeight="25.0" prefWidth="168.0" />
+                       <ComboBox fx:id="cboSupporter" prefHeight="25.0" prefWidth="168.0" />
                        <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" text="Supporterliste bearbeiten..." />
                     </children>
                     <padding>
@@ -67,7 +67,7 @@
                  <Button mnemonicParsing="false" onAction="#onBackAction" text="Zurück" BorderPane.alignment="BOTTOM_LEFT" />
               </left>
               <right>
-                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#onConnectAction" prefHeight="25.0" prefWidth="100.0" text="Verbinden" BorderPane.alignment="BOTTOM_RIGHT" />
+                 <Button fx:id="btnConnect" alignment="CENTER" mnemonicParsing="false" onAction="#onConnectAction" prefHeight="25.0" prefWidth="100.0" text="Verbinden" BorderPane.alignment="BOTTOM_RIGHT" />
               </right>
               <padding>
                  <Insets bottom="15.0" left="20.0" right="20.0" />

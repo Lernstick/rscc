@@ -22,27 +22,32 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author user
+ * @author sschw
  */
 public class RequestSupportController implements Initializable {
-
-    @FXML
-    private ComboBox<Double> cbx_imagescale;
-    @FXML
-    private ComboBox<SupportAddress> cbx_supporter;
     
     private final static double[] IMAGESCALES = { 0.5, 1, 2};
+    
+    @FXML
+    private ComboBox<Double> cboImagescale;
+    @FXML
+    private ComboBox<SupportAddress> cboSupporter;
+    
+    private ResourceBundle bundle;
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        for(double val : IMAGESCALES) {
-            cbx_imagescale.getItems().add(val);
-        }
-        cbx_imagescale.setValue(1.0);
+        bundle = rb;
         
+        for(double val : IMAGESCALES) {
+            cboImagescale.getItems().add(val);
+        }
+        cboImagescale.setValue(1.0);
     }
 
     @FXML
@@ -55,14 +60,17 @@ public class RequestSupportController implements Initializable {
 
     @FXML
     private void onConnectAction(ActionEvent event) {
-        SupportAddress supportAddress = cbx_supporter.getValue();
-        Double scale = cbx_imagescale.getValue();
+        SupportAddress supportAddress = cboSupporter.getValue();
+        Double scale = cboImagescale.getValue();
         
         RemoteSupportExecutor.connect(supportAddress, scale);
         
-        // TODO onDone frame.setTitle((BUNDLE.getString("RemoteSupportFrame.title"));
-        // TODO showPanel(getSeekSupportPanel(), "mainPanel");
-        // TODO frame.setExtendedState(Frame.NORMAL);
+        Scene scene = ((Node)(event.getSource())).getScene();
+        Stage stage = (Stage)scene.getWindow();
+        
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting());
+        
+        // TODO: Run connecting and if fail jump back to this gui
     }
 
     @FXML
@@ -76,5 +84,4 @@ public class RequestSupportController implements Initializable {
         dialog.setScene(FXMLGuiLoader.getInstance().getEditDialog());
         dialog.showAndWait();
     }
-    
 }
