@@ -61,7 +61,7 @@ public class ProvideSupportController implements Initializable {
         chkHttpsPort.setSelected(Settings.getUseHttpsPort());
         txtSafePorts.setText(Settings.getSecurePorts());
         
-        // Disable SafePortsif https is selected
+        // Disable SafePorts if https is selected
         txtSafePorts.disableProperty().bind(chkHttpsPort.selectedProperty());
         
         // Disable controls after starting remote
