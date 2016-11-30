@@ -17,6 +17,7 @@ public class Settings {
     private static int quality;
     private static int compressionLevel;
     private static boolean bgr233;
+    private static boolean useHttpsPort;
     
     private final static Preferences preferences;
     
@@ -45,13 +46,20 @@ public class Settings {
     public static void setBgr233(boolean bgr233) {
         Settings.bgr233 = bgr233;
     }
+    public static boolean getUseHttpsPort() {
+        return useHttpsPort;
+    }
+    public static void setUseHttpsPort(boolean useHttpsPort) {
+        Settings.useHttpsPort = useHttpsPort;
+    }
     
     static {
         preferences = Preferences.userNodeForPackage(Settings.class);
-        securePorts = preferences.get("securePorts", null);
+        securePorts = preferences.get("securePorts", "");
         quality = preferences.getInt("quality", 6);
         compressionLevel = preferences.getInt("compressionLevel", 6);
         bgr233 = preferences.getBoolean("bgr233", false);
+        useHttpsPort = preferences.getBoolean("useHttpsPort", false);
     }
     
     public static void save() {
@@ -59,5 +67,6 @@ public class Settings {
         preferences.putInt("quality", quality);
         preferences.putInt("compressionLevel", compressionLevel);
         preferences.putBoolean("bgr233", bgr233);
+        preferences.putBoolean("useHttpsPort", useHttpsPort);
     }
 }
