@@ -68,10 +68,10 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
-                                    <ComboBox fx:id="cboCompression" prefWidth="150.0" GridPane.columnIndex="1" />
-                                    <CheckBox fx:id="chk8BitColor" mnemonicParsing="false" text="8-Bit-Farben" GridPane.columnIndex="2" />
+                                    <ComboBox fx:id="cboCompression" onAction="#onCompressionChangedAction" prefWidth="150.0" GridPane.columnIndex="1" />
+                                    <CheckBox fx:id="chk8BitColor" mnemonicParsing="false" onAction="#on8BitChangedAction" text="8-Bit-Farben" GridPane.columnIndex="2" />
                                     <Label text="Qualität:" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="cboQuality" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cboQuality" onAction="#onQualityChangedAction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -95,8 +95,8 @@
                     </rowConstraints>
                      <children>
                         <Label text="Sichere Ports:" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtSafePorts" prefHeight="25.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="chkHttpsPort" mnemonicParsing="false" text="Nutze HTTPS als Port" GridPane.columnSpan="2" />
+                        <TextField fx:id="txtSafePorts" onKeyTyped="#OnSecurePortsTyped" prefHeight="25.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="chkHttpsPort" mnemonicParsing="false" onAction="#onHttpsChangedAction" text="Nutze HTTPS als Port" GridPane.columnSpan="2" />
                      </children>
                   </GridPane>
                </children>

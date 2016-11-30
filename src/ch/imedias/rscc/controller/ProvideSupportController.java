@@ -5,10 +5,12 @@
  */
 package ch.imedias.rscc.controller;
 
+import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import ch.imedias.rscc.util.RemoteSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -41,7 +44,7 @@ public class ProvideSupportController implements Initializable {
     private Button cmdStartService;
     
     // Describes if the service is started
-    private boolean serviceStarted = false;
+    private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
 
     /**
      * Initializes the controller class.
@@ -49,10 +52,24 @@ public class ProvideSupportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cboCompression.getItems().addAll(1,2,3,4,5,6,7,8,9);
-        // TODO: set value from model
         cboQuality.getItems().addAll(1,2,3,4,5,6,7,8,9);
-        // TODO: set value from model
-
+        
+        // Read saved values
+        cboCompression.setValue(Settings.getCompressionLevel());
+        cboQuality.setValue(Settings.getQuality());
+        chk8BitColor.setSelected(Settings.getBgr233());
+        chkHttpsPort.setSelected(Settings.getUseHttpsPort());
+        txtSafePorts.setText(Settings.getSecurePorts());
+        
+        // Disable SafePortsif https is selected
+        txtSafePorts.disableProperty().bind(chkHttpsPort.selectedProperty());
+        
+        // Disable controls after starting remote
+        cboCompression.disableProperty().bind(serviceStarted);
+            cboQuality.disableProperty().bind(serviceStarted);
+            chk8BitColor.disableProperty().bind(serviceStarted);
+            chkHttpsPort.disableProperty().bind(serviceStarted);
+            txtSafePorts.disableProperty().bind(serviceStarted);
     }    
 
     @FXML
@@ -65,36 +82,47 @@ public class ProvideSupportController implements Initializable {
     @FXML
     private void onStartServiceAction(ActionEvent event) {
         
-        if (serviceStarted){
+        if (serviceStarted.get()){
             // Stop service
             RemoteSupportExecutor.stopOffer();
             
             cmdStartService.setText("Dienst starten");
-            serviceStarted = false;
-            
-            // Enable components
-            cboCompression.setDisable(false);
-            cboQuality.setDisable(false);
-            chk8BitColor.setDisable(false);
-            chkHttpsPort.setDisable(false);
-            txtSafePorts.setDisable(false);
+            serviceStarted.set(false);
         } else {
             // Start service
             RemoteSupportExecutor.startOffer(txtSafePorts.getText(), 
                         cboCompression.getValue(), 
                         cboQuality.getValue(), 
-                        serviceStarted);
-            
-            // Disable controls
-            cboCompression.setDisable(true);
-            cboQuality.setDisable(true);
-            chk8BitColor.setDisable(true);
-            chkHttpsPort.setDisable(true);
-            txtSafePorts.setDisable(true);
+                        chk8BitColor.isSelected());
             
             cmdStartService.setText("Dienst stoppen");
-            serviceStarted = true;
+            serviceStarted.set(true);
         }
+    }
+
+    @FXML
+    private void onCompressionChangedAction(ActionEvent event) {
+        Settings.setCompressionLevel(cboCompression.getValue());
+    }
+
+    @FXML
+    private void on8BitChangedAction(ActionEvent event) {
+        Settings.setBgr233(chk8BitColor.isSelected());
+    }
+
+    @FXML
+    private void onQualityChangedAction(ActionEvent event) {
+        Settings.setQuality(cboQuality.getValue());
+    }
+
+    @FXML
+    private void onHttpsChangedAction(ActionEvent event) {
+        Settings.setUseHttpsPort(chkHttpsPort.isSelected());
+    }
+
+    @FXML
+    private void OnSecurePortsTyped(KeyEvent event) {
+        Settings.setSecurePorts(txtSafePorts.getText());
     }
     
 }
