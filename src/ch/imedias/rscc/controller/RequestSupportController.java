@@ -10,6 +10,10 @@ import ch.imedias.rscc.util.FXMLGuiLoader;
 import ch.imedias.rscc.util.RemoteSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.property.Property;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +38,8 @@ public class RequestSupportController implements Initializable {
     private ComboBox<SupportAddress> cboSupporter;
     
     private ResourceBundle bundle;
+    
+    private Property<Boolean> connectStatusProperty;
 
     /**
      * Initializes the controller class.
@@ -71,10 +77,12 @@ public class RequestSupportController implements Initializable {
         SupportAddress supportAddress = cboSupporter.getValue();
         Double scale = cboImagescale.getValue();
         
-        RemoteSupportExecutor.connect(supportAddress, scale);
         
-        
-        // TODO: Run connecting and if fail jump back to this gui
+        // XXX not tested:
+        connectStatusProperty.addListener((obs, oldval, newval) -> { if (newval) {
+         // TODO: Run connecting and if fail jump back to this gui
+        }});
+        RemoteSupportExecutor.connect(supportAddress, scale, connectStatusProperty);
     }
 
     @FXML
