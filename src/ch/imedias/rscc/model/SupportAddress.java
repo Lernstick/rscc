@@ -219,7 +219,7 @@ public class SupportAddress implements Serializable {
      */
     @Override
     public String toString() {
-        return getDescription(); //To change body of generated methods, choose Tools | Templates.
+        return getDescription();
     }
     
     
