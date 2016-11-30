@@ -97,8 +97,7 @@ public class RemoteSupportExecutor {
                 return onOfferActionDoInBackground(compression, quality, isBGR233selected);
             }
         };
-        
-        
+        viewerTask.run();
 
         // check that the pem file for stunnel is there
         final String pemFilePath = System.getProperty("user.home")
@@ -128,6 +127,7 @@ public class RemoteSupportExecutor {
                     return null;
                 }
             };
+            tunnelTask.run();
         }
         
     }
@@ -219,6 +219,7 @@ public class RemoteSupportExecutor {
                 rsFrame.setExtendedState(Frame.NORMAL);
             }*/
         };
+        task.run();
         task.setOnSucceeded(e -> statusProperty.setValue(true));
         //XXX the stuff below can prolly be deleted if our property stuff works
         //swingWorker.execute();
