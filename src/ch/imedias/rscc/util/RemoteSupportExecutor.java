@@ -56,11 +56,10 @@ public class RemoteSupportExecutor {
                                          SpinnerNumberModel qualitySpinnerModel,
                                          CheckBox bgr233CheckBox){
         
-        Settings settings = new Settings();
-        securePortsTextField.setText(settings.getSecurePorts());
-        compressionSpinnerModel.setValue((settings.getCompressionLevel()));
-        qualitySpinnerModel.setValue(settings.getQuality());
-        bgr233CheckBox.setSelected(settings.getBgr233());
+        securePortsTextField.setText(Settings.getSecurePorts());
+        compressionSpinnerModel.setValue((Settings.getCompressionLevel()));
+        qualitySpinnerModel.setValue(Settings.getQuality());
+        bgr233CheckBox.setSelected(Settings.getBgr233());
     }
     
     public static void startOffer(String securePortsText, final Number compression, 
