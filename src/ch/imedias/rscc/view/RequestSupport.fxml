@@ -30,11 +30,11 @@
                  <Insets bottom="5.0" left="20.0" right="20.0" top="30.0" />
               </BorderPane.margin>
               <children>
-                 <Label style="-fx-font-family: Arial;" text="Supporter:">
+                 <Label style="-fx-font-family: Arial;" text="%ReceiveSupport.Supporter">
                     <tooltip>
                        <Tooltip text="Der Supporter registriert sich unter einem Namen. Diesen können Sie hier auswählen." />
                     </tooltip></Label>
-                 <Label style="-fx-font-family: Arial;" text="Bildskalierung:" GridPane.rowIndex="1">
+                 <Label style="-fx-font-family: Arial;" text="%ReceiveSupport.scaleLabel" GridPane.rowIndex="1">
                     <tooltip>
                        <Tooltip text="Definiert in welcher Grösse das Bild übertragt wird." />
                     </tooltip></Label>
@@ -42,7 +42,7 @@
                  <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="166.0" GridPane.columnIndex="1">
                     <children>
                        <ComboBox id="PullDown" fx:id="cboSupporter" prefHeight="25.0" prefWidth="168.0" stylesheets="@edit.css" />
-                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="Supporterliste bearbeiten..." textFill="#51b3aa" />
+                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink" textFill="#51b3aa" />
                     </children>
                     <padding>
                        <Insets right="5.0" top="18.0" />
@@ -52,7 +52,7 @@
            </GridPane>
         </center>
         <top>
-           <Label stylesheets="@edit.css" text="Support beziehen" textFill="WHITE" BorderPane.alignment="CENTER">
+           <Label stylesheets="@edit.css" text="%ReceiveSupport.title" textFill="WHITE" BorderPane.alignment="CENTER">
               <font>
                  <Font size="24.0" />
               </font>
@@ -64,10 +64,10 @@
         <bottom>
            <BorderPane prefHeight="111.0" prefWidth="400.0" BorderPane.alignment="CENTER">
               <left>
-                 <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="     Zurück" BorderPane.alignment="BOTTOM_LEFT" />
+                 <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="BOTTOM_LEFT" />
               </left>
               <right>
-                 <Button id="Connect" fx:id="btnConnect" alignment="CENTER" mnemonicParsing="false" onAction="#onConnectAction" stylesheets="@edit.css" text="      Verbinden" BorderPane.alignment="BOTTOM_RIGHT" />
+                 <Button id="Connect" fx:id="btnConnect" alignment="CENTER" mnemonicParsing="false" onAction="#onConnectAction" stylesheets="@edit.css" text="%ReceiveSupport.connectButton" BorderPane.alignment="BOTTOM_RIGHT" />
               </right>
               <padding>
                  <Insets bottom="15.0" left="20.0" right="20.0" />
