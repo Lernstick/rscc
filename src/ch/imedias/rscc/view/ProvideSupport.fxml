@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -95,7 +96,10 @@
                     </rowConstraints>
                      <children>
                         <Label text="%ProvideSupport.securePortsLabel" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtSafePorts" onKeyTyped="#OnSecurePortsTyped" prefHeight="25.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtSafePorts" onKeyTyped="#OnSecurePortsTyped" prefHeight="25.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <tooltip>
+                              <Tooltip text="%ProvideSupport.securePortsTextField.toolTipText" />
+                           </tooltip></TextField>
                         <CheckBox fx:id="chkHttpsPort" mnemonicParsing="false" onAction="#onHttpsChangedAction" text="%ProvideSupport.useHttpsLabel" GridPane.columnSpan="2" />
                      </children>
                   </GridPane>
