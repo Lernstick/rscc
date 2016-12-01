@@ -17,9 +17,15 @@ import javafx.concurrent.Task;
  * xtightvncviewer listener and an stunnel.
  */
 public class ProvideSupportExecutor {
-    private final ProcessExecutor OFFER_PROCESS_EXECUTOR = new ProcessExecutor();
+    private ProcessExecutorFactory factory;
+    private final ProcessExecutor OFFER_PROCESS_EXECUTOR;
     private final List<ProcessExecutor> TUNNEL_EXECUTORS = new ArrayList<ProcessExecutor>();
     private ExecutorService executor = Executors.newCachedThreadPool();
+    
+    public ProvideSupportExecutor(ProcessExecutorFactory factory) {
+        this.factory = factory;
+        OFFER_PROCESS_EXECUTOR = factory.makeProcessExecutor();
+    }
     
     /**
      * Starts xtightvncviewer listener + stunnel.
@@ -59,7 +65,7 @@ public class ProvideSupportExecutor {
         if (!securePorts.isEmpty()) {
             File pemFile = new File(pemFilePath);
             if (!pemFile.exists()) {
-                ProcessExecutor processExecutor = new ProcessExecutor();
+                ProcessExecutor processExecutor = factory.makeProcessExecutor();
                 processExecutor.executeProcess("openssl", "req", "-x509",
                         "-nodes", "-days", "36500", "-subj",
                         "/C=/ST=/L=/CN=tmp", "-newkey",
@@ -72,7 +78,7 @@ public class ProvideSupportExecutor {
             Task tunnelTask = new Task() {
                 @Override
                 protected Object call() throws Exception {
-                    ProcessExecutor tunnelExecutor = new ProcessExecutor();
+                    ProcessExecutor tunnelExecutor = factory.makeProcessExecutor();
                     tunnelExecutor.executeProcess(
                             "stunnel", "-f", "-P", "", "-p", pemFilePath,
                             "-d", securePort.toString(), "-r", "5500");
@@ -116,7 +122,7 @@ public class ProvideSupportExecutor {
             tunnelExecutor.destroy();
         }
         executor.shutdown();
-        ProcessExecutor processExecutor = new ProcessExecutor();
+        ProcessExecutor processExecutor = factory.makeProcessExecutor();
         processExecutor.executeProcess("killall", "-9", "stunnel4");
     }
 }
