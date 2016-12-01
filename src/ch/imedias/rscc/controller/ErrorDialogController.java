@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -21,24 +20,11 @@ import javafx.stage.Stage;
  */
 public class ErrorDialogController implements Initializable {
 
-    @FXML
-    private Label lblMessage;
-    @FXML
-    private Label lblTitle;
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
-    
-    public void setTitle(String title) {
-        lblTitle.setText(title);
-    }
-    
-    public void setMessage(String message) {
-        lblMessage.setText(message);
     }
 
     @FXML

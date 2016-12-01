@@ -85,11 +85,8 @@ public class RequestSupportController implements Initializable {
     private void openConnectedFailed(Stage stage) {
         stage.setScene(FXMLGuiLoader.getInstance().getRequestSupport());
         
-        //TODO set error message
-        String title = "";
-        String message = "";
-        Scene errorDialog = FXMLGuiLoader.getInstance().getErrorDialog(title, message);
-        FXMLGuiLoader.getInstance().createDialog(stage, errorDialog, title, true).show();
+        Scene errorDialog = FXMLGuiLoader.getInstance().getErrorDialog();
+        FXMLGuiLoader.getInstance().createDialog(stage, errorDialog, bundle.getString("Error"), true).show();
     }
 
     @FXML
@@ -99,7 +96,7 @@ public class RequestSupportController implements Initializable {
         
         Scene editDialog = FXMLGuiLoader.getInstance().getEditDialog();
         //TODO Set title
-        FXMLGuiLoader.getInstance().createDialog(stage, editDialog, "", true).showAndWait();
+        FXMLGuiLoader.getInstance().createDialog(stage, editDialog, bundle.getString("EditDialog.title"), true).showAndWait();
         
         SupportAddress sa = cboSupporter.getValue();
         cboSupporter.getItems().clear();

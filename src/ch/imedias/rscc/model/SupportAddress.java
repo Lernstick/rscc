@@ -32,10 +32,13 @@ public class SupportAddress implements Serializable {
     
     private final static Preferences preferences = Preferences.userNodeForPackage(SupportAddress.class);;
     
-
     private static final Logger LOGGER = Logger.getLogger(SupportAddress.class.getName());
     
-    
+    /**
+     * returns list of supportAddresses from static variable or from file
+     * 
+     * @return list of supportAddresses
+     */
     public static List<SupportAddress> getAll() {
         if (supportAddresses != null) return supportAddresses; // if it has already been set: just return it
         // else read from storage
@@ -52,10 +55,18 @@ public class SupportAddress implements Serializable {
         return supportAddresses;
     }
     
+    /**
+     * relaces the static list of supportAddresses
+     * 
+     * @param supportAddresses List of supportAddresses
+     */
     public static void setAll(List<SupportAddress> supportAddresses) {
         SupportAddress.supportAddresses = supportAddresses;
     }
     
+    /**
+     * saves data to xml-file.
+     */
     public static void saveAll() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         XMLEncoder encoder = new XMLEncoder(byteArrayOutputStream);
@@ -67,12 +78,16 @@ public class SupportAddress implements Serializable {
         preferences.put("supportAddresses", supportAddressesXML);
     }
     
+    /**
+     * resets attributes of this with data from local file.
+     */
     public static void resetAllToDefault() {
         supportAddresses = getDefaultList();
     }
     
     /**
-     * returns the default support address list
+     * returns the default support address list.
+     * reads local file.
      *
      * @return the default support address list
      */

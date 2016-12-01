@@ -65,7 +65,7 @@ public final class FXMLGuiLoader {
             requestSupportConnected = new Scene((Parent) loadConnected.load());
             requestSupportConnectedController = (RequestSupportConnectedController) loadConnected.getController();
             
-            FXMLLoader loadError = new FXMLLoader(getClass().getResource("../view/ErrorDialog.fxml"));
+            FXMLLoader loadError = new FXMLLoader(getClass().getResource("../view/ErrorDialog.fxml"), BUNDLE);
             errorDialog = new Scene((Parent) loadError.load());
             errorDialogController = (ErrorDialogController) loadError.getController();
         } catch(IOException ex) {
@@ -104,9 +104,7 @@ public final class FXMLGuiLoader {
         return editDialog;
     }
     
-    public Scene getErrorDialog(String title, String message) {
-        errorDialogController.setTitle(title);
-        errorDialogController.setMessage(message);
+    public Scene getErrorDialog() {
         return errorDialog;
     }
     
