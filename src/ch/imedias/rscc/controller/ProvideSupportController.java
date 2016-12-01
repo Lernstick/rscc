@@ -7,7 +7,7 @@ package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
-import ch.imedias.rscc.util.RemoteSupportExecutor;
+import ch.imedias.rscc.util.ProvideSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -49,6 +49,8 @@ public class ProvideSupportController implements Initializable {
     
     // Describes if the service is started
     private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
+    
+    private ProvideSupportExecutor executor;
 
     /**
      * Initializes the controller class.
@@ -56,6 +58,8 @@ public class ProvideSupportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BUNDLE = rb;
+        executor = new ProvideSupportExecutor();
+
         cboCompression.getItems().addAll(1,2,3,4,5,6,7,8,9);
         cboQuality.getItems().addAll(1,2,3,4,5,6,7,8,9);
         
@@ -88,13 +92,13 @@ public class ProvideSupportController implements Initializable {
         
         if (serviceStarted.get()){
             // Stop service
-            RemoteSupportExecutor.stopOffer();
+            executor.stopOffer();
             
             cmdStartService.setText(BUNDLE.getString("Start_Service"));
             serviceStarted.set(false);
         } else {
             // Start service
-            RemoteSupportExecutor.startOffer(txtSafePorts.getText(), 
+            executor.startOffer(txtSafePorts.getText(), 
                         cboCompression.getValue(), 
                         cboQuality.getValue(), 
                         chk8BitColor.isSelected());

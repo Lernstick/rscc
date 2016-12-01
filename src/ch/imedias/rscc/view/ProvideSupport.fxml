@@ -23,10 +23,10 @@
                <children>
                   <BorderPane>
                      <right>
-                        <Button fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" prefHeight="26.0" prefWidth="132.0" text="Dienst starten" BorderPane.alignment="CENTER" />
+                        <Button fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" prefHeight="26.0" prefWidth="132.0" text="%Start_Service" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
-                        <Button mnemonicParsing="false" onAction="#onBackAction" text="Zurück" BorderPane.alignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#onBackAction" text="%Back" BorderPane.alignment="CENTER" />
                      </left>
                   </BorderPane>
                </children>
@@ -36,7 +36,7 @@
             </VBox>
          </bottom>
          <top>
-            <Label style="-fx-font-family: Arial; -fx-font-size: 18;" text="%RemoteSupportOffer.title" BorderPane.alignment="CENTER">
+            <Label style="-fx-font-family: Arial; -fx-font-size: 18;" text="%ProvideSupport.title" BorderPane.alignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -48,7 +48,7 @@
          <center>
             <VBox prefHeight="208.0" prefWidth="360.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <TitledPane animated="false" collapsible="false" text="%RemoteSupportOffer.settings">
+                  <TitledPane animated="false" collapsible="false" text="%ProvideSupport.connectionSettings">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="82.0" prefWidth="358.0">
                            <children>
@@ -63,14 +63,14 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="%RemoteSupportOffer.compressionLabel">
+                                    <Label text="%ProvideSupport.compressionLabel">
                                        <GridPane.margin>
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
                                     <ComboBox fx:id="cboCompression" onAction="#onCompressionChangedAction" prefWidth="150.0" GridPane.columnIndex="1" />
-                                    <CheckBox fx:id="chk8BitColor" mnemonicParsing="false" onAction="#on8BitChangedAction" text="%RemoteSupportOffer.bgr233Label" GridPane.columnIndex="2" />
-                                    <Label text="%RemoteSupportOffer.qualityLabel" GridPane.rowIndex="1" />
+                                    <CheckBox fx:id="chk8BitColor" mnemonicParsing="false" onAction="#on8BitChangedAction" text="%ProvideSupport.bgr233Label" GridPane.columnIndex="2" />
+                                    <Label text="%ProvideSupport.qualityLabel" GridPane.rowIndex="1" />
                                     <ComboBox fx:id="cboQuality" onAction="#onQualityChangedAction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
@@ -94,9 +94,9 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Sichere Ports:" GridPane.rowIndex="1" />
+                        <Label text="%ProvideSupport.securePortsLabel" GridPane.rowIndex="1" />
                         <TextField fx:id="txtSafePorts" onKeyTyped="#OnSecurePortsTyped" prefHeight="25.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="chkHttpsPort" mnemonicParsing="false" onAction="#onHttpsChangedAction" text="%RemoteSupportOffer.useHttpsLabel" GridPane.columnSpan="2" />
+                        <CheckBox fx:id="chkHttpsPort" mnemonicParsing="false" onAction="#onHttpsChangedAction" text="%ProvideSupport.useHttpsLabel" GridPane.columnSpan="2" />
                      </children>
                   </GridPane>
                </children>
