@@ -12,7 +12,7 @@
    <children>
       <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Label stylesheets="@edit.css" text="Support beziehen" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Label stylesheets="@edit.css" text="%ReceiveSupport.title" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -27,8 +27,8 @@
          <center>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lblConnectedTo" text="Connected to XY" />
-                  <Button id="Disconnect" mnemonicParsing="false" onAction="#onDisconnectAction" stylesheets="@edit.css" text="      Disconnect" />
+                  <Label fx:id="lblConnectedTo" text="%Connected_To" />
+                  <Button id="Disconnect" mnemonicParsing="false" onAction="#onDisconnectAction" stylesheets="@edit.css" text="ProvideSupport.disconnectButton" />
                </children>
             </VBox>
          </center>
