@@ -1,4 +1,4 @@
-package ch.imedias.rscc.test;
+package ch.imedias.rscc;
 
 import static org.junit.Assert.*;
 
