@@ -52,8 +52,7 @@ public class RequestSupportConnectedController implements Initializable {
 
     @FXML
     private void onDisconnectAction(ActionEvent event) {
-        //TODO execute disconnect
-        //executor.disconnect();
+        executor.disconnect();
         
         Scene scene = ((Node)(event.getSource())).getScene();
         Stage stage = (Stage)scene.getWindow();
