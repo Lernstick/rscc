@@ -50,7 +50,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 }
 
 #SaveButton {          
-    -fx-background-image: url("../icons/newIcons50x50/Checkmark-64.png");
+   /* -fx-background-image: url("../icons/newIcons50x50/Checkmark-64.png");*/
     -fx-background-position: 3 3;
     -fx-padding: 5;
     -fx-background-size: 20 20;
@@ -58,7 +58,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 }
 
 #CancelButton {          
-    -fx-background-image: url("../icons/newIcons50x50/Delete-52.png");
+    /*-fx-background-image: url("../icons/newIcons50x50/Delete-52.png");*/
     -fx-background-position: 3 3;
     -fx-padding: 5;
     -fx-background-size: 20 20;
@@ -103,7 +103,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 
 #Disconnect
 {
-    -fx-background-image: url("../icons/newIcons50x50/Disconnected-50.png");
+    /*-fx-background-image: url("../icons/newIcons50x50/Disconnected-50.png");*/
     -fx-background-position: 4 4;
     -fx-padding: 5;
     -fx-background-size: 20 20;
@@ -112,7 +112,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 
 #Connect
 {
-    -fx-background-image: url("../icons/newIcons50x50/Connected_Filled-50(2).png");
+    /*-fx-background-image: url("../icons/newIcons50x50/Connected_Filled-50(2).png");*/
     -fx-background-position: 4 4;
     -fx-padding: 5;
     -fx-background-size: 20 20;
@@ -121,7 +121,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 
 #Back
 {
-    -fx-background-image: url("../icons/newIcons50x50/Left-48.png");
+    /*-fx-background-image: url("../icons/newIcons50x50/Left-48.png");*/
     -fx-background-position: 4 4;
     -fx-padding: 5;
     -fx-background-size: 20 20;
@@ -130,7 +130,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 
 #Start
 {
-    -fx-background-image: url("../icons/newIcons50x50/Play_Filled-50.png");
+    /*-fx-background-image: url("../icons/newIcons50x50/Play_Filled-50.png");*/
     -fx-background-position: 4 4;
     -fx-padding: 5;
     -fx-background-size: 20 20;
