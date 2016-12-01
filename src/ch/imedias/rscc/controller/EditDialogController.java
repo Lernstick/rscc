@@ -1,7 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file contains the implementation of the FXML Controller class of the EditDialog view
+ *
+ * This class is manualy tested by the systemtest "Edit supporter list"
+ * @see "https://www.cs.technik.fhnw.ch/confluence16/display/VTDESGA/Test+Plan+for+Lernstick_1"
+ *
+ * @author Jan Hitz, Line Stettler
+ *
+ *
  */
 package ch.imedias.rscc.controller;
 
@@ -46,11 +51,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 /**
- * FXML Controller class
- *
- * @author user
+ * FXML Controller class for EditDialog
+ * 
+ * This Controller class uses the Model class SupportAddress 
+ * 
  */
-public class EditDialogController extends Application implements Initializable {
+public class EditDialogController implements Initializable {
 
     @FXML
     private Button CancelButton;
@@ -66,17 +72,6 @@ public class EditDialogController extends Application implements Initializable {
     private Button DownButton;
     @FXML
     private Button ResetButton;
-    
-     private final static ResourceBundle BUNDLE = ResourceBundle.getBundle(
-            "ch/imedias/rscc/Bundle");
-    private final static Logger LOGGER
-            = Logger.getLogger(EditDialogController.class.getName());
-    
-    //private final SupportAddressesTableModel tableModel;
-    
-    private ObservableList<SupportAddress> supportAddresses;
-    private boolean okPressed;
-    private SelectionModel<SupportAddress> selectionModel;
     @FXML
     private TableView<SupportAddress> table;
     @FXML
@@ -86,6 +81,14 @@ public class EditDialogController extends Application implements Initializable {
     @FXML
     private TableColumn<SupportAddress, Boolean> encrypted;
     
+    // Not in use  
+    private final static ResourceBundle BUNDLE = ResourceBundle.getBundle(
+            "ch/imedias/rscc/Bundle");
+    private final static Logger LOGGER
+            = Logger.getLogger(EditDialogController.class.getName());
+    
+    
+    private ObservableList<SupportAddress> supportAddresses;
     
     private List<SupportAddress> staticDefaultAddressList;
     private List<SupportAddress> staticAddressList;
@@ -93,22 +96,21 @@ public class EditDialogController extends Application implements Initializable {
     
     /**
      * Initializes the controller class.
+     * 
+     * @parm url  The url used to resolve relative paths for the root 
+     *            object, or null if the location is not known 
+     * @param rb  The resources used to localize the root object, or null if the
+     *            root object was not localized
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("ch.imedias.rscc.EditDialogController.initialize()");
-        staticAddressList = SupportAddress.getAll();//new ArrayList<SupportAddress>();
-        staticDefaultAddressList = SupportAddress.getAll();/*new ArrayList<SupportAddress>();
-        staticAddressList.add(new SupportAddress("Hallo", "hallo.hallo", false));
-        staticAddressList.add(new SupportAddress("Fritz", "fritz.hallo", true));
-        staticAddressList.add(new SupportAddress("Meier", "Meier.hallo", false));
-
-        staticDefaultAddressList.add(new SupportAddress("eins", "eins.hallo", false));
-        staticDefaultAddressList.add(new SupportAddress("zwei", "zwei.hallo", true));
-        staticDefaultAddressList.add(new SupportAddress("drei", "drei.hallo", false));*/
-        
+        // Initialize supporter address lists (default and actual)
+        staticAddressList = SupportAddress.getAll();
+        staticDefaultAddressList = SupportAddress.getAll();
+          
         table.setEditable(true);
         
+        // Initialize columns
         Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> cellFactory = (TableColumn<SupportAddress, String> p) -> new EditingCell();
         
         name.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("description"));
@@ -137,6 +139,8 @@ public class EditDialogController extends Application implements Initializable {
                 return booleanProp;
             }
         });
+        
+        // Adds Checkbox in table cell
         encrypted.setCellFactory(new Callback<TableColumn<SupportAddress, Boolean>,
         TableCell<SupportAddress, Boolean>>() {
             @Override
@@ -150,8 +154,7 @@ public class EditDialogController extends Application implements Initializable {
 
         table.getColumns().setAll(name, address, encrypted);
 
-        // make a deep copy of the list
-       
+        // Make a deep copy of the list
         if(staticAddressList != null)
         {
             this.supportAddresses = FXCollections.observableArrayList(staticAddressList);
@@ -159,6 +162,7 @@ public class EditDialogController extends Application implements Initializable {
             this.supportAddresses = FXCollections.observableArrayList(staticDefaultAddressList);
         }
        
+        // Enable to select mulitple table entries
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         table.itemsProperty().setValue(supportAddresses);
@@ -171,6 +175,10 @@ public class EditDialogController extends Application implements Initializable {
         });
     }
     
+    /**
+     * @brief This function disables the up/down buttons if an entry can not 
+     *        been moved any further up/down
+     */
     private void manageUpDownButtons() {
         ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
         UpButton.setDisable(false);
@@ -190,31 +198,17 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
 
-
-    @Override
-    public void start(Stage mainStage) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource("editDialog.fxml"));
-        Scene myScene = new Scene(root); 
-        mainStage.setScene(myScene);
-        mainStage.setMinWidth(300);
-        mainStage.setMinHeight(300); 
-        mainStage.show();
-    }
-    
     /**
-     * @param args the command line arguments
+     * @param event MouseClick event if cancel button is clicked
      */
-    public static void main(String args[]) {
-
-      launch(args);
-    }
-
     @FXML
     private void onCancelClickedAction(MouseEvent event) {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
+    /**
+     * @param event MouseClick event if save button is clicked
+     */
     @FXML
     private void onSaveClickedAction(MouseEvent event) {
         staticAddressList = new ArrayList<SupportAddress>();
@@ -232,6 +226,9 @@ public class EditDialogController extends Application implements Initializable {
         SupportAddress.saveAll();
     }
 
+    /**
+     * @param event MouseClick event if add button is clicked
+     */
     @FXML
     private void onAddClickedAction(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
@@ -239,7 +236,9 @@ public class EditDialogController extends Application implements Initializable {
         table.getSelectionModel().select(addressNew);
         manageUpDownButtons();
     }
-
+    /**
+     * @param event MouseClick event if delete button is clicked
+     */
     @FXML
     private void onDeleteClickedAction(MouseEvent event) {
         ObservableList<SupportAddress> temp = table.getSelectionModel().getSelectedItems();
@@ -247,6 +246,9 @@ public class EditDialogController extends Application implements Initializable {
         manageUpDownButtons();
     }
 
+    /**
+     * @param event MouseClick event if up button is clicked
+     */
     @FXML
     private void onUpClickedAction(MouseEvent event) {
         List<Integer> changedIndexes = new LinkedList<Integer>();
@@ -270,6 +272,9 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
     
+    /**
+     * @param event MouseClick event if down button is clicked
+     */
     @FXML
     private void onDownClickedAction(MouseEvent event) {
         List<Integer> changedIndexes = new LinkedList<Integer>();
@@ -293,6 +298,9 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
 
+    /**
+     * @param event MouseClick event if reset button is clicked
+     */
     @FXML
     private void onResetClickedAction(MouseEvent event) {
     this.supportAddresses.clear();
@@ -301,12 +309,22 @@ public class EditDialogController extends Application implements Initializable {
         }
     }
     
+    /**
+     * This Class is used to eddit new added SupportAddress entries in table
+     * and handles the input and editing events
+     */
     class EditingCell extends TableCell<SupportAddress, String> {
         private TextField textField;
 
+        /**
+         * Default constructor
+         */
         public EditingCell() {
         }
 
+        /**
+         * This method adds the textfield and enebles editing
+         */
         @Override
         public void startEdit() {
             if (!isEmpty()) {
@@ -318,6 +336,9 @@ public class EditDialogController extends Application implements Initializable {
             }
         }
 
+        /**
+         * This method handles the cancelation of the eding process
+         */
         @Override
         public void cancelEdit() {
             super.cancelEdit();
@@ -326,6 +347,11 @@ public class EditDialogController extends Application implements Initializable {
             setGraphic(null);
         }
 
+        /**
+         * This method updates the updating of the list when an entry is added and edited
+         * @param item
+         * @param empty 
+         */
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -347,6 +373,9 @@ public class EditDialogController extends Application implements Initializable {
             }
         }
 
+        /**
+         * This method creates the textfield and handles the eding of the textfield
+         */
         private void createTextField() {
             textField = new TextField(getString());
             textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
@@ -356,8 +385,15 @@ public class EditDialogController extends Application implements Initializable {
                             commitEdit(textField.getText());
                         }
                     });
+            textField.textProperty().addListener((observable, oldValue, newValue)->{
+                updateItem(newValue, false);
+            });
         }
 
+        /**
+         * This method is the getter of the text entry of the item
+         * @return string property of item
+         */
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }

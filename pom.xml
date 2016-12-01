@@ -24,7 +24,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ch.imedias.rscc.RemoteSupportFrame</mainClass>
+							<mainClass>ch.imedias.rscc.RemoteSupportApplication</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
