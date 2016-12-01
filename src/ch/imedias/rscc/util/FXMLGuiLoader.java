@@ -124,4 +124,8 @@ public final class FXMLGuiLoader {
         requestSupportController.finalizeGui();
         provideSupportController.finalizeGui();
     }
+    
+    public String getApplicationTitle() {
+        return BUNDLE.getString("RemoteSupportStart.title");
+    }
 }

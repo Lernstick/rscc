@@ -23,7 +23,8 @@ public class RequestSupportExecutor {
     private Pattern okSSLPattern;
     private Pattern failedPattern;
     
-    private final static ProcessExecutor SEEK_PROCESS_EXECUTOR = new ProcessExecutor();
+    private ProcessExecutorFactory factory;
+    private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
     
     private ExecutorService executor = Executors.newCachedThreadPool();
     
@@ -33,7 +34,9 @@ public class RequestSupportExecutor {
      * @param success Callback
      * @param failed Callback
      */
-    public RequestSupportExecutor(Runnable success, Runnable failed) {
+    public RequestSupportExecutor(ProcessExecutorFactory factory, Runnable success, Runnable failed) {
+        this.factory = factory;
+        SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();
         SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(evt -> {
             if(success != null && 
                     (okPlainPattern.matcher((String) evt.getNewValue()).matches() || 

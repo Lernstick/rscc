@@ -20,6 +20,7 @@ public class RemoteSupportApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Scene scene = FXMLGuiLoader.getInstance().getRemoteSupportStart();
+        primaryStage.setTitle(FXMLGuiLoader.getInstance().getApplicationTitle());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
