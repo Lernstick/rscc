@@ -34,7 +34,7 @@ public final class FXMLGuiLoader {
     private Scene requestSupportConnected;
     private Scene errorDialog;
     
-    // Controller
+    // Controllers
     private RequestSupportConnectedController requestSupportConnectedController;
     private RequestSupportConnectingController requestSupportConnectingController;
     private ErrorDialogController errorDialogController;
@@ -42,7 +42,7 @@ public final class FXMLGuiLoader {
     private ProvideSupportController provideSupportController;
     
     private FXMLGuiLoader() {
-        // Create all instances
+        // Create all instances with their controllers
         try {
 	    BUNDLE = ResourceBundle.getBundle("ch/imedias/rscc/Bundle");
             remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml"), BUNDLE));
@@ -89,25 +89,52 @@ public final class FXMLGuiLoader {
         return requestSupport;
     }
     
+    /**
+     * 
+     * @param supporter name of supporter
+     * @return Supporter scene
+     */
     public Scene getRequestSupportConnecting(String supporter) {
         requestSupportConnectingController.setSupporter(supporter);
         return requestSupportConnecting;
     }
     
+    /**
+     * 
+     * @param supporter name of supporter
+     * @param executor remote connector, handles vnc workflow
+     * @return RequestSupportConnected scene
+     */
     public Scene getRequestSupportConnected(String supporter, RequestSupportExecutor executor) {
         requestSupportConnectedController.setSupporter(supporter);
         requestSupportConnectedController.setExecutor(executor);
         return requestSupportConnected;
     }
     
+    /**
+     * 
+     * @return edit dialog
+     */
     public Scene getEditDialog() {
         return editDialog;
     }
     
+    /**
+     * 
+     * @return error dialog
+     */
     public Scene getErrorDialog() {
         return errorDialog;
     }
     
+    /**
+     * 
+     * @param parent parent
+     * @param scene scene
+     * @param title stage title
+     * @param modal modal
+     * @return 
+     */
     public Stage createDialog(Stage parent, Scene scene, String title, boolean modal) {
         Stage stage = new Stage();
         stage.initOwner(parent);
@@ -120,11 +147,19 @@ public final class FXMLGuiLoader {
         return stage;
     }
     
+
+    /**
+     * Calls finalizeGuis methods on controllers
+     */
     public void finalizeGuis() {
         requestSupportController.finalizeGui();
         provideSupportController.finalizeGui();
     }
     
+    /**
+     * 
+     * @return Application title
+     */
     public String getApplicationTitle() {
         return BUNDLE.getString("RemoteSupportStart.title");
     }
