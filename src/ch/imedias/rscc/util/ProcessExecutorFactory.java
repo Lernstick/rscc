@@ -1,7 +1,8 @@
 package ch.imedias.rscc.util;
 
 public class ProcessExecutorFactory {
-    ProcessExecutor makeProcessExecutor() {
+    public ProcessExecutor makeProcessExecutor() {
+        System.out.println("hallo");
         return new ProcessExecutor();
     }
 }
