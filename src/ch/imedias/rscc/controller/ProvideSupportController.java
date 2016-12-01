@@ -44,6 +44,9 @@ public class ProvideSupportController implements Initializable {
     @FXML
     private Button cmdStartService;
     
+    // Language bundle
+    private static ResourceBundle BUNDLE;
+    
     // Describes if the service is started
     private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
 
@@ -52,6 +55,7 @@ public class ProvideSupportController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        BUNDLE = rb;
         cboCompression.getItems().addAll(1,2,3,4,5,6,7,8,9);
         cboQuality.getItems().addAll(1,2,3,4,5,6,7,8,9);
         
@@ -86,7 +90,7 @@ public class ProvideSupportController implements Initializable {
             // Stop service
             RemoteSupportExecutor.stopOffer();
             
-            cmdStartService.setText("Dienst starten");
+            cmdStartService.setText(BUNDLE.getString("Start_Service"));
             serviceStarted.set(false);
         } else {
             // Start service
@@ -95,7 +99,7 @@ public class ProvideSupportController implements Initializable {
                         cboQuality.getValue(), 
                         chk8BitColor.isSelected());
             
-            cmdStartService.setText("Dienst stoppen");
+            cmdStartService.setText(BUNDLE.getString("Stop_Service"));
             serviceStarted.set(true);
         }
     }
