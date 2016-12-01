@@ -7,21 +7,15 @@ package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.model.SupportAddress;
 import ch.imedias.rscc.util.FXMLGuiLoader;
-import ch.imedias.rscc.util.RemoteSupportExecutor;
+import ch.imedias.rscc.util.RequestSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -39,8 +33,7 @@ public class RequestSupportController implements Initializable {
     private ComboBox<SupportAddress> cboSupporter;
     
     private ResourceBundle bundle;
-    
-    private Property<Boolean> connectStatusProperty;
+    private RequestSupportExecutor executor;
 
     /**
      * Initializes the controller class.
@@ -50,7 +43,7 @@ public class RequestSupportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bundle = rb;
-        connectStatusProperty = new SimpleBooleanProperty(false);
+        
         for(double val : IMAGESCALES) {
             cboImagescale.getItems().add(val);
         }
@@ -73,28 +66,42 @@ public class RequestSupportController implements Initializable {
         Scene scene = ((Node)(event.getSource())).getScene();
         Stage stage = (Stage)scene.getWindow();
         
-        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting());
-        
         SupportAddress supportAddress = cboSupporter.getValue();
         Double scale = cboImagescale.getValue();
         
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting(supportAddress.getDescription()));
         
-        // XXX not tested:
-        connectStatusProperty.addListener((obs, oldval, newval) -> { if (newval) {
-         // TODO: Run connecting and if fail jump back to this gui
-        }});
-        RemoteSupportExecutor.connect(supportAddress, scale, connectStatusProperty);
+        // Start new connector
+        executor = new RequestSupportExecutor(() -> openConnected(stage), () -> openConnectedFailed(stage));
+        executor.connect(supportAddress, scale);
+    }
+
+    private void openConnected(Stage stage) {
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnected(cboSupporter.getValue().getDescription(), executor));
+    }
+
+    private void openConnectedFailed(Stage stage) {
+        stage.setScene(FXMLGuiLoader.getInstance().getRequestSupport());
+        
+        //TODO set error message
+        String title = "";
+        String message = "";
+        Scene errorDialog = FXMLGuiLoader.getInstance().getErrorDialog(title, message);
+        FXMLGuiLoader.getInstance().createDialog(stage, errorDialog, title, true).show();
     }
 
     @FXML
     private void onEditSupporterlistAction(ActionEvent event) {
         Scene scene = ((Node)(event.getSource())).getScene();
         Stage stage = (Stage)scene.getWindow();
-        Stage dialog = new Stage();
         
-        dialog.initOwner(stage);
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.setScene(FXMLGuiLoader.getInstance().getEditDialog());
-        dialog.showAndWait();
+        Scene editDialog = FXMLGuiLoader.getInstance().getEditDialog();
+        //TODO Set title
+        FXMLGuiLoader.getInstance().createDialog(stage, editDialog, "", true).showAndWait();
+        
+        SupportAddress sa = cboSupporter.getValue();
+        cboSupporter.getItems().clear();
+        cboSupporter.getItems().addAll(SupportAddress.getAll());
+        cboSupporter.getSelectionModel().select(sa);
     }
 }
