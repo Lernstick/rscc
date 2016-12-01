@@ -6,13 +6,15 @@
 package ch.imedias.rscc.util;
 
 import ch.imedias.rscc.controller.ErrorDialogController;
+import ch.imedias.rscc.controller.ProvideSupportController;
 import ch.imedias.rscc.controller.RequestSupportConnectedController;
 import ch.imedias.rscc.controller.RequestSupportConnectingController;
+import ch.imedias.rscc.controller.RequestSupportController;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import java.util.ResourceBundle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,14 +38,23 @@ public final class FXMLGuiLoader {
     private RequestSupportConnectedController requestSupportConnectedController;
     private RequestSupportConnectingController requestSupportConnectingController;
     private ErrorDialogController errorDialogController;
+    private RequestSupportController requestSupportController;
+    private ProvideSupportController provideSupportController;
     
     private FXMLGuiLoader() {
         // Create all instances
         try {
 	    BUNDLE = ResourceBundle.getBundle("ch/imedias/rscc/Bundle");
             remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml"), BUNDLE));
-            provideSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/ProvideSupport.fxml"), BUNDLE));
-            requestSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RequestSupport.fxml"), BUNDLE));
+            
+            FXMLLoader loadProvSup = new FXMLLoader(getClass().getResource("../view/ProvideSupport.fxml"), BUNDLE);
+            provideSupport = new Scene((Parent)loadProvSup.load());
+            provideSupportController = (ProvideSupportController) loadProvSup.getController();
+            
+            FXMLLoader loadReqSup = new FXMLLoader(getClass().getResource("../view/RequestSupport.fxml"), BUNDLE);
+            requestSupport = new Scene((Parent)loadReqSup.load());
+            requestSupportController = (RequestSupportController) loadReqSup.getController();
+            
             editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml"), BUNDLE));  
             
             FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("../view/RequestSupportConnecting.fxml"), BUNDLE);
@@ -109,5 +120,10 @@ public final class FXMLGuiLoader {
         stage.setTitle(title);
         stage.setScene(scene);
         return stage;
+    }
+    
+    public void finalizeGuis() {
+        requestSupportController.finalizeGui();
+        provideSupportController.finalizeGui();
     }
 }

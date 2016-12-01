@@ -132,5 +132,13 @@ public class ProvideSupportController implements Initializable {
     private void OnSecurePortsTyped(KeyEvent event) {
         Settings.setSecurePorts(txtSafePorts.getText());
     }
+
+    public void finalizeGui() {
+        executor.stopOffer();
+        executor = null;
+        
+        // Save settings on application close
+        Settings.save();
+    }
     
 }
