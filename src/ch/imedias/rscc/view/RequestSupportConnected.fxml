@@ -10,11 +10,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.RequestSupportConnectedController">
    <children>
-      <BorderPane prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Label style="-fx-font-family: Arial; -fx-font-size: 18;" text="Support beziehen" BorderPane.alignment="CENTER">
+            <Label stylesheets="@edit.css" text="Support beziehen" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font size="24.0" />
                </font>
                <padding>
                   <Insets top="15.0" />
@@ -28,7 +28,7 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="lblConnectedTo" text="Connected to XY" />
-                  <Button mnemonicParsing="false" onAction="#onDisconnectAction" text="Disconnect" />
+                  <Button id="Disconnect" mnemonicParsing="false" onAction="#onDisconnectAction" stylesheets="@edit.css" text="      Disconnect" />
                </children>
             </VBox>
          </center>

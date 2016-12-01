@@ -10,16 +10,16 @@
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.RemoteSupportStartController">
-    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox id="Background" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" spacing="20.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Label text="Fernwartung">
+            <Label text="Fernwartung" textFill="#f8f7f7">
                 <font>
-                    <Font size="18.0" />
+                    <Font size="26.0" />
                 </font>
             </Label>
             <TextFlow prefHeight="96.0" prefWidth="280.0">
                 <children>
-                    <Label prefHeight="80.0" prefWidth="362.0" text="Dieses Programm dient zum Support zu beziehen und anzubieten.&#10;&#10;Wählen Sie bitte die entsprechende Option aus." wrapText="true">
+                    <Label id="Description" prefHeight="80.0" prefWidth="362.0" stylesheets="@edit.css" text="Dieses Programm dient zum Support zu beziehen und anzubieten.&#10;&#10;Wählen Sie bitte die entsprechende Option aus." wrapText="true">
                   <padding>
                      <Insets left="10.0" right="10.0" />
                   </padding></Label>
@@ -27,8 +27,8 @@
             </TextFlow>
             <HBox alignment="CENTER" prefWidth="360.0" spacing="30.0">
                 <children>
-                    <Button mnemonicParsing="false" onAction="#onRequstSupportAction" prefHeight="70.0" prefWidth="150.0" text="Support beziehen" />
-                    <Button mnemonicParsing="false" onAction="#OnProvideSupportAction" prefHeight="70.0" prefWidth="150.0" text="Support anbieten" />
+                    <Button mnemonicParsing="false" onAction="#onRequstSupportAction" stylesheets="@edit.css" text="Support beziehen" />
+                    <Button mnemonicParsing="false" onAction="#OnProvideSupportAction" prefWidth="150.0" stylesheets="@edit.css" text="Support anbieten" />
                 </children>
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
