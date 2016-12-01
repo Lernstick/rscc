@@ -85,5 +85,6 @@ public class RequestSupportExecutor {
      */
     public void disconnect() {
         SEEK_PROCESS_EXECUTOR.destroy();
+        executor.shutdown();
     }
 }

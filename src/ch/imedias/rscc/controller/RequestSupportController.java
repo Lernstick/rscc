@@ -71,8 +71,10 @@ public class RequestSupportController implements Initializable {
         
         stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting(supportAddress.getDescription()));
         
-        // Start new connector
-        executor = new RequestSupportExecutor(() -> openConnected(stage), () -> openConnectedFailed(stage));
+        // Initialize connecter giving the current stage
+        if(executor == null)
+            executor = new RequestSupportExecutor(() -> openConnected(stage), () -> openConnectedFailed(stage));
+        // Start executor to connect
         executor.connect(supportAddress, scale);
     }
 
@@ -103,5 +105,12 @@ public class RequestSupportController implements Initializable {
         cboSupporter.getItems().clear();
         cboSupporter.getItems().addAll(SupportAddress.getAll());
         cboSupporter.getSelectionModel().select(sa);
+    }
+
+    public void finalizeGui() {
+        if(executor != null) {
+            executor.disconnect();
+            executor = null;
+        }
     }
 }

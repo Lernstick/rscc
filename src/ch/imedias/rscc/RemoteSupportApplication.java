@@ -5,12 +5,11 @@
  */
 package ch.imedias.rscc;
 
-import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.io.IOException;
 import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
@@ -34,8 +33,7 @@ public class RemoteSupportApplication extends Application {
 
     @Override
     public void stop() throws Exception {
-        // Save settings on application close
-        Settings.save();      
+        FXMLGuiLoader.getInstance().finalizeGuis();
     }
     
     
