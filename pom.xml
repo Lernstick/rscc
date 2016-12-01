@@ -16,9 +16,6 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
-				<configuration>
-					<source>src</source>
-				</configuration>
 			</plugin>
 			 <!-- add resources like *.properties files to the build -->
             <plugin>
