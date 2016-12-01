@@ -6,6 +6,7 @@
 package ch.imedias.rscc.controller;
 
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,8 +30,8 @@ public class RequestSupportConnectingController implements Initializable {
     }
     
     public void setSupporter(String supporter) {
-        //TODO get string from bundle
-        lblConnectingTo.setText("Connecting to " + supporter + "...");
+        String t = MessageFormat.format(lblConnectingTo.getText(), supporter);
+        lblConnectingTo.setText(t);
     }
     
 }

@@ -8,6 +8,7 @@ package ch.imedias.rscc.controller;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import ch.imedias.rscc.util.RequestSupportExecutor;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,16 +25,14 @@ import javafx.stage.Stage;
  */
 public class RequestSupportConnectedController implements Initializable {
 
-    private ResourceBundle bundle;
-    
     private RequestSupportExecutor executor;
     
     @FXML
     private Label lblConnectedTo;
     
     public void setSupporter(String supporter) {
-        //TODO String from bundle
-        lblConnectedTo.setText("Connected to " + supporter);
+        String t = MessageFormat.format(lblConnectedTo.getText(), supporter);
+        lblConnectedTo.setText(t);
     }
     
     public void setExecutor(RequestSupportExecutor rse) {
@@ -47,7 +46,6 @@ public class RequestSupportConnectedController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bundle = rb;
     }
 
     @FXML
