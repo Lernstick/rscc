@@ -35,11 +35,13 @@ public class RequestSupportExecutor {
      */
     public RequestSupportExecutor(Runnable success, Runnable failed) {
         SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(evt -> {
-            if(okPlainPattern.matcher((String) evt.getNewValue()).matches() || 
-                    okSSLPattern.matcher((String) evt.getNewValue()).matches())
-                if (success != null) Platform.runLater(success);
-            else if(failedPattern.matcher((String) evt.getNewValue()).matches())
-                if (failed != null) Platform.runLater(failed);
+            if(success != null && 
+                    (okPlainPattern.matcher((String) evt.getNewValue()).matches() || 
+                    okSSLPattern.matcher((String) evt.getNewValue()).matches()))
+                Platform.runLater(success);
+            else if(failed != null && 
+                    failedPattern.matcher((String) evt.getNewValue()).matches())
+                Platform.runLater(failed);
         });
     }
     
