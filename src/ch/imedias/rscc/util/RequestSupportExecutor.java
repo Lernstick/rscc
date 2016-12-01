@@ -22,7 +22,7 @@ public class RequestSupportExecutor {
     private Pattern okPlainPattern;
     private Pattern okSSLPattern;
     private Pattern failedPattern;
-      
+    
     private final static ProcessExecutor SEEK_PROCESS_EXECUTOR = new ProcessExecutor();
     
     private ExecutorService executor = Executors.newCachedThreadPool();
@@ -79,5 +79,11 @@ public class RequestSupportExecutor {
             }
         };
         executor.submit(task);
+    }
+    /**
+     * Stops service.
+     */
+    public void disconnect() {
+        SEEK_PROCESS_EXECUTOR.destroy();
     }
 }
