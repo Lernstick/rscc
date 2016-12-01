@@ -11,6 +11,7 @@ import ch.imedias.rscc.controller.RequestSupportConnectedController;
 import ch.imedias.rscc.controller.RequestSupportConnectingController;
 import ch.imedias.rscc.controller.RequestSupportController;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,10 +20,11 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author user
+ * @author Roger Obrist
  */
 public final class FXMLGuiLoader {
-    private static FXMLGuiLoader instance = new FXMLGuiLoader();
+    private static ResourceBundle BUNDLE;
+    private static final FXMLGuiLoader INSTANCE = new FXMLGuiLoader();
     
     private Scene remoteSupportStart;
     private Scene provideSupport;
@@ -42,23 +44,24 @@ public final class FXMLGuiLoader {
     private FXMLGuiLoader() {
         // Create all instances
         try {
-            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml")));
+	    BUNDLE = ResourceBundle.getBundle("ch/imedias/rscc/Bundle");
+            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml"), BUNDLE));
             
-            FXMLLoader loadProvSup = new FXMLLoader(getClass().getResource("../view/ProvideSupport.fxml"));
+            FXMLLoader loadProvSup = new FXMLLoader(getClass().getResource("../view/ProvideSupport.fxml"), BUNDLE);
             provideSupport = new Scene((Parent)loadProvSup.load());
             provideSupportController = (ProvideSupportController) loadProvSup.getController();
             
-            FXMLLoader loadReqSup = new FXMLLoader(getClass().getResource("../view/RequestSupport.fxml"));
+            FXMLLoader loadReqSup = new FXMLLoader(getClass().getResource("../view/RequestSupport.fxml"), BUNDLE);
             requestSupport = new Scene((Parent)loadReqSup.load());
             requestSupportController = (RequestSupportController) loadReqSup.getController();
             
-            editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml")));  
+            editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml"), BUNDLE));  
             
-            FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("../view/RequestSupportConnecting.fxml"));
+            FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("../view/RequestSupportConnecting.fxml"), BUNDLE);
             requestSupportConnecting = new Scene((Parent) loadConnecting.load());
             requestSupportConnectingController = (RequestSupportConnectingController) loadConnecting.getController();
             
-            FXMLLoader loadConnected = new FXMLLoader(getClass().getResource("../view/RequestSupportConnected.fxml"));
+            FXMLLoader loadConnected = new FXMLLoader(getClass().getResource("../view/RequestSupportConnected.fxml"), BUNDLE);
             requestSupportConnected = new Scene((Parent) loadConnected.load());
             requestSupportConnectedController = (RequestSupportConnectedController) loadConnected.getController();
             
@@ -71,7 +74,7 @@ public final class FXMLGuiLoader {
     }
     
     public static FXMLGuiLoader getInstance() {
-        return instance;
+        return INSTANCE;
     }
     
     public Scene getRemoteSupportStart() {
