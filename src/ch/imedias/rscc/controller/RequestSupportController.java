@@ -107,7 +107,7 @@ public class RequestSupportController implements Initializable {
 
     public void finalizeGui() {
         if(executor != null) {
-            executor.disconnect();
+            executor.exit();
             executor = null;
         }
     }

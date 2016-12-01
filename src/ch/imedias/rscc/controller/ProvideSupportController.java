@@ -135,7 +135,7 @@ public class ProvideSupportController implements Initializable {
     }
 
     public void finalizeGui() {
-        executor.stopOffer();
+        executor.exit();
         executor = null;
         
         // Save settings on application close
