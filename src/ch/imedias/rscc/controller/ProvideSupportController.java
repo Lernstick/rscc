@@ -7,6 +7,7 @@ package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
+import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.ProvideSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -58,7 +59,7 @@ public class ProvideSupportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BUNDLE = rb;
-        executor = new ProvideSupportExecutor();
+        executor = new ProvideSupportExecutor(new ProcessExecutorFactory());
 
         cboCompression.getItems().addAll(1,2,3,4,5,6,7,8,9);
         cboQuality.getItems().addAll(1,2,3,4,5,6,7,8,9);

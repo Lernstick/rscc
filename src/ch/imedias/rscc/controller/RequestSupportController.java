@@ -7,6 +7,7 @@ package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.model.SupportAddress;
 import ch.imedias.rscc.util.FXMLGuiLoader;
+import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.RequestSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,7 +74,7 @@ public class RequestSupportController implements Initializable {
         
         // Initialize connecter giving the current stage
         if(executor == null)
-            executor = new RequestSupportExecutor(() -> openConnected(stage), () -> openConnectedFailed(stage));
+            executor = new RequestSupportExecutor(new ProcessExecutorFactory(), () -> openConnected(stage), () -> openConnectedFailed(stage));
         // Start executor to connect
         executor.connect(supportAddress, scale);
     }
