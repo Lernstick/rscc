@@ -22,33 +22,72 @@ public class Settings {
     private final static Preferences preferences;
     
     // getters & setters
+    /**
+     * @return the secure ports
+     */
     public static String getSecurePorts() {
         return securePorts;
     }
+    
+    /**
+     * @param securePorts the secure ports 
+     */
     public static void setSecurePorts(String securePorts) {
         Settings.securePorts = securePorts;
     }
+    
+    /**
+     * @return the quality
+     */
     public static int getQuality() {
         return quality;
     }
+    
+    /**
+     * @param quality the quality
+     */
     public static void setQuality(int quality) {
         Settings.quality = quality;
     }
+    
+    /**
+     * @return the compression level
+     */
     public static int getCompressionLevel() {
         return compressionLevel;
     }
+    
+    /**
+     * @param compressionLevel the compression level
+     */
     public static void setCompressionLevel(int compressionLevel) {
         Settings.compressionLevel = compressionLevel;
     }
+    
+    /**
+     * @return shows if bgr233 supported
+     */
     public static boolean getBgr233() {
         return bgr233;
     }
+    
+    /**
+     * @param bgr233 set bgr233
+     */
     public static void setBgr233(boolean bgr233) {
         Settings.bgr233 = bgr233;
     }
+    
+    /**
+     * @return shows if https is used
+     */
     public static boolean getUseHttpsPort() {
         return useHttpsPort;
     }
+    
+    /**
+     * @param useHttpsPort shows if https is used
+     */
     public static void setUseHttpsPort(boolean useHttpsPort) {
         Settings.useHttpsPort = useHttpsPort;
     }
@@ -62,6 +101,9 @@ public class Settings {
         useHttpsPort = preferences.getBoolean("useHttpsPort", false);
     }
     
+    /**
+     * Saves the values into preferences
+     */
     public static void save() {
         preferences.put("securePorts", securePorts);
         preferences.putInt("quality", quality);
