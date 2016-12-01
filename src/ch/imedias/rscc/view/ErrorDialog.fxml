@@ -12,12 +12,12 @@
    <children>
       <BorderPane prefHeight="230.0" prefWidth="345.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Label fx:id="lblMessage" alignment="TOP_LEFT" prefHeight="230.0" prefWidth="345.0" text="ErrorMessageText" BorderPane.alignment="CENTER" />
+            <Label alignment="TOP_LEFT" prefHeight="230.0" prefWidth="345.0" text="%Connection_Failed" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onOkAction" text="OK" />
+                  <Button mnemonicParsing="false" onAction="#onOkAction" text="%OK" />
                </children>
             </HBox>
          </bottom>
@@ -28,7 +28,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
          <top>
-            <Label fx:id="lblTitle" text="ErrorMessage" BorderPane.alignment="CENTER">
+            <Label text="%Error" BorderPane.alignment="CENTER">
                <padding>
                   <Insets bottom="15.0" />
                </padding>
