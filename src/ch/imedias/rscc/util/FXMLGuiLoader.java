@@ -5,11 +5,15 @@
  */
 package ch.imedias.rscc.util;
 
+import ch.imedias.rscc.controller.ErrorDialogController;
 import ch.imedias.rscc.controller.RequestSupportConnectedController;
+import ch.imedias.rscc.controller.RequestSupportConnectingController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -24,9 +28,12 @@ public final class FXMLGuiLoader {
     private Scene editDialog;
     private Scene requestSupportConnecting;
     private Scene requestSupportConnected;
+    private Scene errorDialog;
     
     // Controller
     private RequestSupportConnectedController requestSupportConnectedController;
+    private RequestSupportConnectingController requestSupportConnectingController;
+    private ErrorDialogController errorDialogController;
     
     private FXMLGuiLoader() {
         // Create all instances
@@ -35,11 +42,18 @@ public final class FXMLGuiLoader {
             provideSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/ProvideSupport.fxml")));
             requestSupport = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RequestSupport.fxml")));
             editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml")));  
-            requestSupportConnecting = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RequestSupportConnecting.fxml")));
+            
+            FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("../view/RequestSupportConnecting.fxml"));
+            requestSupportConnecting = new Scene((Parent) loadConnecting.load());
+            requestSupportConnectingController = (RequestSupportConnectingController) loadConnecting.getController();
             
             FXMLLoader loadConnected = new FXMLLoader(getClass().getResource("../view/RequestSupportConnected.fxml"));
             requestSupportConnected = new Scene((Parent) loadConnected.load());
             requestSupportConnectedController = (RequestSupportConnectedController) loadConnected.getController();
+            
+            FXMLLoader loadError = new FXMLLoader(getClass().getResource("../view/ErrorDialog.fxml"));
+            errorDialog = new Scene((Parent) loadError.load());
+            errorDialogController = (ErrorDialogController) loadError.getController();
         } catch(IOException ex) {
                ex.printStackTrace();
         }
@@ -61,16 +75,36 @@ public final class FXMLGuiLoader {
         return requestSupport;
     }
     
-    public Scene getRequestSupportConnecting() {
+    public Scene getRequestSupportConnecting(String supporter) {
+        requestSupportConnectingController.setSupporter(supporter);
         return requestSupportConnecting;
     }
     
-    public Scene getRequestSupportConnected(String supporter) {
+    public Scene getRequestSupportConnected(String supporter, RequestSupportExecutor executor) {
         requestSupportConnectedController.setSupporter(supporter);
+        requestSupportConnectedController.setExecutor(executor);
         return requestSupportConnected;
     }
     
     public Scene getEditDialog() {
         return editDialog;
+    }
+    
+    public Scene getErrorDialog(String title, String message) {
+        errorDialogController.setTitle(title);
+        errorDialogController.setMessage(message);
+        return errorDialog;
+    }
+    
+    public Stage createDialog(Stage parent, Scene scene, String title, boolean modal) {
+        Stage stage = new Stage();
+        stage.initOwner(parent);
+        if(modal) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(modal);
+        }
+        stage.setTitle(title);
+        stage.setScene(scene);
+        return stage;
     }
 }
