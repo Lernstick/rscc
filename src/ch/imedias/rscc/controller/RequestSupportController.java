@@ -11,6 +11,7 @@ import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.RequestSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -104,7 +105,7 @@ public class RequestSupportController implements Initializable {
         
         // Initialize connecter giving the current stage
         if(executor == null)
-            executor = new RequestSupportExecutor(new ProcessExecutorFactory(), () -> openConnected(stage), () -> openConnectedFailed(stage));
+            executor = new RequestSupportExecutor(new ProcessExecutorFactory(), Executors.newCachedThreadPool(), () -> openConnected(stage), () -> openConnectedFailed(stage));
         // Start executor to connect
         executor.connect(supportAddress, scale);
     }

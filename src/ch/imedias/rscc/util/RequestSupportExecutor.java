@@ -31,11 +31,14 @@ public class RequestSupportExecutor {
     /**
      * Construcor, adds changelistener to ProcessExecutor. If the succeeds,
      * "success" will be called, "failed" otherwise. Callbacks can be null.
+     * @param factory ProcessExecutorFactory
+     * @param executor The executor to be used (normally Executors.newCachedThreadPool())
      * @param success Callback
      * @param failed Callback
      */
-    public RequestSupportExecutor(ProcessExecutorFactory factory, Runnable success, Runnable failed) {
+    public RequestSupportExecutor(ProcessExecutorFactory factory, ExecutorService executor, Runnable success, Runnable failed) {
         this.factory = factory;
+        this.executor = executor;
         SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();
         SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(evt -> {
             if(success != null && 
@@ -48,13 +51,16 @@ public class RequestSupportExecutor {
         });
     }
     
+    /*public void setExecutorService(ExecutorService executor) {
+        this.executor = executor;
+    }*/
+    
     /**
      * Starts x11vnc and connects to supportAddress with given scale.
      * @param supportAddress
      * @param scale
      */
     public void connect(final SupportAddress supportAddress, final Double scale){
-        executor = Executors.newCachedThreadPool();
         final String address = supportAddress.getAddress();
 
         okPlainPattern = Pattern.compile(".*reverse_connect: " + address + "/.* OK");
