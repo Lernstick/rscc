@@ -13,9 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the GUI when a client tries to connect with a
+ * supporter.
  *
- * @author user
+ * @author sschw
  */
 public class RequestSupportConnectingController implements Initializable {
 
@@ -29,6 +30,15 @@ public class RequestSupportConnectingController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
     
+    /**
+     * Change the text of the ConnectingTo label.<br>
+     * <br>
+     * Uses the already defined {@link ResourceBundle} text, which was defined
+     * in the FXML and adds the supporter name by using 
+     * {@link MessageFormat#format(java.lang.String, java.lang.Object...) }.
+     * 
+     * @param supporter the description text of the supporter.
+     */
     public void setSupporter(String supporter) {
         String t = MessageFormat.format(lblConnectingTo.getText(), supporter);
         lblConnectingTo.setText(t);

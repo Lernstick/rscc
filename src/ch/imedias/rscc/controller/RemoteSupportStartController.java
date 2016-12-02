@@ -16,9 +16,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the startup screen.
  *
- * @author user
+ * @author sschw
  */
 public class RemoteSupportStartController implements Initializable {
 
