@@ -30,6 +30,10 @@ public class RequestSupportExecutorTest {
     RequestSupportExecutor rse;
     String testValue;
     
+    /**
+     * Needed to initialize javaFX Thread, otherwise tasks cannot be tested.
+     * @throws InterruptedException 
+     */
     @BeforeClass
     public static void initJFX() throws InterruptedException {
         Thread t = new Thread("JavaFX Init Thread") {
@@ -67,6 +71,16 @@ public class RequestSupportExecutorTest {
         System.out.println(testValue);
     }
     
+    @Test
+    public void testExit()  {
+        rse.exit();
+        verify(pe).destroy();
+    }
+    
+    /**
+     * Wait for tasks to finish.
+     * @throws InterruptedException 
+     */
     public static void waitForRunLater() throws InterruptedException {
         Semaphore semaphore = new Semaphore(0);
         Platform.runLater(() -> semaphore.release());
