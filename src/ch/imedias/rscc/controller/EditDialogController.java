@@ -96,7 +96,9 @@ public class EditDialogController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Initialize supporter address lists (default and actual)
         staticAddressList = SupportAddress.getAll();
+        SupportAddress.resetAllToDefault();
         staticDefaultAddressList = SupportAddress.getAll();
+        SupportAddress.setAll(staticAddressList);
           
         table.setEditable(true);
         
