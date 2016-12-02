@@ -51,6 +51,11 @@ public class RequestSupportExecutor {
         });
     }
     
+    /**
+     * This method is unused at the time, but might be useful some time in the 
+     * future when you want to set different executors for different tasks or 
+     * also if you want to set a new executor after shutting down the old one.
+     */
     /*public void setExecutorService(ExecutorService executor) {
         this.executor = executor;
     }*/
@@ -98,6 +103,9 @@ public class RequestSupportExecutor {
         SEEK_PROCESS_EXECUTOR.destroy();
     }
     
+    /**
+     * Stops the service and shuts the executor down.
+     */
     public void exit() {
         disconnect();
         executor.shutdown();

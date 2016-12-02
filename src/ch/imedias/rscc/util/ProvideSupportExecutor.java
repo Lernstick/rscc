@@ -125,6 +125,9 @@ public class ProvideSupportExecutor {
         processExecutor.executeProcess("killall", "-9", "stunnel4");
     }
     
+    /**
+     * Kills all processes and shuts the executor down.
+     */
     public void exit() {
         stopOffer();
         executor.shutdown();

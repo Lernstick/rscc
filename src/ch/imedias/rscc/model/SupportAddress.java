@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 /**
- * a VNC support address
- *
- * @author Ronny Standtke <ronny.standtke@fhnw.ch>
+ * a VNC support address. Also provides methods to retrieve, save and reset a 
+ * complete list of addresses.
+ * @author Ronny Standtke <ronny.standtke@fhnw.ch>, updated and expanded patric steiner
  */
 public class SupportAddress implements Serializable {
 
