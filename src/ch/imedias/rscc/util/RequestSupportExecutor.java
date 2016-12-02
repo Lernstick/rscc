@@ -26,7 +26,7 @@ public class RequestSupportExecutor {
     private ProcessExecutorFactory factory;
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
     
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor;
     
     /**
      * Construcor, adds changelistener to ProcessExecutor. If the succeeds,
@@ -54,7 +54,7 @@ public class RequestSupportExecutor {
      * @param scale
      */
     public void connect(final SupportAddress supportAddress, final Double scale){
-
+        executor = Executors.newCachedThreadPool();
         final String address = supportAddress.getAddress();
 
         okPlainPattern = Pattern.compile(".*reverse_connect: " + address + "/.* OK");
@@ -90,6 +90,10 @@ public class RequestSupportExecutor {
      */
     public void disconnect() {
         SEEK_PROCESS_EXECUTOR.destroy();
+    }
+    
+    public void exit() {
+        disconnect();
         executor.shutdown();
     }
 }

@@ -121,8 +121,12 @@ public class ProvideSupportExecutor {
         for(ProcessExecutor tunnelExecutor : TUNNEL_EXECUTORS) {
             tunnelExecutor.destroy();
         }
-        executor.shutdown();
         ProcessExecutor processExecutor = factory.makeProcessExecutor();
         processExecutor.executeProcess("killall", "-9", "stunnel4");
+    }
+    
+    public void exit() {
+        stopOffer();
+        executor.shutdown();
     }
 }

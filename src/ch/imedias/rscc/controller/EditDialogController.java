@@ -101,16 +101,16 @@ public class EditDialogController implements Initializable {
         table.setEditable(true);
         
         // Initialize columns
-        Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> cellFactory = (TableColumn<SupportAddress, String> p) -> new EditingCell();
-        
+        Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> dexcriptionCellFactory = (TableColumn<SupportAddress, String> p) -> new DescriptionCell();      
         name.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("description"));
-        name.setCellFactory(cellFactory);
+        name.setCellFactory(dexcriptionCellFactory);
         name.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
             ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setDescription(t.getNewValue());
         });
 
+        Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> addressCellFactory = (TableColumn<SupportAddress, String> p) -> new AddressCell();
         address.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("address"));
-        address.setCellFactory(cellFactory);
+        address.setCellFactory(addressCellFactory);
         address.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
             ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAddress(t.getNewValue());
         });
@@ -222,6 +222,7 @@ public class EditDialogController implements Initializable {
     @FXML
     private void onAddClickedAction(MouseEvent event) {
         SupportAddress addressNew = new SupportAddress("","", false);
+        table.getSelectionModel().clearSelection();
         supportAddresses.add(addressNew);
         table.getSelectionModel().select(addressNew);
         manageUpDownButtons();
@@ -304,7 +305,7 @@ public class EditDialogController implements Initializable {
      * and handles the input and editing events
      */
     class EditingCell extends TableCell<SupportAddress, String> {
-        private TextField textField;
+        protected TextField textField;
 
         /**
          * Default constructor
@@ -366,7 +367,7 @@ public class EditDialogController implements Initializable {
         /**
          * This method creates the textfield and handles the eding of the textfield
          */
-        private void createTextField() {
+        protected void createTextField() {
             textField = new TextField(getString());
             textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
             textField.focusedProperty().addListener(
@@ -377,6 +378,7 @@ public class EditDialogController implements Initializable {
                     });
             textField.textProperty().addListener((observable, oldValue, newValue)->{
                 updateItem(newValue, false);
+                table.getSelectionModel().getSelectedItem().setDescription(getString());
             });
         }
 
@@ -384,8 +386,50 @@ public class EditDialogController implements Initializable {
          * This method is the getter of the text entry of the item
          * @return string property of item
          */
-        private String getString() {
+        protected String getString() {
             return getItem() == null ? "" : getItem().toString();
+        }
+    }
+    
+    class DescriptionCell extends EditingCell {
+        /**
+         * This method creates the textfield and handles the eding of the textfield
+         */
+        @Override
+        protected void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.focusedProperty().addListener(
+                    (ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) -> {
+                        if (!arg2) {
+                            commitEdit(textField.getText());
+                        }
+                    });
+            textField.textProperty().addListener((observable, oldValue, newValue)->{
+                updateItem(newValue, false);
+                table.getSelectionModel().getSelectedItem().setDescription(getString());
+            });
+        }
+    }
+    
+    class AddressCell extends EditingCell {
+        /**
+         * This method creates the textfield and handles the eding of the textfield
+         */
+        @Override
+        protected void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.focusedProperty().addListener(
+                    (ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) -> {
+                        if (!arg2) {
+                            commitEdit(textField.getText());
+                        }
+                    });
+            textField.textProperty().addListener((observable, oldValue, newValue)->{
+                updateItem(newValue, false);
+                table.getSelectionModel().getSelectedItem().setAddress(getString());
+            });
         }
     }
 }
