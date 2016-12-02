@@ -14,9 +14,11 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the Error Dialog.<br>
+ * <br>
+ * JavaFX does not have a standard error dialog.
  *
- * @author user
+ * @author sschw
  */
 public class ErrorDialogController implements Initializable {
 
