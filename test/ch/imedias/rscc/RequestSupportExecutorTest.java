@@ -36,6 +36,7 @@ public class RequestSupportExecutorTest {
      */
     @BeforeClass
     public static void initJFX() throws InterruptedException {
+    	System.setProperty("ui4j.headless", "true");
         Thread t = new Thread("JavaFX Init Thread") {
             public void run() {
                 Application.launch(RemoteSupportApplication.class, new String[0]);
