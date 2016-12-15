@@ -20,7 +20,7 @@
  *
  * Created on 31. August 2003, 14:32
  */
-package ch.imedias.rscc;
+package ch.imedias.rscc.util;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
