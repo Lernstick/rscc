@@ -17,7 +17,7 @@ public class Settings {
     private static int quality;
     private static int compressionLevel;
     private static boolean bgr233;
-    private static boolean useHttpsPort;
+    private static boolean useSSHPort;
     
     private final static Preferences preferences;
     
@@ -82,14 +82,14 @@ public class Settings {
      * @return shows if https is used
      */
     public static boolean getUseHttpsPort() {
-        return useHttpsPort;
+        return useSSHPort;
     }
     
     /**
-     * @param useHttpsPort shows if https is used
+     * @param useSSHPort shows if SSH port is used
      */
-    public static void setUseHttpsPort(boolean useHttpsPort) {
-        Settings.useHttpsPort = useHttpsPort;
+    public static void setUseSSHPort(boolean useSSHPort) {
+        Settings.useSSHPort = useSSHPort;
     }
     
     static {
@@ -98,7 +98,7 @@ public class Settings {
         quality = preferences.getInt("quality", 6);
         compressionLevel = preferences.getInt("compressionLevel", 6);
         bgr233 = preferences.getBoolean("bgr233", false);
-        useHttpsPort = preferences.getBoolean("useHttpsPort", false);
+        useSSHPort = preferences.getBoolean("useSSHPort", false);
     }
     
     /**
@@ -109,6 +109,6 @@ public class Settings {
         preferences.putInt("quality", quality);
         preferences.putInt("compressionLevel", compressionLevel);
         preferences.putBoolean("bgr233", bgr233);
-        preferences.putBoolean("useHttpsPort", useHttpsPort);
+        preferences.putBoolean("useHttpsPort", useSSHPort);
     }
 }

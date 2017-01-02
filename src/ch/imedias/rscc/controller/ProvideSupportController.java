@@ -39,9 +39,7 @@ public class ProvideSupportController implements Initializable {
     @FXML
     private ComboBox<Integer> cboQuality;
     @FXML
-    private TextField txtSafePorts;
-    @FXML
-    private CheckBox chkHttpsPort;
+    private CheckBox chkSSHPort;
     @FXML
     private Button cmdStartService;
     
@@ -52,6 +50,7 @@ public class ProvideSupportController implements Initializable {
     private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
     
     private ProvideSupportExecutor executor;
+    @FXML
 
     /**
      * Initializes the controller class.
@@ -68,17 +67,13 @@ public class ProvideSupportController implements Initializable {
         cboCompression.setValue(Settings.getCompressionLevel());
         cboQuality.setValue(Settings.getQuality());
         chk8BitColor.setSelected(Settings.getBgr233());
-        chkHttpsPort.setSelected(Settings.getUseHttpsPort());
-        txtSafePorts.setText(Settings.getSecurePorts());
+        chkSSHPort.setSelected(Settings.getUseHttpsPort());
         
         // Disable controls after starting remote
         cboCompression.disableProperty().bind(serviceStarted);
         cboQuality.disableProperty().bind(serviceStarted);
         chk8BitColor.disableProperty().bind(serviceStarted);
-        chkHttpsPort.disableProperty().bind(serviceStarted);
-        
-        // Also disable SafePorts if https is selected
-        txtSafePorts.disableProperty().bind(Bindings.or(serviceStarted, chkHttpsPort.selectedProperty()));
+        chkSSHPort.disableProperty().bind(serviceStarted);
     }    
 
     @FXML
@@ -99,10 +94,11 @@ public class ProvideSupportController implements Initializable {
             serviceStarted.set(false);
         } else {
             // Start service
-            executor.startOffer(txtSafePorts.getText(), 
+            executor.startOffer( 
                         cboCompression.getValue(), 
                         cboQuality.getValue(), 
-                        chk8BitColor.isSelected());
+                        chk8BitColor.isSelected(),
+                        chkSSHPort.isSelected());
             
             cmdStartService.setText(BUNDLE.getString("Stop_Service"));
             serviceStarted.set(true);
@@ -123,17 +119,11 @@ public class ProvideSupportController implements Initializable {
     private void onQualityChangedAction(ActionEvent event) {
         Settings.setQuality(cboQuality.getValue());
     }
-
+    
     @FXML
-    private void onHttpsChangedAction(ActionEvent event) {
-        Settings.setUseHttpsPort(chkHttpsPort.isSelected());
+    private void onSSHChangedAction(ActionEvent event) {
+        Settings.setUseSSHPort(chkSSHPort.isSelected());
     }
-
-    @FXML
-    private void OnSecurePortsTyped(KeyEvent event) {
-        Settings.setSecurePorts(txtSafePorts.getText());
-    }
-
     public void finalizeGui() {
         executor.exit();
         executor = null;
