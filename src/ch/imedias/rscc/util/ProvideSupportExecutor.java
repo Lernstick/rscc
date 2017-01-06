@@ -34,60 +34,14 @@ public class ProvideSupportExecutor {
      * @param quality
      * @param isBGR233selected 
      */
-    public void startOffer(String securePortsText, final Number compression, final Number quality, final boolean isBGR233selected){
-        String[] securePortsStrings = securePortsText.split(",");
-        List<Integer> securePorts = new ArrayList<Integer>();
-        for (String securePortsString : securePortsStrings) {
-            String trimmed = securePortsString.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
-            // throws NumberFormatException
-            int securePort = Integer.parseInt(trimmed);
-            if ((securePort >= 0) && (securePort <= 65535)) {
-                securePorts.add(securePort);
-            } else {
-                throw new NumberFormatException();
-            }
-        }
-
-        Task viewerTask = new Task() {
+    public void startOffer(final Number compression, final Number quality, final boolean isBGR233selected, boolean isSSHConnection){
+         Task viewerTask = new Task() {
             @Override
             protected Object call() throws Exception {
                 return onOfferActionDoInBackground(compression, quality, isBGR233selected);
             }
         };
-        executor.submit(viewerTask);
-
-        // check that the pem file for stunnel is there
-        final String pemFilePath = System.getProperty("user.home")
-                + "/.local/stunnel.pem";
-        if (!securePorts.isEmpty()) {
-            File pemFile = new File(pemFilePath);
-            if (!pemFile.exists()) {
-                ProcessExecutor processExecutor = factory.makeProcessExecutor();
-                processExecutor.executeProcess("openssl", "req", "-x509",
-                        "-nodes", "-days", "36500", "-subj",
-                        "/C=/ST=/L=/CN=tmp", "-newkey",
-                        "rsa:1024",
-                        "-keyout", pemFilePath, "-out", pemFilePath);
-            }
-        }
-
-        for (final Integer securePort : securePorts) {
-            Task tunnelTask = new Task() {
-                @Override
-                protected Object call() throws Exception {
-                    ProcessExecutor tunnelExecutor = factory.makeProcessExecutor();
-                    tunnelExecutor.executeProcess(
-                            "stunnel", "-f", "-P", "", "-p", pemFilePath,
-                            "-d", securePort.toString(), "-r", "5500");
-                    TUNNEL_EXECUTORS.add(tunnelExecutor);
-                    return null;
-                }
-            };
-            executor.submit(tunnelTask);
-        }       
+        executor.submit(viewerTask);    
     }   
     
     /**
