@@ -34,21 +34,17 @@ public class ProvideSupportExecutorTest {
         pse = new ProvideSupportExecutor(factory);
     }
     
-    @Test(expected = NumberFormatException.class)
-    public void testStartOfferWithInvalidPort(){
-        pse.startOffer("hallo", 1.0, 1.0, true);
-    }
-    
     @Test
-    public void testStartOfferWithEmptyPortsString(){
-        pse.startOffer("", 1.0, 1.0, true);
-    }
-    
-    @Test
-    public void testStartOfferWithMultiplePorts(){
-        pse.startOffer("21,22,23", 1.0, 1.0, true);
+    public void testStartOfferWithSSH(){
+        pse.startOffer(1.0, 1.0, true, true);
         verify(executor, atLeast(0)).executeProcess(any());
     }
+    
+    @Test
+    public void testStartOfferWithOutSSH(){
+        pse.startOffer(1.0, 1.0, true, false);
+        verify(executor, atLeast(0)).executeProcess(any());
+    }   
     
     @Test
     public void testStopOffer(){
