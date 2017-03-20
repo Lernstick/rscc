@@ -35,7 +35,7 @@
             </VBox>
          </bottom>
          <top>
-            <Label stylesheets="@edit.css" text="%ProvideSupport.title" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Label stylesheets="@edit.css" text="%ProvideSupport.title" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

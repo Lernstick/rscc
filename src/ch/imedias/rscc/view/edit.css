@@ -10,7 +10,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 */
 
 #AddButton {          
-    -fx-background-image: url("../icons/newIcons50x50/Plus-52(1).png");
+    -fx-background-image: url("../icons/newIcons50x50/plus.png");
     -fx-background-image-size: 10;
     -fx-background-size: 25;
     -fx-background-repeat: no-repeat;
@@ -18,7 +18,7 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
 }
 
 #DeleteButton {          
-    -fx-background-image: url("../icons/newIcons50x50/Cancel_2-48.png");
+    -fx-background-image: url("../icons/newIcons50x50/Delete-48.png");
     -fx-background-image-size: 10;
     -fx-background-position: center;
     -fx-padding: 5;
@@ -49,92 +49,6 @@ icons: <a href="https://icons8.com/web-app/16263/Edit-Row">Edit row icon credits
     -fx-background-repeat: no-repeat;
 }
 
-#SaveButton {          
-   /* -fx-background-image: url("../icons/newIcons50x50/Checkmark-64.png");*/
-    -fx-background-position: 3 3;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
 
-#CancelButton {          
-    /*-fx-background-image: url("../icons/newIcons50x50/Delete-52.png");*/
-    -fx-background-position: 3 3;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
-
-.table-view .column-header{
-    -fx-background-color: rgb(79, 181, 170);
-}
-
-#Background {
-    -fx-background-color: rgb(210,210,210);/*darkslategrey;*/
-    -fx-text-fill: whitesmoke;
-    -fx-text-size: 24;
-}
-
-#Description {
-    -fx-background-color: whitesmoke;
-}
-
-.button {
-    -fx-background-color: whitesmoke;
-    -fx-border-color: rgb(79, 181, 170);;
-    -fx-border-insets: -1;
-    -fx-border-style: solid;
-    -fx-border-radius: 3;
-    -fx-border-width: 1.5;
-}
-
-#PullDown{
-    -fx-background-color: whitesmoke;
-    -fx-border-color: rgb(79, 181, 170);;
-    -fx-border-insets: -1;
-    -fx-border-style: solid;
-    -fx-border-radius: 3;
-    -fx-border-width: 1.5;
-}
-
-.titled-pane > .title {
-    -fx-background-color: rgb(79, 181, 170);
-}
-
-#Disconnect
-{
-    /*-fx-background-image: url("../icons/newIcons50x50/Disconnected-50.png");*/
-    -fx-background-position: 4 4;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
-
-#Connect
-{
-    /*-fx-background-image: url("../icons/newIcons50x50/Connected_Filled-50(2).png");*/
-    -fx-background-position: 4 4;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
-
-#Back
-{
-    /*-fx-background-image: url("../icons/newIcons50x50/Left-48.png");*/
-    -fx-background-position: 4 4;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
-
-#Start
-{
-    /*-fx-background-image: url("../icons/newIcons50x50/Play_Filled-50.png");*/
-    -fx-background-position: 4 4;
-    -fx-padding: 5;
-    -fx-background-size: 20 20;
-    -fx-background-repeat: no-repeat;
-}
 
 

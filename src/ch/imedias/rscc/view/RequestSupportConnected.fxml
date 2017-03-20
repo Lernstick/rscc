@@ -12,7 +12,7 @@
    <children>
       <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <Label stylesheets="@edit.css" text="%ReceiveSupport.title" textFill="WHITE" BorderPane.alignment="CENTER">
+            <Label stylesheets="@edit.css" text="%ReceiveSupport.title" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

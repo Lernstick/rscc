@@ -12,12 +12,12 @@
 <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.RemoteSupportStartController">
     <VBox id="Background" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" spacing="20.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Label text="%RemoteSupportStart.title" textFill="#f8f7f7">
+            <Label text="%RemoteSupportStart.title">
                 <font>
                     <Font size="26.0" />
                 </font>
             </Label>
-            <TextFlow prefHeight="96.0" prefWidth="280.0">
+          <TextFlow prefHeight="96.0" prefWidth="280.0">
                 <children>
                     <Label id="Description" prefHeight="64.0" prefWidth="362.0" stylesheets="@edit.css" text="%RemoteSupportStart.descriptionSummary" wrapText="true">
                   <padding>

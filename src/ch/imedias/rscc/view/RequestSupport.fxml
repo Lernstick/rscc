@@ -42,7 +42,7 @@
                  <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="166.0" GridPane.columnIndex="1">
                     <children>
                        <ComboBox id="PullDown" fx:id="cboSupporter" prefHeight="25.0" prefWidth="168.0" stylesheets="@edit.css" />
-                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink" textFill="#51b3aa" />
+                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink"/>
                     </children>
                     <padding>
                        <Insets right="5.0" top="18.0" />
@@ -52,7 +52,7 @@
            </GridPane>
         </center>
         <top>
-           <Label stylesheets="@edit.css" text="%ReceiveSupport.title" textFill="WHITE" BorderPane.alignment="CENTER">
+           <Label stylesheets="@edit.css" text="%ReceiveSupport.title" BorderPane.alignment="CENTER">
               <font>
                  <Font size="24.0" />
               </font>
