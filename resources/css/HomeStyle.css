@@ -1,0 +1,5 @@
+.HomeNavigationBtn{
+    -fx-font-size: 18pt;
+    -fx-fit-to-width: true;
+    -fx-content-display: left;
+}

@@ -1,0 +1,28 @@
+#descriptionTxt{
+    -fx-wrap-text: true;
+}
+
+#keyGenerationLbl{
+    -fx-font-family: Cantarell;
+    -fx-font-size: 30pt;
+}
+
+#generatedKeyFld{
+    -fx-background-color: #e2e2e2;
+    -fx-font-family: Monospaced;
+    -fx-font-size: 30pt;
+}
+
+#additionalDescriptionTxt{
+    -fx-wrap-text: true;
+}
+
+#centerBox{
+    -fx-padding: 10, 20, 10, 20;
+}
+#bottomBox{
+    -fx-padding: 10 ,20 ,1 ,20;
+}
+
+
+

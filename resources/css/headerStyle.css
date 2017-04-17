@@ -1,0 +1,19 @@
+#header {
+    -fx-background-color: #eeeeee;
+    -fx-padding: 10;
+}
+
+#headerText {
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-font-family: Cantarell;
+}
+
+#helpBtn, #backBtn, #settingsBtn{
+    -fx-padding: 5;
+    -fx-border-color: #d5d5d5;
+    -fx-border-width: 3;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+}
+
