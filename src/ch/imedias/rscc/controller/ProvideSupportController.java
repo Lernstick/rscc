@@ -11,7 +11,6 @@ import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.ProvideSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -42,6 +41,14 @@ public class ProvideSupportController implements Initializable {
     private CheckBox chkSSHPort;
     @FXML
     private Button cmdStartService;
+    @FXML
+    private Label lbPort;
+    @FXML
+    private TextField tfPort;
+    @FXML
+    private Label lbPWLabel;
+    @FXML
+    private Label lbPWValue;
     
     // Language bundle
     private static ResourceBundle BUNDLE;
@@ -74,6 +81,11 @@ public class ProvideSupportController implements Initializable {
         cboQuality.disableProperty().bind(serviceStarted);
         chk8BitColor.disableProperty().bind(serviceStarted);
         chkSSHPort.disableProperty().bind(serviceStarted);
+        
+        lbPort.visibleProperty().setValue(false);
+        tfPort.visibleProperty().setValue(false);
+        lbPWLabel.visibleProperty().setValue(false);
+        lbPWValue.visibleProperty().setValue(false);
     }    
 
     @FXML
@@ -123,6 +135,17 @@ public class ProvideSupportController implements Initializable {
     @FXML
     private void onSSHChangedAction(ActionEvent event) {
         Settings.setUseSSHPort(chkSSHPort.isSelected());
+        if (chkSSHPort.isSelected()) {
+            lbPort.visibleProperty().setValue(true);
+            tfPort.visibleProperty().setValue(true);
+            lbPWLabel.visibleProperty().setValue(true);
+            lbPWValue.visibleProperty().setValue(true); 
+        } else {
+            lbPort.visibleProperty().setValue(false);
+            tfPort.visibleProperty().setValue(false);
+            lbPWLabel.visibleProperty().setValue(false);
+            lbPWValue.visibleProperty().setValue(false);
+        }
     }
     public void finalizeGui() {
         executor.exit();
