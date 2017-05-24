@@ -27,6 +27,8 @@ public class RemoteSupportApplication extends Application {
         Scene scene = FXMLGuiLoader.getInstance().getRemoteSupportStart();
         primaryStage.setTitle(FXMLGuiLoader.getInstance().getApplicationTitle());
         primaryStage.setScene(scene);
+        primaryStage.setMinHeight(300);
+        primaryStage.setMinWidth(400);
         primaryStage.show();
     }
 

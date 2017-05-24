@@ -18,20 +18,17 @@
 
 <VBox prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.ProvideSupportController">
    <children>
-      <BorderPane id="Background" prefHeight="372.0" prefWidth="400.0" stylesheets="@edit.css">
+      <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css">
          <bottom>
             <VBox alignment="TOP_CENTER" prefWidth="400.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane>
+                  <BorderPane prefHeight="18.0" prefWidth="360.0">
                      <right>
                         <Button id="Start" fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" stylesheets="@edit.css" text="%Start_Service" BorderPane.alignment="CENTER" />
                      </right>
                      <left>
                         <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="CENTER" />
                      </left>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
                   </BorderPane>
                </children>
                <padding>
@@ -50,9 +47,9 @@
             </Label>
          </top>
          <center>
-            <VBox prefHeight="208.0" prefWidth="360.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="360.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <TitledPane id="Settings" animated="false" collapsible="false" prefHeight="173.0" prefWidth="360.0" stylesheets="@edit.css" text="%ProvideSupport.connectionSettings">
+                  <TitledPane id="Settings" animated="false" collapsible="false" prefHeight="100.0" prefWidth="360.0" stylesheets="@edit.css" text="%ProvideSupport.connectionSettings">
                     <content>
                       <AnchorPane minHeight="70.0" minWidth="0.0" prefHeight="133.0" prefWidth="358.0">
                            <children>
@@ -88,46 +85,27 @@
                         <Insets />
                      </VBox.margin>
                   </TitledPane>
-                  <GridPane prefHeight="75.0" prefWidth="360.0" vgap="3.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="115.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="225.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <CheckBox fx:id="chkSSHPort" mnemonicParsing="false" onAction="#onSSHChangedAction" text="%ProvideSupport.useSSHLabel" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <CheckBox fx:id="chkSSHPort" mnemonicParsing="false" onAction="#onSSHChangedAction" text="%ProvideSupport.useSSHLabel" GridPane.columnSpan="2" />
-                     </children>
-                  </GridPane>
-                  <VBox prefHeight="80.0" prefWidth="100.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="lbPort" text="Port">
-                                 <padding>
-                                    <Insets right="20.0" />
-                                 </padding>
-                              </Label>
-                              <TextField fx:id="tfPort" prefWidth="70.0" text="23" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="40.0" prefWidth="200.0">
-                           <children>
-                              <Label fx:id="lbPWLabel" text="Password">
-                                 <padding>
-                                    <Insets right="20.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lbPWValue" text="1234" />
-                           </children>
+                        <Label fx:id="lbPort" text="Port">
                            <padding>
-                              <Insets top="10.0" />
+                              <Insets right="20.0" />
                            </padding>
-                        </HBox>
+                        </Label>
+                        <TextField fx:id="tfPort" prefWidth="70.0" text="23" />
                      </children>
-                  </VBox>
+                  </HBox>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <Label fx:id="lbPWLabel" text="Password">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbPWValue" text="1234" />
+                     </children>
+                  </HBox>
                </children>
                <BorderPane.margin>
                   <Insets left="20.0" right="20.0" top="15.0" />
