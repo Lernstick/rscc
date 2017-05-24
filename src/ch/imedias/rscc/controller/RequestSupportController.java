@@ -142,7 +142,11 @@ public class RequestSupportController implements Initializable {
         Stage stage = (Stage)scene.getWindow();
         
         Scene editDialog = FXMLGuiLoader.getInstance().getEditDialog();
-        FXMLGuiLoader.getInstance().createDialog(stage, editDialog, bundle.getString("EditDialog.title"), true).showAndWait();
+        Stage s = FXMLGuiLoader.getInstance().createDialog(stage, editDialog, bundle.getString("EditDialog.title"), true);
+        s.setMinWidth(640);
+        s.setMinHeight(400);
+        s.showAndWait();
+       
         
         // Reload supporter list after dialog while keeping current selection
         SupportAddress sa = cboSupporter.getValue();

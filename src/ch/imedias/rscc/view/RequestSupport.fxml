@@ -17,7 +17,7 @@
 <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.RequestSupportController">
     <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <center>
-           <GridPane hgap="5.0" prefHeight="146.0" prefWidth="360.0" vgap="5.0" BorderPane.alignment="CENTER">
+           <GridPane hgap="5.0" minHeight="109.0" minWidth="360.0" prefHeight="146.0" prefWidth="360.0" vgap="5.0" BorderPane.alignment="CENTER">
              <columnConstraints>
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="129.0" />
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="226.0" />
@@ -42,7 +42,7 @@
                  <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="166.0" GridPane.columnIndex="1">
                     <children>
                        <ComboBox id="PullDown" fx:id="cboSupporter" prefHeight="25.0" prefWidth="168.0" stylesheets="@edit.css" />
-                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink"/>
+                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink" />
                     </children>
                     <padding>
                        <Insets right="5.0" top="18.0" />

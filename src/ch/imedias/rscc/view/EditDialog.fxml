@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.EditDialogController">
+<VBox minHeight="400.0" minWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.EditDialogController">
   <children>
-    <AnchorPane id="Background" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@edit.css" VBox.vgrow="ALWAYS">
+    <AnchorPane id="Background" maxHeight="-1.0" maxWidth="-1.0" minHeight="400.0" minWidth="640.0" prefHeight="400.0" prefWidth="640.0" stylesheets="@edit.css" VBox.vgrow="ALWAYS">
       <children>
         <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library hereâ€¦" textAlignment="CENTER" wrapText="false">
           <font>
@@ -42,7 +42,7 @@
                   </Label>
                </top>
                <bottom>
-                  <BorderPane id="BorderPain" prefHeight="26.0" prefWidth="527.0" stylesheets="@edit.css" BorderPane.alignment="CENTER">
+                  <BorderPane id="BorderPain" prefHeight="26.0" prefWidth="527.0" stylesheets="@edit.css" BorderPane.alignment="BOTTOM_CENTER">
                      <left>
                         <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#onCancelClickedAction" stylesheets="@edit.css" text="%EditDialog.cancelButton.text" BorderPane.alignment="CENTER" />
                      </left>

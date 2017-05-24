@@ -24,10 +24,10 @@
                <children>
                   <BorderPane prefHeight="18.0" prefWidth="360.0">
                      <right>
-                        <Button id="Start" fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" stylesheets="@edit.css" text="%Start_Service" BorderPane.alignment="CENTER" />
+                        <Button id="Start" fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" stylesheets="@edit.css" text="%Start_Service" BorderPane.alignment="BOTTOM_RIGHT" />
                      </right>
                      <left>
-                        <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="CENTER" />
+                        <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="BOTTOM_LEFT" />
                      </left>
                   </BorderPane>
                </children>
