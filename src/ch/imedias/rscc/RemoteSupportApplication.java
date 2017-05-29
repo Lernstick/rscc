@@ -49,6 +49,7 @@ public class RemoteSupportApplication extends Application {
     @Override
     public void stop() throws Exception {
         FXMLGuiLoader.getInstance().finalizeGuis();
+        System.exit(0);
     }
     
     

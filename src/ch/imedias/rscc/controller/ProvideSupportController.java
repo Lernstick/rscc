@@ -7,6 +7,7 @@ package ch.imedias.rscc.controller;
 
 import ch.imedias.rscc.model.Settings;
 import ch.imedias.rscc.util.FXMLGuiLoader;
+import ch.imedias.rscc.util.PasswordChanger;
 import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.ProvideSupportExecutor;
 import java.net.URL;
@@ -86,6 +87,9 @@ public class ProvideSupportController implements Initializable {
         tfPort.visibleProperty().setValue(false);
         lbPWLabel.visibleProperty().setValue(false);
         lbPWValue.visibleProperty().setValue(false);
+        
+        // Set and generate new Password
+        lbPWValue.setText(PasswordChanger.setRandomPassword());
     }    
 
     @FXML
@@ -110,7 +114,8 @@ public class ProvideSupportController implements Initializable {
                         cboCompression.getValue(), 
                         cboQuality.getValue(), 
                         chk8BitColor.isSelected(),
-                        chkSSHPort.isSelected());
+                        chkSSHPort.isSelected(),
+                        tfPort.getText());
             
             cmdStartService.setText(BUNDLE.getString("Stop_Service"));
             serviceStarted.set(true);

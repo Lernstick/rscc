@@ -27,7 +27,7 @@
                     <columns>
                       <TableColumn fx:id="name" minWidth="20.0" prefWidth="184.0" text="%Description" />
                       <TableColumn fx:id="address" minWidth="0.0" prefWidth="190.0" text="%Address" />
-                        <TableColumn fx:id="encrypted" prefWidth="180.0" text="%UseSSL" />
+                        <TableColumn fx:id="encrypted" prefWidth="180.0" text="%UseSSH" />
                     </columns>
                   </TableView>
                </center>

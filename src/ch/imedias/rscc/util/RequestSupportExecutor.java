@@ -6,67 +6,68 @@
 package ch.imedias.rscc.util;
 
 import ch.imedias.rscc.model.SupportAddress;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 /**
- * Util class to request remote support. Provides method to connect to a
- * vnc (xtightvncviewer) listener.
+ * Util class to request remote support. Provides method to connect to a vnc
+ * (xtightvncviewer) listener.
  */
 public class RequestSupportExecutor {
+
     private Pattern okPlainPattern;
     private Pattern okSSLPattern;
     private Pattern failedPattern;
-    
-    private ProcessExecutorFactory factory;
+
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
-    
-    private ExecutorService executor;
-    
+
+    private final ExecutorService executor;
+    private boolean connected = false;
+    private final Runnable success;
+    private final Runnable failed;
+
     /**
      * Construcor, adds changelistener to ProcessExecutor. If the succeeds,
      * "success" will be called, "failed" otherwise. Callbacks can be null.
+     *
      * @param factory ProcessExecutorFactory
-     * @param executor The executor to be used (normally Executors.newCachedThreadPool())
+     * @param executor The executor to be used (normally
+     * Executors.newCachedThreadPool())
      * @param success Callback
      * @param failed Callback
      */
     public RequestSupportExecutor(ProcessExecutorFactory factory, ExecutorService executor, Runnable success, Runnable failed) {
-        this.factory = factory;
         this.executor = executor;
         SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();
-        SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(evt -> {
-            if(success != null && 
-                    (okPlainPattern.matcher((String) evt.getNewValue()).matches() || 
-                    okSSLPattern.matcher((String) evt.getNewValue()).matches()))
-                Platform.runLater(success);
-            else if(failed != null && 
-                    failedPattern.matcher((String) evt.getNewValue()).matches())
-                Platform.runLater(failed);
-        });
+        this.success = success;
+        this.failed = failed;
     }
-    
+
     /**
-     * This method is unused at the time, but might be useful some time in the 
-     * future when you want to set different executors for different tasks or 
+     * This method is unused at the time, but might be useful some time in the
+     * future when you want to set different executors for different tasks or
      * also if you want to set a new executor after shutting down the old one.
      */
     /*public void setExecutorService(ExecutorService executor) {
         this.executor = executor;
     }*/
-    
     /**
      * Starts x11vnc and connects to supportAddress with given scale.
+     *vnc
      * @param supportAddress
      * @param scale
+     * @param password
      */
-    public void connect(final SupportAddress supportAddress, final Double scale){
-        final String address = supportAddress.getAddress();
+    public void connect(final SupportAddress supportAddress, final Double scale, final String password) {
+        String[] splitted = supportAddress.getAddress().split(":");
+        final String address = splitted[0];
+        final String scaleString = scale.toString();
 
         okPlainPattern = Pattern.compile(".*reverse_connect: " + address + "/.* OK");
         okSSLPattern = Pattern.compile(".*created selwin:.*");
@@ -75,34 +76,71 @@ public class RequestSupportExecutor {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                List<String> commandList = new ArrayList<String>();
-                commandList.add("x11vnc");
-                commandList.add("-connect_or_exit");
-                commandList.add(address);
                 if (supportAddress.isEncrypted()) {
-                    commandList.add("-ssl");
-                    commandList.add("TMP");
+                    String port = "22"; // default Port
+                    if (splitted.length >= 2) {
+                        port = splitted[1];
+                    }
+
+                    // TODO: throw exception if port wrong, etc
+                    String sshConnection = String.format("%1$s %2$s %3$s %4$s %5$s %6$s %7$s",
+                            "sshpass -p " + password,
+                            "ssh -o StrictHostKeyChecking=no",
+                            "-p" + port,
+                            "-NfL5500:localhost:5500 rscc_ssh@" + address,
+                            "sleep 2 && x11vnc",
+                            "-connect_or_exit localhost:5500",
+                            "-scale " + scaleString
+                    );
+
+                    SEEK_PROCESS_EXECUTOR.executeScript(SEEK_PROCESS_EXECUTOR.createScript(sshConnection).getAbsolutePath());
+
+                } else {
+                    String sshConnection = "x11vnc -connect_or_exit -scale" + scaleString;
+                    SEEK_PROCESS_EXECUTOR.executeScript(SEEK_PROCESS_EXECUTOR.createScript(sshConnection).getAbsolutePath());
                 }
-                String scaleString = scale.toString();
-                if (!scaleString.equals("1.0")) {
-                    commandList.add("-scale");
-                    commandList.add(scaleString);
-                }
-                String[] commandArray =
-                        commandList.toArray(new String[commandList.size()]);
-                SEEK_PROCESS_EXECUTOR.executeProcess(true, true, commandArray);
                 return null;
             }
         };
+
         executor.submit(task);
+
+        try {
+            final long start = System.currentTimeMillis();
+            final String path = SEEK_PROCESS_EXECUTOR.createScript("netstat -anp | grep x11vnc").getAbsolutePath();
+            final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+            ses.scheduleAtFixedRate(() -> {
+                try {
+                    SEEK_PROCESS_EXECUTOR.executeScript(true, false, path);
+                    String s = SEEK_PROCESS_EXECUTOR.getOutput();
+                    if (!connected && s != null && !s.isEmpty()) {
+                        connected = true;
+                        Platform.runLater(success);
+                    } else if (!connected) {
+                        if (System.currentTimeMillis() - start > 12000) {
+                            Platform.runLater(failed);
+                            throw new RuntimeException("Task finished");
+                        }
+                    } else if (connected && (s == null || s.isEmpty())) {
+                        disconnect();
+                        throw new RuntimeException("Task finished");
+                    }
+                } catch (IOException e) {
+                }
+            }, 0, 1, TimeUnit.SECONDS);
+        } catch (IOException e) {
+        }
     }
+
     /**
      * Stops service.
      */
     public void disconnect() {
+        connected = false;
         SEEK_PROCESS_EXECUTOR.destroy();
+        SEEK_PROCESS_EXECUTOR.executeProcess("killall", "-9", "x11vnc");
     }
-    
+
     /**
      * Stops the service and shuts the executor down.
      */
