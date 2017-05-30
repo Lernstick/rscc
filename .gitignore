@@ -8,3 +8,4 @@ debian/rscc.substvars
 dist/
 nbproject/private/
 /nbproject/
+target/
