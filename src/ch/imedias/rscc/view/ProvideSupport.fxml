@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.ProvideSupportController" stylesheets="@edit.css">
+<BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.ProvideSupportController">
  <top>
     <Label stylesheets="@edit.css" text="%ProvideSupport.title" BorderPane.alignment="CENTER">
        <font>
@@ -74,7 +74,7 @@
                       <Insets right="20.0" />
                    </padding>
                 </Label>
-                <TextField fx:id="tfPort" prefWidth="70.0" text="23" />
+                <TextField fx:id="tfPort" prefWidth="70.0" text="22" />
              </children>
           </HBox>
           <HBox prefWidth="200.0">
@@ -84,7 +84,7 @@
                       <Insets right="20.0" />
                    </padding>
                 </Label>
-                <Label fx:id="lbPWValue" text="1234" />
+                <Label fx:id="lbPWValue" />
              </children>
           </HBox>
        </children>
@@ -111,4 +111,3 @@
     </BorderPane>
  </bottom>
 </BorderPane>
-
