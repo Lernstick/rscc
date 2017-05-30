@@ -1,0 +1,6 @@
+rename to rscc (Remote Support Control Center)
+(remove all "lernstick" specific class names, strings, ...)
+
+separate package lernstick-rscc-defaults
+
+is -bgr233 independend of -compression and -quality?
