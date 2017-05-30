@@ -11,6 +11,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -26,6 +28,7 @@ public class RequestSupportExecutor {
     private Pattern failedPattern;
 
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
+    private ScheduledExecutorService ses;
 
     private final ExecutorService executor;
     private boolean connected = false;
@@ -58,8 +61,8 @@ public class RequestSupportExecutor {
         this.executor = executor;
     }*/
     /**
-     * Starts x11vnc and connects to supportAddress with given scale.
-     *vnc
+     * Starts x11vnc and connects to supportAddress with given scale. vnc
+     *
      * @param supportAddress
      * @param scale
      * @param password
@@ -105,10 +108,11 @@ public class RequestSupportExecutor {
 
         executor.submit(task);
 
+        // Start new Thread to observe SSH-connection
         try {
             final long start = System.currentTimeMillis();
             final String path = SEEK_PROCESS_EXECUTOR.createScript("netstat -anp | grep x11vnc").getAbsolutePath();
-            final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+            ses = Executors.newSingleThreadScheduledExecutor();
             ses.scheduleAtFixedRate(() -> {
                 try {
                     SEEK_PROCESS_EXECUTOR.executeScript(true, false, path);
@@ -117,6 +121,7 @@ public class RequestSupportExecutor {
                         connected = true;
                         Platform.runLater(success);
                     } else if (!connected) {
+                        // Needs to connect within 12s
                         if (System.currentTimeMillis() - start > 12000) {
                             Platform.runLater(failed);
                             throw new RuntimeException("Task finished");
@@ -126,9 +131,11 @@ public class RequestSupportExecutor {
                         throw new RuntimeException("Task finished");
                     }
                 } catch (IOException e) {
+                    Logger.getLogger(PasswordChanger.class.getName()).log(Level.SEVERE, null, e);
                 }
             }, 0, 1, TimeUnit.SECONDS);
-        } catch (IOException e) {
+        } catch (IOException ex) {
+            Logger.getLogger(PasswordChanger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,7 +143,7 @@ public class RequestSupportExecutor {
      * Stops service.
      */
     public void disconnect() {
-        connected = false;
+        ses.shutdownNow();
         SEEK_PROCESS_EXECUTOR.destroy();
         SEEK_PROCESS_EXECUTOR.executeProcess("killall", "-9", "x11vnc");
     }
