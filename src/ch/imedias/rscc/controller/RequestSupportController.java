@@ -21,7 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -113,12 +112,16 @@ public class RequestSupportController implements Initializable {
         String password = "";
         
         if (supportAddress.isEncrypted()) {
-            // TODO: Ask for PW, Error-Handling
-            Dialog dialog = new TextInputDialog("TEST");
-            dialog.setTitle("SSH-Password");
-            dialog.setHeaderText("Please enter SSH-PW from your supporter");
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent()) password = result.get();
+            Dialog dialog = new TextInputDialog();
+            dialog.setTitle(bundle.getString("ReceiveSupport.sshPwTitel"));
+            dialog.setHeaderText(bundle.getString("ReceiveSupport.sshPwText"));
+            Optional result = dialog.showAndWait();
+            if (result.isPresent()){
+                password = result.get().toString();
+            } else {
+                return;
+            }
+            
         }
 
         Double scale = cboImagescale.getValue();
