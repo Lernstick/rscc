@@ -66,7 +66,7 @@ public class ProvideSupportExecutor {
             // Start SSH Server
             // TODO: Config File
             String config = "/etc/ssh/sshd_config";
-            String startSSHServer = "service sshd stop \n sshd -f " + config + " -p " + port;
+            String startSSHServer = "service sshd stop \n /usr/sbin/sshd -f " + config + " -p " + port;
             try {
                 OFFER_PROCESS_EXECUTOR.executeScript(OFFER_PROCESS_EXECUTOR.createScript(startSSHServer).getAbsolutePath());
                 OFFER_PROCESS_EXECUTOR.wait();
