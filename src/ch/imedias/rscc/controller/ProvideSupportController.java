@@ -82,6 +82,7 @@ public class ProvideSupportController implements Initializable {
         cboQuality.disableProperty().bind(serviceStarted);
         chk8BitColor.disableProperty().bind(serviceStarted);
         chkSSHPort.disableProperty().bind(serviceStarted);
+        tfPort.disableProperty().bind(serviceStarted);
         
         lbPort.visibleProperty().setValue(false);
         tfPort.visibleProperty().setValue(false);
