@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.imedias.rscc;
+
 
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.io.IOException;

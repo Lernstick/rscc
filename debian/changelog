@@ -1,3 +1,10 @@
+rscc (1.6-1) unstable; urgency=medium
+
+  [ Tiago Santos ]
+  * [111111] added dependencies for ssh tunneling
+
+ -- Tiago Santos <tiago.santos@students.fhnw.ch>  Tue, 30 May 2017 23:16:40 +0200
+
 rscc (1.5-2) lernstick-8; urgency=medium
 
   [ ronny ]

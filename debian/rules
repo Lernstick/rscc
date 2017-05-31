@@ -11,6 +11,9 @@
 
 DESTDIR      = $(CURDIR)/debian/rscc
 
+%:
+	dh $@ 
+
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
@@ -41,6 +44,7 @@ install: build
 	find $(DESTDIR) -name ".svn" -type d | xargs rm -rf
 	mkdir $(DESTDIR)/usr/bin
 	cp target/rscc-1.0.0-SNAPSHOT.jar $(DESTDIR)/usr/bin/rscc.jar
+	install -D -o root -g root -m 640 sshd_config ${DESTDIR}/etc/rscc/sshd_config
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -63,3 +67,5 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
+
+

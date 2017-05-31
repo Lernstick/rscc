@@ -8,6 +8,6 @@ Homepage: http://www.imedias.ch/lernstick
 
 Package: rscc
 Architecture: all
-Depends: java-runtime, xtightvncviewer, x11vnc, openssl, stunnel4
+Depends: java-runtime, xtightvncviewer, x11vnc, openssl, sshpass, openssh-server, openssh-client, stunnel4
 Description: Remote Support Control Center
  A GUI for establishing and offering secure reverse VNC connections.
