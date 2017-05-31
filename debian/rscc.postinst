@@ -8,7 +8,7 @@ if [ "$1" = "configure" ]; then
 
 	# Create the "${username}" user
 	if ! getent passwd ${username} > /dev/null; then
-		adduser --quiet --system --group --home /nonexistent  \
+		adduser --quiet --system --group --home /  \
 			--no-create-home                                 \
 			--gecos "Remote Support Control Center" \
 			${username}
