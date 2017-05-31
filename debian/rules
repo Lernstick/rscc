@@ -20,7 +20,7 @@ build: build-stamp
 
 build-stamp: configure-stamp
 	dh_testdir
-	ant jar
+#	mvn package
 	touch $@
 
 clean:
@@ -28,7 +28,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp configure-stamp
 
-	ant clean
+#	mvn clean
 	dh_clean
 
 install: build
@@ -40,11 +40,11 @@ install: build
 	cp -r usr $(DESTDIR)
 	find $(DESTDIR) -name ".svn" -type d | xargs rm -rf
 	mkdir $(DESTDIR)/usr/bin
-	cp dist/rscc.jar $(DESTDIR)/usr/bin
+	cp target/rscc-1.0.0-SNAPSHOT.jar $(DESTDIR)/usr/bin/rscc.jar
 
 # Build architecture-independent files here.
 binary-indep: build install
-	ant jar
+#	mvn package
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs
