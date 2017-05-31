@@ -44,28 +44,28 @@ public final class FXMLGuiLoader {
     private FXMLGuiLoader() {
         // Create all instances with their controllers
         try {
-	    BUNDLE = ResourceBundle.getBundle("ch/imedias/rscc/Bundle");
-            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/RemoteSupportStart.fxml"), BUNDLE));
+	    BUNDLE = ResourceBundle.getBundle("ch.imedias.rscc.Bundle");
+            remoteSupportStart = new Scene((Parent)FXMLLoader.load(getClass().getResource("/ch/imedias/rscc/view/RemoteSupportStart.fxml"), BUNDLE));
             
-            FXMLLoader loadProvSup = new FXMLLoader(getClass().getResource("../view/ProvideSupport.fxml"), BUNDLE);
+            FXMLLoader loadProvSup = new FXMLLoader(getClass().getResource("/ch/imedias/rscc/view/ProvideSupport.fxml"), BUNDLE);
             provideSupport = new Scene((Parent)loadProvSup.load());
             provideSupportController = (ProvideSupportController) loadProvSup.getController();
             
-            FXMLLoader loadReqSup = new FXMLLoader(getClass().getResource("../view/RequestSupport.fxml"), BUNDLE);
+            FXMLLoader loadReqSup = new FXMLLoader(getClass().getResource("/ch/imedias/rscc/view/RequestSupport.fxml"), BUNDLE);
             requestSupport = new Scene((Parent)loadReqSup.load());
             requestSupportController = (RequestSupportController) loadReqSup.getController();
             
-            editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("../view/EditDialog.fxml"), BUNDLE));  
+            editDialog = new Scene((Parent)FXMLLoader.load(getClass().getResource("/ch/imedias/rscc/view/EditDialog.fxml"), BUNDLE));  
             
-            FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("../view/RequestSupportConnecting.fxml"), BUNDLE);
+            FXMLLoader loadConnecting = new FXMLLoader(getClass().getResource("/ch/imedias/rscc/view/RequestSupportConnecting.fxml"), BUNDLE);
             requestSupportConnecting = new Scene((Parent) loadConnecting.load());
             requestSupportConnectingController = (RequestSupportConnectingController) loadConnecting.getController();
             
-            FXMLLoader loadConnected = new FXMLLoader(getClass().getResource("../view/RequestSupportConnected.fxml"), BUNDLE);
+            FXMLLoader loadConnected = new FXMLLoader(getClass().getResource("/ch/imedias/rscc/view/RequestSupportConnected.fxml"), BUNDLE);
             requestSupportConnected = new Scene((Parent) loadConnected.load());
             requestSupportConnectedController = (RequestSupportConnectedController) loadConnected.getController();
             
-            FXMLLoader loadError = new FXMLLoader(getClass().getResource("../view/ErrorDialog.fxml"), BUNDLE);
+            FXMLLoader loadError = new FXMLLoader(getClass().getResource("/ch/imedias/rscc/view/ErrorDialog.fxml"), BUNDLE);
             errorDialog = new Scene((Parent) loadError.load());
             errorDialogController = (ErrorDialogController) loadError.getController();
         } catch(IOException ex) {
