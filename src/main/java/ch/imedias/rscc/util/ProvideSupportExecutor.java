@@ -5,7 +5,6 @@
  */
 package ch.imedias.rscc.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,14 +67,13 @@ public class ProvideSupportExecutor {
             String startSSHServer = "service sshd stop \n /usr/sbin/sshd -f " + config + " -p " + port;
             try {
                 OFFER_PROCESS_EXECUTOR.executeScript(OFFER_PROCESS_EXECUTOR.createScript(startSSHServer).getAbsolutePath());
-                OFFER_PROCESS_EXECUTOR.wait();
-            } catch (IOException | InterruptedException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(ProvideSupportExecutor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         List<String> commandList = new ArrayList<String>();
-        commandList.add("xtightvncviewer");
+        commandList.add("vncviewer");
         commandList.add("-listen");
         commandList.add("-compresslevel");
         commandList.add(compression.toString());
