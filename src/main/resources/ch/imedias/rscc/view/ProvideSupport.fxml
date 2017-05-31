@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.ProvideSupportController">
+<BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.ProvideSupportController">
  <top>
-    <Label text="%ProvideSupport.title" BorderPane.alignment="CENTER">
+    <Label stylesheets="@edit.css" text="%ProvideSupport.title" BorderPane.alignment="CENTER">
        <font>
           <Font size="24.0" />
        </font>
@@ -30,7 +30,7 @@
  <center>
     <VBox prefHeight="200.0" prefWidth="360.0" spacing="10.0" BorderPane.alignment="CENTER">
        <children>
-          <TitledPane id="Settings" animated="false" collapsible="false" prefHeight="100.0" prefWidth="360.0" text="%ProvideSupport.connectionSettings">
+          <TitledPane id="Settings" animated="false" collapsible="false" prefHeight="100.0" prefWidth="360.0" stylesheets="@edit.css" text="%ProvideSupport.connectionSettings">
             <content>
               <AnchorPane minHeight="70.0" minWidth="0.0" prefHeight="133.0" prefWidth="358.0">
                    <children>
@@ -50,10 +50,10 @@
                                   <Insets />
                                </GridPane.margin>
                             </Label>
-                            <ComboBox id="PullDown" fx:id="cboCompression" onAction="#onCompressionChangedAction" prefWidth="150.0" GridPane.columnIndex="1" />
+                            <ComboBox id="PullDown" fx:id="cboCompression" onAction="#onCompressionChangedAction" prefWidth="150.0" stylesheets="@edit.css" GridPane.columnIndex="1" />
                             <CheckBox fx:id="chk8BitColor" mnemonicParsing="false" onAction="#on8BitChangedAction" text="%ProvideSupport.bgr233Label" GridPane.columnIndex="2" />
                             <Label text="%ProvideSupport.qualityLabel" GridPane.rowIndex="1" />
-                            <ComboBox id="PullDown" fx:id="cboQuality" onAction="#onQualityChangedAction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <ComboBox id="PullDown" fx:id="cboQuality" onAction="#onQualityChangedAction" prefWidth="150.0" stylesheets="@edit.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                          </children>
                       </GridPane>
                    </children>
@@ -96,14 +96,14 @@
  <bottom>
     <BorderPane depthTest="DISABLE" maxHeight="51.0" prefHeight="0.0" prefWidth="400.0" BorderPane.alignment="BOTTOM_CENTER">
        <left>
-          <Button id="Back" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#onBackAction" text="%Back" BorderPane.alignment="BOTTOM_RIGHT">
+          <Button id="Back" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="BOTTOM_RIGHT">
              <opaqueInsets>
                 <Insets />
              </opaqueInsets>
           </Button>
        </left>
        <right>
-          <Button id="Start" fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" text="%Start_Service" BorderPane.alignment="BOTTOM_RIGHT" />
+          <Button id="Start" fx:id="cmdStartService" alignment="CENTER" mnemonicParsing="false" onAction="#onStartServiceAction" stylesheets="@edit.css" text="%Start_Service" BorderPane.alignment="BOTTOM_RIGHT" />
        </right>
        <padding>
           <Insets bottom="15.0" left="20.0" right="20.0" top="10.0" />
