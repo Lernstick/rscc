@@ -64,7 +64,7 @@ public class ProvideSupportExecutor {
         if (isSSHConnection) {
             // Start SSH Server
             String config = "/etc/rscc/sshd_config";
-            String startSSHServer = "service sshd stop \n /usr/sbin/sshd -f " + config + " -p " + port;
+            String startSSHServer = "/etc/init.d/ssh stop \n /usr/sbin/sshd -f " + config + " -p " + port;
             try {
                 OFFER_PROCESS_EXECUTOR.executeScript(OFFER_PROCESS_EXECUTOR.createScript(startSSHServer).getAbsolutePath());
             } catch (IOException ex) {
@@ -97,7 +97,7 @@ public class ProvideSupportExecutor {
         ProcessExecutor processExecutor = factory.makeProcessExecutor();
         processExecutor.executeProcess("killall", "-9", "stunnel4");
         processExecutor.executeProcess("killall", "-9", "sshd");
-        processExecutor.executeProcess("service", "sshd", "start");
+        processExecutor.executeProcess("/etc/init.d/ssh", "start");
     }
 
     /**
