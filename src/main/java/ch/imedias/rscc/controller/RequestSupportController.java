@@ -9,6 +9,8 @@ import ch.imedias.rscc.model.SupportAddress;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.RequestSupportExecutor;
+import ch.imedias.rscc.util.RequestSupportSshExecutor;
+import ch.imedias.rscc.util.RequestSupportStdExecutor;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -44,6 +46,16 @@ public class RequestSupportController implements Initializable {
 
     /**
      * Executor which will be used to call backend operations.
+     */
+    private RequestSupportStdExecutor stdExecutor;
+    
+    /**
+     * Executor which will be used to call backend operations.
+     */
+    private RequestSupportSshExecutor sshExecutor;
+    
+    /**
+     * Currently active executor.
      */
     private RequestSupportExecutor executor;
 
@@ -128,10 +140,16 @@ public class RequestSupportController implements Initializable {
         stage.setScene(FXMLGuiLoader.getInstance().getRequestSupportConnecting(supportAddress.getDescription()));
 
         // Initialize connecter giving the current stage
-        if (executor == null) {
-            executor = new RequestSupportExecutor(new ProcessExecutorFactory(), Executors.newCachedThreadPool(), () -> openConnected(stage), () -> openConnectedFailed(stage));
+        if (stdExecutor == null && !supportAddress.isEncrypted()) {
+            stdExecutor = new RequestSupportStdExecutor(new ProcessExecutorFactory(), Executors.newCachedThreadPool(), () -> openConnected(stage), () -> openConnectedFailed(stage));
+        } else if(sshExecutor == null && supportAddress.isEncrypted()) {
+            sshExecutor = new RequestSupportSshExecutor(new ProcessExecutorFactory(), Executors.newCachedThreadPool(), () -> openConnected(stage), () -> openConnectedFailed(stage));
         }
         // Start executor to connect
+        if(supportAddress.isEncrypted())
+            executor = sshExecutor;
+        else
+            executor = stdExecutor;
         executor.connect(supportAddress, scale, password);
     }
 
@@ -194,9 +212,13 @@ public class RequestSupportController implements Initializable {
      * Calls {@link RequestSupportExecutor#exit() }
      */
     public void finalizeGui() {
-        if (executor != null) {
-            executor.exit();
-            executor = null;
+        if (stdExecutor != null) {
+            stdExecutor.exit();
+            stdExecutor = null;
+        }
+        if(sshExecutor != null) {
+            sshExecutor.exit();
+            sshExecutor = null;
         }
     }
 }
