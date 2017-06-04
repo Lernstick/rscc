@@ -6,13 +6,10 @@
 package ch.imedias.rscc.util;
 
 import ch.imedias.rscc.model.SupportAddress;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -22,10 +19,9 @@ import javafx.concurrent.Task;
  */
 public class RequestSupportSshExecutor implements RequestSupportExecutor {
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
-    private ScheduledExecutorService ses;
+    private ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
 
     private final ExecutorService executor;
-    private boolean connected = false;
     private final Runnable success;
     private final Runnable failed;
 
@@ -86,8 +82,17 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                         "-connect_or_exit localhost:5500",
                         "-scale " + scaleString
                 );
-
-                SEEK_PROCESS_EXECUTOR.executeScript(SEEK_PROCESS_EXECUTOR.createScript(sshConnection).getAbsolutePath());
+                SEEK_PROCESS_EXECUTOR.executeScript(sshConnection);
+                
+                // Check for Exit Code
+                SEEK_PROCESS_EXECUTOR.executeProcess(true, false, "echo $?");
+                int exitCode = Integer.parseInt(SEEK_PROCESS_EXECUTOR.getOutput());
+                
+                // Show failed window if error occured
+                if (exitCode != 0) {
+                    Platform.runLater(failed);
+                }
+                // Else could show disconnected message or return to previous window
 
                 return null;
             }
@@ -95,35 +100,14 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
 
         executor.submit(task);
 
-        // Start new Thread to observe SSH-connection
-        try {
-            final long start = System.currentTimeMillis();
-            final String path = SEEK_PROCESS_EXECUTOR.createScript("netstat -anp | grep x11vnc").getAbsolutePath();
-            ses = Executors.newSingleThreadScheduledExecutor();
-            ses.scheduleAtFixedRate(() -> {
-                try {
-                    SEEK_PROCESS_EXECUTOR.executeScript(true, false, path);
-                    String s = SEEK_PROCESS_EXECUTOR.getOutput();
-                    if (!connected && s != null && !s.isEmpty()) {
-                        connected = true;
-                        Platform.runLater(success);
-                    } else if (!connected) {
-                        // Needs to connect within 12s
-                        if (System.currentTimeMillis() - start > 12000) {
-                            Platform.runLater(failed);
-                            throw new RuntimeException("Task finished");
-                        }
-                    } else if (connected && (s == null || s.isEmpty())) {
-                        disconnect();
-                        throw new RuntimeException("Task finished");
-                    }
-                } catch (IOException e) {
-                    Logger.getLogger(PasswordChanger.class.getName()).log(Level.SEVERE, null, e);
-                }
-            }, 0, 1, TimeUnit.SECONDS);
-        } catch (IOException ex) {
-            Logger.getLogger(PasswordChanger.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Start new Thread to observe stdout and see if connected
+        ses.scheduleAtFixedRate(() -> {
+            String stdOut = SEEK_PROCESS_EXECUTOR.getStdOut();
+            if (stdOut.contains("reverse_connect: localhost:5500/::1 OK")) {
+                Platform.runLater(success);
+                ses.shutdownNow();
+            }
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     /**

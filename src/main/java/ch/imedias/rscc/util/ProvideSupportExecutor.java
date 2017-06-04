@@ -66,7 +66,7 @@ public class ProvideSupportExecutor {
             String config = "/etc/rscc/sshd_config";
             String startSSHServer = "/etc/init.d/ssh stop \n /usr/sbin/sshd -f " + config + " -p " + port;
             try {
-                OFFER_PROCESS_EXECUTOR.executeScript(OFFER_PROCESS_EXECUTOR.createScript(startSSHServer).getAbsolutePath());
+                OFFER_PROCESS_EXECUTOR.executeScript(startSSHServer);
             } catch (IOException ex) {
                 Logger.getLogger(ProvideSupportExecutor.class.getName()).log(Level.SEVERE, null, ex);
             }

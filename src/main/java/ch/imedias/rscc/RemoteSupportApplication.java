@@ -10,6 +10,7 @@ package ch.imedias.rscc;
 import ch.imedias.rscc.util.FXMLGuiLoader;
 import java.io.IOException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -51,7 +52,7 @@ public class RemoteSupportApplication extends Application {
     @Override
     public void stop() throws Exception {
         FXMLGuiLoader.getInstance().finalizeGuis();
-        System.exit(0);
+        Platform.exit();
     }
     
     

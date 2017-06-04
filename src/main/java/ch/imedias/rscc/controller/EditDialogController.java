@@ -104,14 +104,14 @@ public class EditDialogController implements Initializable {
         
         // Initialize columns
         Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> dexcriptionCellFactory = (TableColumn<SupportAddress, String> p) -> new DescriptionCell();      
-        name.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("description"));
+        name.setCellValueFactory(new PropertyValueFactory<>("description"));
         name.setCellFactory(dexcriptionCellFactory);
         name.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
             ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setDescription(t.getNewValue());
         });
 
         Callback<TableColumn<SupportAddress, String>, TableCell<SupportAddress, String>> addressCellFactory = (TableColumn<SupportAddress, String> p) -> new AddressCell();
-        address.setCellValueFactory(new PropertyValueFactory<SupportAddress, String>("address"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
         address.setCellFactory(addressCellFactory);
         address.setOnEditCommit((CellEditEvent<SupportAddress, String> t) -> {
             ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAddress(t.getNewValue());
