@@ -71,8 +71,7 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                 if (splitted.length >= 2) {
                     port = splitted[1];
                 }
-
-                // TODO: throw exception if port wrong, etc
+                
                 String sshConnection = String.format("%1$s %2$s %3$s %4$s %5$s %6$s %7$s",
                         "sshpass -p " + password,
                         "ssh -o StrictHostKeyChecking=no",
@@ -85,7 +84,7 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                 SEEK_PROCESS_EXECUTOR.executeScript(sshConnection);
                 
                 // Check for Exit Code
-                SEEK_PROCESS_EXECUTOR.executeProcess(true, false, "echo $?");
+                SEEK_PROCESS_EXECUTOR.executeProcess(true, false, "/bin/echo $?");
                 int exitCode = Integer.parseInt(SEEK_PROCESS_EXECUTOR.getOutput());
                 
                 // Show failed window if error occured
