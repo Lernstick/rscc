@@ -7,9 +7,7 @@ package ch.imedias.rscc.util;
 
 import ch.imedias.rscc.model.SupportAddress;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -18,8 +16,10 @@ import javafx.concurrent.Task;
  * (xtightvncviewer) listener.
  */
 public class RequestSupportSshExecutor implements RequestSupportExecutor {
+    private Pattern successPattern;
+    private Pattern failedPattern;
+    
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
-    private ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
 
     private final ExecutorService executor;
     private final Runnable success;
@@ -36,9 +36,18 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
      */
     public RequestSupportSshExecutor(ProcessExecutorFactory factory, ExecutorService executor, Runnable success, Runnable failed) {
         this.executor = executor;
-        SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();
         this.success = success;
         this.failed = failed;
+        
+        SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();
+        SEEK_PROCESS_EXECUTOR.addPropertyChangeListener(evt -> {
+            if(success != null && 
+                    successPattern.matcher((String) evt.getNewValue()).matches())
+                Platform.runLater(success);
+            else if(failed != null && 
+                    failedPattern.matcher((String) evt.getNewValue()).matches())
+                Platform.runLater(failed);
+        });
     }
 
     /**
@@ -59,10 +68,14 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
      * @param scale
      * @param password
      */
+    @Override
     public void connect(final SupportAddress supportAddress, final Double scale, final String password) {
         String[] splitted = supportAddress.getAddress().split(":");
         final String address = splitted[0];
         final String scaleString = scale.toString();
+
+        successPattern = Pattern.compile(".*reverse_connect: .* OK");
+        failedPattern = Pattern.compile(".*reverse_connect: .* failed");
 
         Task task = new Task() {
             @Override
@@ -72,48 +85,31 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                     port = splitted[1];
                 }
                 
-                String sshConnection = String.format("%1$s %2$s %3$s %4$s %5$s %6$s %7$s",
-                        "sshpass -p " + password,
-                        "ssh -o StrictHostKeyChecking=no",
-                        "-p" + port,
-                        "-NfL5500:localhost:5500 rscc_ssh@" + address,
-                        "sleep 2 && x11vnc",
-                        "-connect_or_exit localhost:5500",
-                        "-scale " + scaleString
-                );
-                SEEK_PROCESS_EXECUTOR.executeScript(sshConnection);
+                String sshConnection = 
+                    "sshpass -p " + password + " ssh -o StrictHostKeyChecking=no" +
+                    " -p " + port + " -NfL5500:localhost:5500 rscc_ssh@" + address + 
+                    " sleep 2 && x11vnc -connect_or_exit localhost:5500" +
+                    " -scale " + scaleString;
+                int exitCode = SEEK_PROCESS_EXECUTOR.executeScript(true, true, sshConnection);
                 
-                // Check for Exit Code
-                SEEK_PROCESS_EXECUTOR.executeProcess(true, false, "/bin/echo $?");
-                int exitCode = Integer.parseInt(SEEK_PROCESS_EXECUTOR.getOutput());
-                
-                // Show failed window if error occured
                 if (exitCode != 0) {
                     Platform.runLater(failed);
+                } else {
+                    disconnect();
                 }
-                // Else could show disconnected message or return to previous window
 
                 return null;
             }
         };
 
         executor.submit(task);
-
-        // Start new Thread to observe stdout and see if connected
-        ses.scheduleAtFixedRate(() -> {
-            String stdOut = SEEK_PROCESS_EXECUTOR.getStdOut();
-            if (stdOut.contains("reverse_connect: localhost:5500/::1 OK")) {
-                Platform.runLater(success);
-                ses.shutdownNow();
-            }
-        }, 0, 1, TimeUnit.SECONDS);
     }
 
     /**
      * Stops service.
      */
+    @Override
     public void disconnect() {
-        ses.shutdownNow();
         SEEK_PROCESS_EXECUTOR.destroy();
         SEEK_PROCESS_EXECUTOR.executeProcess("killall", "-9", "x11vnc");
     }
@@ -121,6 +117,7 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
     /**
      * Stops the service and shuts the executor down.
      */
+    @Override
     public void exit() {
         disconnect();
         executor.shutdown();
