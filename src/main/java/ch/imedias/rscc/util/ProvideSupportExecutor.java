@@ -16,13 +16,13 @@ import javafx.concurrent.Task;
 
 /**
  * Util class to offer remote support. Basically just provides methods to run
- * xtightvncviewer listener and an stunnel.
+ * xtightvncviewer listener and an tunnel.
  */
 public class ProvideSupportExecutor {
 
-    private ProcessExecutorFactory factory;
+    private final ProcessExecutorFactory factory;
     private final ProcessExecutor OFFER_PROCESS_EXECUTOR;
-    private final List<ProcessExecutor> TUNNEL_EXECUTORS = new ArrayList<ProcessExecutor>();
+    private final List<ProcessExecutor> TUNNEL_EXECUTORS = new ArrayList<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
 
     public ProvideSupportExecutor(ProcessExecutorFactory factory) {
@@ -72,7 +72,7 @@ public class ProvideSupportExecutor {
             }
         }
 
-        List<String> commandList = new ArrayList<String>();
+        List<String> commandList = new ArrayList<>();
         commandList.add("vncviewer");
         commandList.add("-listen");
         commandList.add("-compresslevel");

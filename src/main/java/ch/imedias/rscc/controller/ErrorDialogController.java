@@ -22,12 +22,8 @@ import javafx.stage.Stage;
  */
 public class ErrorDialogController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+    public void initialize(URL url, ResourceBundle rb) { }
 
     @FXML
     private void onOkAction(ActionEvent event) {

@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -49,19 +48,19 @@ import javafx.util.Callback;
 public class EditDialogController implements Initializable {
 
     @FXML
-    private Button CancelButton;
+    private Button cancelButton;
     @FXML
-    private Button SaveButton;
+    private Button saveButton;
     @FXML
-    private Button AddButton;
+    private Button addButton;
     @FXML
-    private Button DeleteButton;
+    private Button deleteButton;
     @FXML
-    private Button UpButton;
+    private Button upButton;
     @FXML
-    private Button DownButton;
+    private Button downButton;
     @FXML
-    private Button ResetButton;
+    private Button resetButton;
     @FXML
     private TableView<SupportAddress> table;
     @FXML
@@ -87,7 +86,7 @@ public class EditDialogController implements Initializable {
     /**
      * Initializes the controller class.
      * 
-     * @parm url  The url used to resolve relative paths for the root 
+     * @param url The URL used to resolve relative paths for the root 
      *            object, or null if the location is not known 
      * @param rb  The resources used to localize the root object, or null if the
      *            root object was not localized
@@ -117,19 +116,11 @@ public class EditDialogController implements Initializable {
             ((SupportAddress) t.getTableView().getItems().get(t.getTablePosition().getRow())).setAddress(t.getNewValue());
         });
         
-        encrypted.setCellValueFactory(new Callback<CellDataFeatures<SupportAddress, Boolean>, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(CellDataFeatures<SupportAddress, Boolean> param) {
-                final SupportAddress sa = param.getValue();
-                SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(sa.isEncrypted());
-                booleanProp.addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                        sa.setEncrypted(newValue);
-                    }
-                });
-                return booleanProp;
-            }
+        encrypted.setCellValueFactory((CellDataFeatures<SupportAddress, Boolean> param) -> {
+            final SupportAddress sa = param.getValue();
+            SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(sa.isEncrypted());
+            booleanProp.addListener((observable, oldValue, newValue) -> sa.setEncrypted(newValue));
+            return booleanProp;
         });
         
         // Adds Checkbox in table cell
@@ -137,7 +128,7 @@ public class EditDialogController implements Initializable {
         TableCell<SupportAddress, Boolean>>() {
             @Override
             public TableCell<SupportAddress, Boolean> call(TableColumn<SupportAddress, Boolean> p) {
-                CheckBoxTableCell<SupportAddress, Boolean> cell = new CheckBoxTableCell<SupportAddress, Boolean>();
+                CheckBoxTableCell<SupportAddress, Boolean> cell = new CheckBoxTableCell<>();
                 cell.setAlignment(Pos.CENTER);
                 return cell;
             }
@@ -161,6 +152,7 @@ public class EditDialogController implements Initializable {
         
         ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
         selectedItems.addListener(new ListChangeListener<SupportAddress>() {
+            @Override
             public void onChanged(Change c) {
                 manageUpDownButtons();
             }
@@ -173,20 +165,20 @@ public class EditDialogController implements Initializable {
      */
     private void manageUpDownButtons() {
         ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
-        UpButton.setDisable(false);
-        DownButton.setDisable(false);
+        upButton.setDisable(false);
+        downButton.setDisable(false);
         if (supportAddresses.size() >= 2) {
             for (SupportAddress s : selectedItems) {
                 int index = supportAddresses.indexOf(s);
                 if (index <= 0) {
-                    UpButton.setDisable(true);
+                    upButton.setDisable(true);
                 } else if (index >= (supportAddresses.size()-1)) {
-                    DownButton.setDisable(true);
+                    downButton.setDisable(true);
                 }
             }
         } else {
-            UpButton.setDisable(true);
-            DownButton.setDisable(true);
+            upButton.setDisable(true);
+            downButton.setDisable(true);
         }
     }
 
@@ -203,7 +195,7 @@ public class EditDialogController implements Initializable {
      */
     @FXML
     private void onSaveClickedAction(MouseEvent event) {
-        staticAddressList = new ArrayList<SupportAddress>();
+        staticAddressList = new ArrayList<>();
         for (SupportAddress supportAddress : supportAddresses) {
             if (supportAddress != null) {
                 SupportAddress addressCopy = new SupportAddress(
@@ -244,16 +236,14 @@ public class EditDialogController implements Initializable {
      */
     @FXML
     private void onUpClickedAction(MouseEvent event) {
-        List<Integer> changedIndexes = new LinkedList<Integer>();
+        List<Integer> changedIndexes = new LinkedList<>();
         ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
-        List<SupportAddress> objects = new LinkedList<SupportAddress>();        
+        List<SupportAddress> objects = new LinkedList<>();        
         for (SupportAddress sa : selectedItems) {
             objects.add(supportAddresses.get(supportAddresses.indexOf(sa)));
         }
         for (SupportAddress sa : objects) {
             int indexPrevious = supportAddresses.indexOf(sa)-1;
-            SupportAddress previous = supportAddresses.get(indexPrevious);
-            int indexSelected = indexPrevious+1;
             SupportAddress selected = supportAddresses.get(supportAddresses.indexOf(sa));
             supportAddresses.remove(selected);
             supportAddresses.add(indexPrevious, selected);
@@ -270,16 +260,14 @@ public class EditDialogController implements Initializable {
      */
     @FXML
     private void onDownClickedAction(MouseEvent event) {
-        List<Integer> changedIndexes = new LinkedList<Integer>();
+        List<Integer> changedIndexes = new LinkedList<>();
         ObservableList<SupportAddress> selectedItems = table.getSelectionModel().getSelectedItems();
-        List<SupportAddress> objects = new LinkedList<SupportAddress>();
+        List<SupportAddress> objects = new LinkedList<>();
         for (int i = selectedItems.size()-1; i >= 0; i--) {
             objects.add(supportAddresses.get(supportAddresses.indexOf(selectedItems.get(i))));
         }
         for (SupportAddress sa : objects) {
             int indexNext = supportAddresses.indexOf(sa)+1;
-            SupportAddress next = supportAddresses.get(indexNext);
-            int indexSelected = indexNext-1;
             SupportAddress selected = supportAddresses.get(supportAddresses.indexOf(sa));
             supportAddresses.remove(selected);
             supportAddresses.add(indexNext, selected);
@@ -303,7 +291,7 @@ public class EditDialogController implements Initializable {
     }
     
     /**
-     * This Class is used to eddit new added SupportAddress entries in table
+     * This Class is used to edit new added SupportAddress entries in table
      * and handles the input and editing events
      */
     class EditingCell extends TableCell<SupportAddress, String> {
@@ -316,7 +304,7 @@ public class EditDialogController implements Initializable {
         }
 
         /**
-         * This method adds the textfield and enebles editing
+         * This method adds the TextField and enables editing
          */
         @Override
         public void startEdit() {
@@ -330,7 +318,7 @@ public class EditDialogController implements Initializable {
         }
 
         /**
-         * This method handles the cancelation of the eding process
+         * This method handles the cancellation of the editing process
          */
         @Override
         public void cancelEdit() {
@@ -367,7 +355,7 @@ public class EditDialogController implements Initializable {
         }
 
         /**
-         * This method creates the textfield and handles the eding of the textfield
+         * This method creates the TextField and handles the editing of the TextField
          */
         protected void createTextField() {
             textField = new TextField(getString());
@@ -389,13 +377,13 @@ public class EditDialogController implements Initializable {
          * @return string property of item
          */
         protected String getString() {
-            return getItem() == null ? "" : getItem().toString();
+            return getItem() == null ? "" : getItem();
         }
     }
     
     class DescriptionCell extends EditingCell {
         /**
-         * This method creates the textfield and handles the eding of the textfield
+         * This method creates the TextField and handles the editing of the TextField
          */
         @Override
         protected void createTextField() {
@@ -416,7 +404,7 @@ public class EditDialogController implements Initializable {
     
     class AddressCell extends EditingCell {
         /**
-         * This method creates the textfield and handles the eding of the textfield
+         * This method creates the TextField and handles the editing of the TextField
          */
         @Override
         protected void createTextField() {

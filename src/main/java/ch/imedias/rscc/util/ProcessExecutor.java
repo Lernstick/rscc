@@ -175,9 +175,9 @@ public class ProcessExecutor {
             stringBuilder.append("\"");
             LOGGER.fine(stringBuilder.toString());
         }
-        stdOut = new ArrayList<String>();
-        stdErr = new ArrayList<String>();
-        stdAll = new ArrayList<String>();
+        stdOut = new ArrayList<>();
+        stdErr = new ArrayList<>();
+        stdAll = new ArrayList<>();
         ProcessBuilder processBuilder = new ProcessBuilder(commandArray);
         if (environment != null) {
             processBuilder.environment().putAll(environment);
@@ -202,16 +202,14 @@ public class ProcessExecutor {
                 stderrReader.join();
             }
             return exitValue;
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, null, e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.WARNING, null, e);
         }
         return -1;
     }
 
     /**
-     * returns the program output as a single string (with linebreaks)
+     * returns the program output as a single string (with line breaks)
      * @return the program output
      */
     public String getOutput() {
@@ -306,7 +304,7 @@ public class ProcessExecutor {
                         LOGGER.fine(allLine);
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 LOGGER.log(Level.WARNING, "", e);
             } finally {
                 if (reader != null) {

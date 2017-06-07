@@ -25,12 +25,14 @@ import java.util.prefs.Preferences;
  */
 public class SupportAddress implements Serializable {
 
+    private static final long serialVersionUID = 0L;
+
     private String description;
     private String address;
     private boolean encrypted;
     private static List<SupportAddress> supportAddresses;
     
-    private final static Preferences preferences = Preferences.userNodeForPackage(SupportAddress.class);;
+    private final static Preferences PREFERENCES = Preferences.userNodeForPackage(SupportAddress.class);;
     
     private static final Logger LOGGER = Logger.getLogger(SupportAddress.class.getName());
     
@@ -42,7 +44,7 @@ public class SupportAddress implements Serializable {
     public static List<SupportAddress> getAll() {
         if (supportAddresses != null) return supportAddresses; // if it has already been set: just return it
         // else read from storage
-        String supportAddressesXML = preferences.get("supportAddresses", null);
+        String supportAddressesXML = PREFERENCES.get("supportAddresses", null);
         if (supportAddressesXML == null) {
             // use some hardcoded defaults
             supportAddresses = getDefaultList();
@@ -56,7 +58,7 @@ public class SupportAddress implements Serializable {
     }
     
     /**
-     * relaces the static list of supportAddresses
+     * Replaces the static list of supportAddresses.
      * 
      * @param supportAddresses List of supportAddresses
      */
@@ -65,34 +67,33 @@ public class SupportAddress implements Serializable {
     }
     
     /**
-     * saves data to xml-file.
+     * Saves data to XML-file.
      */
     public static void saveAll() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        XMLEncoder encoder = new XMLEncoder(byteArrayOutputStream);
-        encoder.setPersistenceDelegate(SupportAddress.class,
-                SupportAddress.getPersistenceDelegate());
-        encoder.writeObject(supportAddresses);
-        encoder.close();
+        try (XMLEncoder encoder = new XMLEncoder(byteArrayOutputStream)) {
+            encoder.setPersistenceDelegate(SupportAddress.class,
+                    SupportAddress.getPersistenceDelegate());
+            encoder.writeObject(supportAddresses);
+        }
         String supportAddressesXML = byteArrayOutputStream.toString();
-        preferences.put("supportAddresses", supportAddressesXML);
+        PREFERENCES.put("supportAddresses", supportAddressesXML);
     }
     
     /**
-     * resets attributes of this with data from local file.
+     * Resets attributes of this with data from local file.
      */
     public static void resetAllToDefault() {
         supportAddresses = getDefaultList();
     }
     
     /**
-     * returns the default support address list.
-     * reads local file.
+     * Returns the default support address list. Reads local file.
      *
      * @return the default support address list
      */
     private static List<SupportAddress> getDefaultList() {
-        List<SupportAddress> defaultList = new ArrayList<SupportAddress>();
+        List<SupportAddress> defaultList = new ArrayList<>();
         FilenameFilter rsccDefaultsFilter = new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -147,7 +148,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * creates a new SupportAddress
+     * Creates a new SupportAddress.
      *
      * @param description the description
      * @param address the address
@@ -161,7 +162,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * returns the description
+     * Returns the description.
      *
      * @return the description
      */
@@ -170,7 +171,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * sets the description
+     * Sets the description.
      *
      * @param description the description to set
      */
@@ -179,7 +180,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * returns the address
+     * Returns the address.
      *
      * @return the address
      */
@@ -188,7 +189,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * sets the address
+     * Sets the address.
      *
      * @param address the address to set
      */
@@ -197,9 +198,9 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * returns
+     * Returns
      * <code>true</code>, if the connection is encrypted,
-     * <code>false</code> otherwise
+     * <code>false</code> otherwise.
      *
      * @return
      * <code>true</code>, if the connection is encrypted,
@@ -210,7 +211,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * sets the encrypted property of the SupportAddress
+     * Sets the encrypted property of the SupportAddress.
      *
      * @param encrypted if the SupportAddress is used for encrypted connections
      */
@@ -219,7 +220,7 @@ public class SupportAddress implements Serializable {
     }
 
     /**
-     * returns the PersistenceDelegate
+     * Returns the PersistenceDelegate.
      *
      * @return the PersistenceDelegate
      */
@@ -230,7 +231,8 @@ public class SupportAddress implements Serializable {
 
     /**
      * Override to String cause main info is supporter name.
-     * @return 
+     * 
+     * @return the string
      */
     @Override
     public String toString() {

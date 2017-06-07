@@ -12,6 +12,8 @@ import ch.imedias.rscc.controller.RequestSupportConnectingController;
 import ch.imedias.rscc.controller.RequestSupportController;
 import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +27,8 @@ import javafx.stage.Stage;
 public final class FXMLGuiLoader {
     private static ResourceBundle BUNDLE;
     private static final FXMLGuiLoader INSTANCE = new FXMLGuiLoader();
+    private final static Logger LOGGER
+            = Logger.getLogger(FXMLGuiLoader.class.getName());
     
     private Scene remoteSupportStart;
     private Scene provideSupport;
@@ -69,7 +73,7 @@ public final class FXMLGuiLoader {
             errorDialog = new Scene((Parent) loadError.load());
             errorDialogController = (ErrorDialogController) loadError.getController();
         } catch(IOException ex) {
-               ex.printStackTrace();
+               LOGGER.log(Level.SEVERE, "FXMLGuiLoader failed", ex);
         }
     }
     
@@ -102,7 +106,7 @@ public final class FXMLGuiLoader {
     /**
      * 
      * @param supporter name of supporter
-     * @param executor remote connector, handles vnc workflow
+     * @param executor remote connector, handles VNC work flow
      * @return RequestSupportConnected scene
      */
     public Scene getRequestSupportConnected(String supporter, RequestSupportExecutor executor) {

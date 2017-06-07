@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class for the GUI when a client etablished a connection 
+ * FXML Controller class for the GUI when a client established a connection 
  * with a supporter.
  *
  * @author sschw
@@ -52,7 +52,7 @@ public class RequestSupportConnectedController implements Initializable {
      * Sets the executor so it uses the same executor as the connection 
      * operation needed.
      * 
-     * @param rse the RequestSupportExecutor which already runned {@link RequestSupportExecutor#connect(ch.imedias.rscc.model.SupportAddress, java.lang.Double) } successfully
+     * @param rse the RequestSupportExecutor which already ran {@link RequestSupportExecutor#connect(ch.imedias.rscc.model.SupportAddress, java.lang.Double) } successfully
      */
     public void setExecutor(RequestSupportExecutor rse) {
         executor = rse;
@@ -64,8 +64,7 @@ public class RequestSupportConnectedController implements Initializable {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+    public void initialize(URL url, ResourceBundle rb) { }
 
     /**
      * Action handler for disconnect button.<br>

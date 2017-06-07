@@ -17,12 +17,10 @@ import javafx.concurrent.Task;
  */
 public class RequestSupportSshExecutor implements RequestSupportExecutor {
     private final Pattern successPattern = Pattern.compile(".*reverse_connect: .* OK");
-    private final Pattern failedPattern = Pattern.compile(".*reverse_connect: .* failed");
     
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
 
     private final ExecutorService executor;
-    private final Runnable success;
     private final Runnable failed;
 
     /**
@@ -36,7 +34,6 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
      */
     public RequestSupportSshExecutor(ProcessExecutorFactory factory, ExecutorService executor, Runnable success, Runnable failed) {
         this.executor = executor;
-        this.success = success;
         this.failed = failed;
         
         SEEK_PROCESS_EXECUTOR = factory.makeProcessExecutor();

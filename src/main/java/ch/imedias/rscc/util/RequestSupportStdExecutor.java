@@ -22,10 +22,10 @@ public class RequestSupportStdExecutor implements RequestSupportExecutor {
     private Pattern okSSLPattern;
     private Pattern failedPattern;
     
-    private ProcessExecutorFactory factory;
+    private final ProcessExecutorFactory factory;
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
     
-    private ExecutorService executor;
+    private final ExecutorService executor;
     
     /**
      * Construcor, adds changelistener to ProcessExecutor. If the succeeds,
@@ -75,7 +75,7 @@ public class RequestSupportStdExecutor implements RequestSupportExecutor {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                List<String> commandList = new ArrayList<String>();
+                List<String> commandList = new ArrayList<>();
                 commandList.add("x11vnc");
                 commandList.add("-connect_or_exit");
                 commandList.add(address);
@@ -99,6 +99,7 @@ public class RequestSupportStdExecutor implements RequestSupportExecutor {
     /**
      * Stops service.
      */
+    @Override
     public void disconnect() {
         SEEK_PROCESS_EXECUTOR.destroy();
     }
@@ -106,6 +107,7 @@ public class RequestSupportStdExecutor implements RequestSupportExecutor {
     /**
      * Stops the service and shuts the executor down.
      */
+    @Override
     public void exit() {
         disconnect();
         executor.shutdown();

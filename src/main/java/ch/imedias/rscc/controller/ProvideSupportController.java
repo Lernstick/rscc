@@ -52,17 +52,13 @@ public class ProvideSupportController implements Initializable {
     private Label lbPWValue;
     
     // Language bundle
-    private static ResourceBundle BUNDLE;
+    private ResourceBundle BUNDLE;
     
     // Describes if the service is started
-    private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
     
     private ProvideSupportExecutor executor;
-    @FXML
-
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BUNDLE = rb;
@@ -153,6 +149,10 @@ public class ProvideSupportController implements Initializable {
             lbPWValue.visibleProperty().setValue(false);
         }
     }
+
+    /**
+     * This method is used to cleanly stop the GUI that is using this controller.
+     */
     public void finalizeGui() {
         executor.exit();
         executor = null;

@@ -33,8 +33,13 @@
           <TextFlow prefHeight="96.0" prefWidth="280.0" />
             <HBox alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="360.0" spacing="30.0">
                 <children>
+<<<<<<< HEAD:src/main/resources/ch/imedias/rscc/view/RemoteSupportStart.fxml
                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#onRequstSupportAction" stylesheets="@edit.css" text="%ReceiveSupport.title" />
                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#OnProvideSupportAction" prefWidth="150.0" stylesheets="@edit.css" text="%ProvideSupport.title" />
+=======
+                    <Button mnemonicParsing="false" onAction="#onRequestSupportAction" stylesheets="@edit.css" text="%ReceiveSupport.title" />
+                    <Button mnemonicParsing="false" onAction="#onProvideSupportAction" prefWidth="150.0" stylesheets="@edit.css" text="%ProvideSupport.title" />
+>>>>>>> master:src/ch/imedias/rscc/view/RemoteSupportStart.fxml
                 </children>
                 <padding>
                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
