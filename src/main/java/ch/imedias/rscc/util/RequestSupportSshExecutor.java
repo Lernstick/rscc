@@ -92,7 +92,8 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                     " -scale " + scaleString;
                 int exitCode = SEEK_PROCESS_EXECUTOR.executeScript(true, true, sshConnection);
                 
-                if (exitCode != 0) {
+                // Exit code 143 is killed by another process
+                if (exitCode != 0 || exitCode != 143 ){
                     Platform.runLater(failed);
                 } else {
                     disconnect();
