@@ -73,7 +73,8 @@ public final class FXMLGuiLoader {
             errorDialog = new Scene((Parent) loadError.load());
             errorDialogController = (ErrorDialogController) loadError.getController();
         } catch(IOException ex) {
-               LOGGER.log(Level.SEVERE, "FXMLGuiLoader failed", ex);
+            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, "FXMLGuiLoader failed", ex);
         }
     }
     
