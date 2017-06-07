@@ -16,8 +16,8 @@ import javafx.concurrent.Task;
  * (xtightvncviewer) listener.
  */
 public class RequestSupportSshExecutor implements RequestSupportExecutor {
-    private Pattern successPattern;
-    private Pattern failedPattern;
+    private final Pattern successPattern = Pattern.compile(".*reverse_connect: .* OK");
+    private final Pattern failedPattern = Pattern.compile(".*reverse_connect: .* failed");
     
     private final ProcessExecutor SEEK_PROCESS_EXECUTOR;
 
@@ -73,9 +73,6 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
         String[] splitted = supportAddress.getAddress().split(":");
         final String address = splitted[0];
         final String scaleString = scale.toString();
-
-        successPattern = Pattern.compile(".*reverse_connect: .* OK");
-        failedPattern = Pattern.compile(".*reverse_connect: .* failed");
 
         Task task = new Task() {
             @Override
