@@ -11,7 +11,6 @@ import ch.imedias.rscc.util.ProcessExecutorFactory;
 import ch.imedias.rscc.util.ProvideSupportExecutor;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -44,17 +41,13 @@ public class ProvideSupportController implements Initializable {
     private Button cmdStartService;
     
     // Language bundle
-    private static ResourceBundle BUNDLE;
+    private ResourceBundle BUNDLE;
     
     // Describes if the service is started
-    private SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty serviceStarted = new SimpleBooleanProperty(false);
     
     private ProvideSupportExecutor executor;
-    @FXML
-
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BUNDLE = rb;
@@ -124,6 +117,10 @@ public class ProvideSupportController implements Initializable {
     private void onSSHChangedAction(ActionEvent event) {
         Settings.setUseSSHPort(chkSSHPort.isSelected());
     }
+
+    /**
+     * This method is used to cleanly stop the GUI that is using this controller.
+     */
     public void finalizeGui() {
         executor.exit();
         executor = null;

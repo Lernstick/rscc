@@ -19,7 +19,7 @@ public class Settings {
     private static boolean bgr233;
     private static boolean useSSHPort;
     
-    private final static Preferences preferences;
+    private final static Preferences PREFERENCES;
     
     // getters & setters
     /**
@@ -93,22 +93,22 @@ public class Settings {
     }
     
     static {
-        preferences = Preferences.userNodeForPackage(Settings.class);
-        securePorts = preferences.get("securePorts", "");
-        quality = preferences.getInt("quality", 6);
-        compressionLevel = preferences.getInt("compressionLevel", 6);
-        bgr233 = preferences.getBoolean("bgr233", false);
-        useSSHPort = preferences.getBoolean("useSSHPort", false);
+        PREFERENCES = Preferences.userNodeForPackage(Settings.class);
+        securePorts = PREFERENCES.get("securePorts", "");
+        quality = PREFERENCES.getInt("quality", 6);
+        compressionLevel = PREFERENCES.getInt("compressionLevel", 6);
+        bgr233 = PREFERENCES.getBoolean("bgr233", false);
+        useSSHPort = PREFERENCES.getBoolean("useSSHPort", false);
     }
     
     /**
      * Saves the values into preferences
      */
     public static void save() {
-        preferences.put("securePorts", securePorts);
-        preferences.putInt("quality", quality);
-        preferences.putInt("compressionLevel", compressionLevel);
-        preferences.putBoolean("bgr233", bgr233);
-        preferences.putBoolean("useHttpsPort", useSSHPort);
+        PREFERENCES.put("securePorts", securePorts);
+        PREFERENCES.putInt("quality", quality);
+        PREFERENCES.putInt("compressionLevel", compressionLevel);
+        PREFERENCES.putBoolean("bgr233", bgr233);
+        PREFERENCES.putBoolean("useHttpsPort", useSSHPort);
     }
 }

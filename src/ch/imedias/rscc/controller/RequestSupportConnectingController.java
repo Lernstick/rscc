@@ -22,10 +22,7 @@ public class RequestSupportConnectingController implements Initializable {
 
     @FXML
     private Label lblConnectingTo;
-
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

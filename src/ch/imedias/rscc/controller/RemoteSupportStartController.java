@@ -22,9 +22,6 @@ import javafx.stage.Stage;
  */
 public class RemoteSupportStartController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
@@ -34,7 +31,7 @@ public class RemoteSupportStartController implements Initializable {
      * @param event 
      */
     @FXML
-    private void onRequstSupportAction(ActionEvent event) {
+    private void onRequestSupportAction(ActionEvent event) {
         Scene scene = ((Node)(event.getSource())).getScene();
         Stage stage = (Stage)scene.getWindow();
         
@@ -46,7 +43,7 @@ public class RemoteSupportStartController implements Initializable {
      * @param event 
      */
     @FXML
-    private void OnProvideSupportAction(ActionEvent event) {
+    private void onProvideSupportAction(ActionEvent event) {
         Scene scene = ((Node)(event.getSource())).getScene();
         Stage stage = (Stage)scene.getWindow();
         
