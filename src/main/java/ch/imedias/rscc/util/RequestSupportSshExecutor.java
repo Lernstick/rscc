@@ -44,9 +44,6 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
             if(success != null && 
                     successPattern.matcher((String) evt.getNewValue()).matches())
                 Platform.runLater(success);
-            else if(failed != null && 
-                    failedPattern.matcher((String) evt.getNewValue()).matches())
-                Platform.runLater(failed);
         });
     }
 
@@ -90,7 +87,7 @@ public class RequestSupportSshExecutor implements RequestSupportExecutor {
                 int exitCode = SEEK_PROCESS_EXECUTOR.executeScript(true, true, sshConnection);
                 
                 // Exit code 143 is killed by another process
-                if (exitCode != 0 || exitCode != 143 ){
+                if (exitCode != 0 && exitCode != 143 ){
                     Platform.runLater(failed);
                 } else {
                     disconnect();
