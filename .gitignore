@@ -7,3 +7,5 @@ debian/rscc.debhelper.log
 debian/rscc.substvars                                                                                                                                                                                                                                                  
 dist/
 nbproject/private/
+/nbproject/
+target/

@@ -1,0 +1,25 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "configure" ]; then
+
+    username=rscc_ssh
+
+	# Create the "${username}" user
+	if ! getent passwd ${username} > /dev/null; then
+		adduser --quiet --system --group --home /  \
+			--no-create-home                                 \
+			--gecos "Remote Support Control Center" \
+			${username}
+	fi
+
+    # Create the "${username}" group, if it is missing, and set the
+    # primary group of the "${username}" user to this group.
+    if ! getent group ${username} > /dev/null; then
+        addgroup --quiet --system ${username}
+        usermod -g ${username} ${username}
+    fi
+fi
+
+#DEBHELPER#

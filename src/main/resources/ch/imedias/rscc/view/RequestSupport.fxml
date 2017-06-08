@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.RequestSupportController">
+    <BorderPane id="Background" prefHeight="300.0" prefWidth="400.0" stylesheets="@edit.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <center>
+           <GridPane hgap="5.0" minHeight="109.0" minWidth="360.0" prefHeight="146.0" prefWidth="360.0" vgap="5.0" BorderPane.alignment="CENTER">
+             <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="129.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="226.0" />
+             </columnConstraints>
+             <rowConstraints>
+               <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+             </rowConstraints>
+              <BorderPane.margin>
+                 <Insets bottom="5.0" left="20.0" right="20.0" top="30.0" />
+              </BorderPane.margin>
+              <children>
+                 <Label style="-fx-font-family: Arial;" text="%ReceiveSupport.Supporter">
+                    <tooltip>
+                       <Tooltip text="Der Supporter registriert sich unter einem Namen. Diesen können Sie hier auswählen." />
+                    </tooltip></Label>
+                 <Label style="-fx-font-family: Arial;" text="%ReceiveSupport.scaleLabel" GridPane.rowIndex="1">
+                    <tooltip>
+                       <Tooltip text="Definiert in welcher Grösse das Bild übertragt wird." />
+                    </tooltip></Label>
+                 <ComboBox id="PullDown" fx:id="cboImagescale" prefHeight="25.0" prefWidth="72.0" stylesheets="@edit.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                 <VBox alignment="CENTER_LEFT" prefHeight="96.0" prefWidth="166.0" GridPane.columnIndex="1">
+                    <children>
+                       <ComboBox id="PullDown" fx:id="cboSupporter" prefHeight="25.0" prefWidth="168.0" stylesheets="@edit.css" />
+                       <Hyperlink onAction="#onEditSupporterlistAction" prefHeight="31.0" prefWidth="225.0" stylesheets="@edit.css" text="%ReceiveSupport.editLink" />
+                    </children>
+                    <padding>
+                       <Insets right="5.0" top="18.0" />
+                    </padding>
+                 </VBox>
+              </children>
+           </GridPane>
+        </center>
+        <top>
+           <Label stylesheets="@edit.css" text="%ReceiveSupport.title" BorderPane.alignment="CENTER">
+              <font>
+                 <Font size="24.0" />
+              </font>
+              <padding>
+                 <Insets top="15.0" />
+              </padding>
+           </Label>
+        </top>
+        <bottom>
+           <BorderPane prefHeight="111.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+              <left>
+                 <Button id="Back" mnemonicParsing="false" onAction="#onBackAction" stylesheets="@edit.css" text="%Back" BorderPane.alignment="BOTTOM_LEFT" />
+              </left>
+              <right>
+                 <Button id="Connect" fx:id="btnConnect" alignment="CENTER" mnemonicParsing="false" onAction="#onConnectAction" stylesheets="@edit.css" text="%ReceiveSupport.connectButton" BorderPane.alignment="BOTTOM_RIGHT" />
+              </right>
+              <padding>
+                 <Insets bottom="15.0" left="20.0" right="20.0" />
+              </padding>
+           </BorderPane>
+        </bottom>
+     </BorderPane>
+</AnchorPane>

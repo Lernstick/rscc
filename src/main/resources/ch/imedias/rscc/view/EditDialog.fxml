@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="400.0" minWidth="640.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.imedias.rscc.controller.EditDialogController">
+  <children>
+    <AnchorPane id="Background" maxHeight="-1.0" maxWidth="-1.0" minHeight="400.0" minWidth="640.0" prefHeight="400.0" prefWidth="640.0" stylesheets="@edit.css" VBox.vgrow="ALWAYS">
+      <children>
+        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library hereâ€¦" textAlignment="CENTER" wrapText="false">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+            <BorderPane prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <TableView id="Table" fx:id="table" prefHeight="283.0" prefWidth="475.0" stylesheets="@edit.css" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="name" minWidth="20.0" prefWidth="184.0" text="%Description" />
+                      <TableColumn fx:id="address" minWidth="0.0" prefWidth="190.0" text="%Address" />
+                        <TableColumn fx:id="encrypted" prefWidth="180.0" text="%UseSSH" />
+                    </columns>
+                  </TableView>
+               </center>
+               <top>
+                  <Label id="Titel" alignment="BASELINE_CENTER" stylesheets="@edit.css" text="%EditDialog.title" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets bottom="15.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </top>
+               <bottom>
+                  <BorderPane id="BorderPain" prefHeight="26.0" prefWidth="527.0" stylesheets="@edit.css" BorderPane.alignment="BOTTOM_CENTER">
+                     <left>
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onCancelClickedAction" stylesheets="@edit.css" text="%EditDialog.cancelButton.text" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Button fx:id="saveButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onSaveClickedAction" stylesheets="@edit.css" text="%Save" />
+                     </right>
+                     <BorderPane.margin>
+                        <Insets top="15.0" />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets right="45.0" />
+                     </padding>
+                  </BorderPane>
+               </bottom>
+               <right>
+                  <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#onAddClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <tooltip>
+                              <Tooltip text="%EditDialog.insertButton.toolTipText" />
+                           </tooltip></Button>
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#onDeleteClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <tooltip>
+                              <Tooltip text="%EditDialog.deleteButton.toolTipText" />
+                           </tooltip></Button>
+                        <Button fx:id="upButton" mnemonicParsing="false" onMouseClicked="#onUpClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <tooltip>
+                              <Tooltip text="%EditDialog.upButton.toolTipText" />
+                           </tooltip></Button>
+                        <Button fx:id="downButton" mnemonicParsing="false" onMouseClicked="#onDownClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <TilePane.margin>
+                              <Insets />
+                           </TilePane.margin>
+                           <tooltip>
+                              <Tooltip text="%EditDialog.downButton.toolTipText" />
+                           </tooltip></Button>
+                        <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#onResetClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                           <tooltip>
+                              <Tooltip text="%EditDialog.defaultButton.toolTipText" />
+                           </tooltip></Button>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets left="15.0" />
+                     </BorderPane.margin>
+                  </TilePane>
+               </right>
+            </BorderPane>
+      </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+    </AnchorPane>
+  </children>
+</VBox>
