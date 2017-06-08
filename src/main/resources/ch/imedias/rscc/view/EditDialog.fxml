@@ -44,10 +44,10 @@
                <bottom>
                   <BorderPane id="BorderPain" prefHeight="26.0" prefWidth="527.0" stylesheets="@edit.css" BorderPane.alignment="BOTTOM_CENTER">
                      <left>
-                        <Button fx:id="CancelButton" mnemonicParsing="false" onMouseClicked="#onCancelClickedAction" stylesheets="@edit.css" text="%EditDialog.cancelButton.text" BorderPane.alignment="CENTER" />
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#onCancelClickedAction" stylesheets="@edit.css" text="%EditDialog.cancelButton.text" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <Button fx:id="SaveButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onSaveClickedAction" stylesheets="@edit.css" text="%Save" />
+                        <Button fx:id="saveButton" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onSaveClickedAction" stylesheets="@edit.css" text="%Save" />
                      </right>
                      <BorderPane.margin>
                         <Insets top="15.0" />
@@ -60,26 +60,26 @@
                <right>
                   <TilePane alignment="TOP_CENTER" orientation="VERTICAL" tileAlignment="TOP_CENTER" vgap="15.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#onAddClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                        <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#onAddClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
                            <tooltip>
                               <Tooltip text="%EditDialog.insertButton.toolTipText" />
                            </tooltip></Button>
-                        <Button fx:id="DeleteButton" mnemonicParsing="false" onMouseClicked="#onDeleteClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#onDeleteClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
                            <tooltip>
                               <Tooltip text="%EditDialog.deleteButton.toolTipText" />
                            </tooltip></Button>
-                        <Button fx:id="UpButton" mnemonicParsing="false" onMouseClicked="#onUpClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                        <Button fx:id="upButton" mnemonicParsing="false" onMouseClicked="#onUpClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
                            <tooltip>
                               <Tooltip text="%EditDialog.upButton.toolTipText" />
                            </tooltip></Button>
-                        <Button fx:id="DownButton" mnemonicParsing="false" onMouseClicked="#onDownClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                        <Button fx:id="downButton" mnemonicParsing="false" onMouseClicked="#onDownClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
                            <TilePane.margin>
                               <Insets />
                            </TilePane.margin>
                            <tooltip>
                               <Tooltip text="%EditDialog.downButton.toolTipText" />
                            </tooltip></Button>
-                        <Button fx:id="ResetButton" mnemonicParsing="false" onMouseClicked="#onResetClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
+                        <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#onResetClickedAction" prefHeight="30.0" prefWidth="30.0" stylesheets="@edit.css">
                            <tooltip>
                               <Tooltip text="%EditDialog.defaultButton.toolTipText" />
                            </tooltip></Button>
